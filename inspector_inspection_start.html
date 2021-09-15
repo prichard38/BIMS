@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        <script src="https://kit.fontawesome.com/7b2b0481fc.js" crossorigin="anonymous"></script>
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="assets/css/custom.css">
+        <title>Bridge Inspection Management</title>
+
+        <style>
+            .sidebar {
+                float: left;
+                width: 200px;
+                height: 100vh;
+                background-color: rgb(13, 60, 121);
+            }
+        </style>
+    </head>
+    
+    <body>
+        <nav class="navbar navbar-light" style="background-color: #005cbf; width: 100vw;">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#" style="color: white; vertical-align: middle;">
+                    <img src="img/wvdtlogo.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                    Bridge Inspection Management System
+                </a>
+                <span class="float-right" style="color: white; font-size: 0.9em;">
+                    <i class="fas fa-user-circle"></i>&nbsp;
+                    Loged in as Inspector &nbsp;|&nbsp; <a href="login.html" style="color: white; text-decoration: none;"> sign out</a>
+                </span>
+            </div>
+        </nav>
+
+        <div class="sidebar">
+            <div class="menubar">
+                <ul class="menu">
+                    <li><a id="IM" href='inspector_inspection_management.html'>Inspection Management</a></li>
+                    <li style="background-color: #5e5e5e;"><a id="Intro" href='inspector_inspection_start.html'>Instructions</a></li>
+                    <li><a id="NR" href='inspector_inspection_1narrative_1.html'>1&nbsp;&nbsp;Narrative Report</a></li>
+                    <li><a id="BE" href='inspector_inspection_2bridge_1.html'>2&nbsp;&nbsp;Bridge Elements</a></li>
+                    <li><a id="AE" href='inspector_inspection_3additional.html'>3&nbsp;&nbsp;Additional Elements</a></li>
+                    <li><a id="RV" href='inspector_inspection_4review.html'>4&nbsp;&nbsp;Review & Finish</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container">
+            
+
+            <div id="container">
+                <div id="maincontents">
+                    <div class="tab-content" style="margin-top: 10px; padding-bottom: 20px;"><br>
+                        <div class="institle">
+                            <h4>Vietnam Veterans Memorial Bridge</h4>
+                            <h6>111-3/5-5.95(01110)&nbsp;|&nbsp;035A123&nbsp;|&nbsp;I-470, Wheeling, WV 26003, United States&nbsp;|&nbsp;In-Depth&nbsp;|&nbsp;2021-11-29</b></h6>
+                        </div>
+        
+                    <!-- Temporary Input -->
+                        <div>
+                            <img src="img/temp_desc.png" alt="temporary input" style="width: 95%; min-width: 600px;">
+                        </div>
+                    <!--
+                        <div>
+                                You may complete your inspection in multiple sessions, please feel free to save and continue your inspection report until you are ready to submit it for approval.
+                            All the fields must be filled to proceed to the next page. If you need to skip to the next step or find a field that does not require adding information, simply type N/A.
+                            To save your progress and move to the next page click Start Inspection and to continue your work later in your next session click Exit.
+                                For attachments, you can use pictures stored on your computer and photos taken with a drone.
+                        </div>
+                    -->
+                        <div class="btn_carry">
+                            <form method="POST" action="inspector_inspection_1narrative_1.html">
+                                <button type="submit" class="btnset_big btn_act">Start Inspection</button><br>
+                                <button type="submit" class="btnset_big btn_smt">Get Data from Previous Inspection</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    </body>
+</html>

@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        <script src="https://kit.fontawesome.com/7b2b0481fc.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="assets/css/custom.css">
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+        <title>Bridge Inspection Management</title>
+    </head>
+    
+    <body>
+        <nav class="navbar navbar-light" style="background-color: #005cbf; width: 100vw;">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#" style="color: white; vertical-align: middle;">
+                    <img src="img/wvdtlogo.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                    Bridge Inspection Management System
+                </a>
+                <span class="float-right" style="color: white; font-size: 0.9em;">
+                    <i class="fas fa-user-circle"></i>&nbsp;
+                    Loged in as Inspector &nbsp;|&nbsp; <a href="login.html" style="color: white; text-decoration: none;"> sign out</a>
+                </span>
+            </div>
+        </nav>
+
+        <div class="sidebar">
+            <div class="menubar">
+                <ul class="menu">
+                    <li><a id="IM" href='inspector_inspection_management.html'>Inspection Management</a></li>
+                    <li><a id="Intro" href='inspector_inspection_start.html'>Instructions &nbsp; <i class="fas fa-check"></i></a></li>
+                    <li><a id="NR" href='inspector_inspection_1narrative_1.html'>1&nbsp;&nbsp;Narrative Report &nbsp; <i class="fas fa-check"></i></a></li>
+                    <li><a id="BE" href='inspector_inspection_2bridge_1.html'>2&nbsp;&nbsp;Bridge Elements &nbsp; <i class="fas fa-check"></i></a></li>
+                    <li style="background-color: #5e5e5e;"><a id="AE" href='inspector_inspection_3additional.html'>3&nbsp;&nbsp;Additional Elements</a></li>
+                    <li><a id="RV" href='inspector_inspection_4review.html'>4&nbsp;&nbsp;Review & Finish</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container">
+            <div id="container">
+                <div id="maincontents">
+                    <div class="tab-content" style="margin-top: 10px; padding-bottom: 20px;"><br>
+                        <div class="institle">
+                            <h4>Vietnam Veterans Memorial Bridge</h4>
+                            <h6>111-3/5-5.95(01110)&nbsp;|&nbsp;035A123&nbsp;|&nbsp;I-470, Wheeling, WV 26003, United States&nbsp;|&nbsp;In-Depth&nbsp;|&nbsp;2021-11-29</b></h6>
+                        </div>
+        
+                        <div class="desc_insp">
+                            <br>
+                            <div style="text-align: center;">
+                                Please feel free to any additional document related to the bridge Inspection.
+                            </div><br>
+                            <div class="btn_carry">
+                                <form method="POST" action="">
+                                    <button type="button" class="btnset_big btn_smt" data-bs-toggle="modal" data-bs-target="#AddDocumentModal">Add New Documents</button>
+                                </form>
+                                <!--
+                                <div class="upload_wrapper">
+                                    <form method="POST" enctype="multipart/form-data">
+                                        <label for="image">
+                                            <input type="file" class="form-control-file" name="image" style="display: block" required multiple>
+                                        </label>
+                                        <input type="submit" name="submit" value="Add New Documents" class="btnset_insp btn_upload" >
+                                    </form>
+                                </div>
+                                -->
+                            </div>
+                        </div>
+
+                        <div class="table-responsive" style="padding: 10px;">
+                            <table id="addElementsTbl" class="table">
+                                <thead>
+                                    <tr>
+                                        <th> Preview </th>
+                                        <th> Name </th>
+                                        <th> Description </th>
+                                        <th> Action </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div><br><br>
+                        
+                        <div class="btn_carry">
+                            <button class="btnset_insp btn_back" onclick="location.href='inspector_inspection_2bridge.html'">Back</button>
+                            <button class="btnset_insp btn_save" onclick="location.href='inspector_inspection_4review.html'">Save & Next</button>
+                        </div>
+                    </div>
+
+                    <!-- Modal Design -->
+                    <div class="modal" id="AddDocumentModal" aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-fullscreen-lg-down">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Upload Additional Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="container-fluid">
+                                        <form id="addDocu_cont">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="element-name" class="col-form-label">Upload Images</label>
+                                                    <input id="element-img" type="file" class="form-control-file" style="display: block" required multiple>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="element-name" class="col-form-label">Element Name</label>
+                                                    <textarea class="form-control" id="element-name" rows="1"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="element-description" class="col-form-label">Element Description</label>
+                                                    <textarea class="form-control" id="element-description" rows="5"></textarea>
+                                                </div>
+                                            </div><br>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btnset_insp btn_back" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" id="addbtn" class="btnset_insp btn_save" data-bs-dismiss="modal">Upload</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- sidebar size -->
+        <script language="JavaScript" type="text/javascript">
+            $(document).ready(function(){ 
+                $(".tbox").hide();
+                var origHeight = "calc(100vh - 58px)";
+                var contHeight = $('section').height();
+                var sideHeight = $('.sidebar').height();
+
+                if (contHeight > sideHeight) {
+                    $('.sidebar').height(contHeight);
+                } else {
+                    $('.sidebar').height(origHeight);
+                }
+            });
+        </script>
+
+        <!-- Add Table Row -->
+        <script>
+           $(document).ready(function() {
+                $('#addbtn').click(function(){
+                    var eimg = document.getElementById("element-img");
+                    var length = eimg.files.length;
+                    if (!length) {
+                        return false;
+                    }
+                    var ename = document.getElementById("element-name").value;
+                    var edesc = document.getElementById("element-description").value;
+                    useImage(eimg, ename, edesc);
+                    $("#addDocu_cont").trigger("reset");
+                });
+            });
+
+            function useImage(img, name, desc) {
+                var file = img.files[0];
+                var imagefile = file.type;
+                var match = ["image/jpeg", "image/png", "image/jpg"];
+                if (!((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2]))) {
+                    alert("Invalid File Extension");
+                } else {
+                    var reader = new FileReader();
+                    reader.onload = imageIsLoaded;
+                    reader.readAsDataURL(img.files[0]);
+                }
+                function imageIsLoaded(e) {
+                    var tr_start = "<tr>";
+                    var td1 = "<td class='add_td1'><div style='background-image: url("+e.target.result+");'></div></td>";
+                    var td2 = "<td class='add_td2'>" + name + "</td>";
+                    var td3 = "<td class='add_td3'>" + desc + "</td>";
+                    var td4 = "<td class='add_td4'><a href='' onclick='deleteRow();'> Delete </a></td>";
+                    var tr_close = "</tr>";
+                    $('#addElementsTbl').append(tr_start, td1, td2, td3, td4, tr_close);
+                }
+            }
+            function deleteRow() {
+                $(this).closest("tr").remove();
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        <script src="https://kit.fontawesome.com/7b2b0481fc.js" crossorigin="anonymous"></script>
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="assets/css/custom.css">
+        <title>Bridge Management</title>
+    </head>
+    
+    <body>
+        <nav class="navbar navbar-light" style="background-color: #005cbf; width: 100vw;">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#" style="color: white; vertical-align: middle;">
+                    <img src="img/wvdtlogo.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                    Bridge Inspection Management System
+                </a>
+                <span class="float-right" style="color: white; font-size: 0.9em;">
+                    <i class="fas fa-user-circle"></i>&nbsp;
+                    Loged in as Admin &nbsp;|&nbsp; <a href="login_i.html" style="color: white; text-decoration: none;"> sign out</a>
+                </span>
+            </div>
+        </nav>
+
+        <div class="sidebar">
+            <div class="menubar">
+                <ul class="menu">
+                    <li><a id="Home" href='#'>Admin Home</a></li>
+                    <li style="background-color: #5e5e5e;"><a id="IM" href='admin_inspection_management.html'>Inspection Management</a></li>
+                    <li><a id="BM"href='admin_bridge_management.html'>Bridge Management</a></li>
+                    <li><a id="RM" href='admin_report_management.html'>Report Management</a></li>
+                    <li><a id="UM" href='#'>User Management</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="main_title">
+                <h5> Inspection Management </h5>
+                <p>Manage your Inspections.</p>
+            </div>
+            
+            <div class="contents">
+                
+                <div class="tabcont">
+                    <ul class="nav nav-pills mb-3" style="margin-bottom: 0 !important;" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="pills-active-insp-tab" data-bs-toggle="pill" data-bs-target="#pills-active-insp" type="button" role="tab" aria-controls="pills-active-insp" aria-selected="true">Active Inspections</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-approved-insp-tab" data-bs-toggle="pill" data-bs-target="#pills-approved-insp" type="button" role="tab" aria-controls="pills-approved-insp" aria-selected="false">Approved Inspections</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-active-insp" role="tabpanel" aria-labelledby="pills-active-insp-tab" style="padding-bottom: 30px;">
+                            <h6>Inspection List</h6>
+                            <button type="button" class="btn btn_pri floatr" value="Add" onclick="location.href='admin_new_inspection.html'"><i class="fas fa-plus"></i>&nbsp;Add New Inspection</button>
+                            <div style="clear: both;">
+                                <div style="padding: 10px; overflow: auto; min-width: 400px;">
+                                    <table class="table table-sm" id="tbl_active_insp">
+                                        <tr>
+                                            <th>Bridge no.</th>
+                                            <th>Bridge name</th>
+                                            <th>Type</th>
+                                            <th>Assigned to</th>
+                                            <th>Assigned by</th>
+                                            <th>Assigned on</th>
+                                            <th>Deadline</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        <tr>
+                                            <td>001-4/5-2.95(01810)</td>
+                                            <td>Cane Hill Bridge over Little Red River</td>
+                                            <td>In-Depth</td>
+                                            <td>William Jones</td>
+                                            <td>Irene Song</td>
+                                            <td>2021-05-20</td>
+                                            <td>2021-07-20</td>
+                                            <td>Awaiting Confirmation</td>
+                                            <td><button class="btnset btn_contact" onclick="" data-bs-toggle="modal" data-bs-target="#inspector_contact_modal">Contact Inspector</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>006-3/4-8.65(03148)</td>
+                                            <td>Robert C. Byrd Bridge over Ohio River</td>
+                                            <td>Periodic</td>
+                                            <td>Liam Davis</td>
+                                            <td>Irene Song</td>
+                                            <td>2021-04-21</td>
+                                            <td>2021-06-19</td>
+                                            <td>In Progress</td>
+                                            <td><button class="btnset btn_contact" onclick="" data-bs-toggle="modal" data-bs-target="#inspector_contact_modal">Contact Inspector</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>004-4/5-2.95(01210)</td>
+                                            <td>East Huntington Bridge over Ohio River</td>
+                                            <td>Periodic</td>
+                                            <td>Rebecca Johnson</td>
+                                            <td>Irene Song</td>
+                                            <td>2021-05-01</td>
+                                            <td>2021-05-31</td>
+                                            <td>Rejected</td>
+                                            <td><button class="btnset btn_assign"  onclick="location.href='admin_new_inspection.html'">Reassign</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>001-4/5-2.95(01210)</td>
+                                            <td>Alderson Bridge over Greenbrier River</td>
+                                            <td>Interim-Condition</td>
+                                            <td>Randy Jane</td>
+                                            <td>John Marshall</td>
+                                            <td>2021-04-01</td>
+                                            <td>2021-04-08</td>
+                                            <td>Declined</td>
+                                            <td><button class="btnset btn_view" onclick="" data-bs-toggle="modal" data-bs-target="#inspector_comments_modal">View Comments</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>002-4/5-2.95(01211)</td>
+                                            <td>New River Gorge Bridge over New River</td>
+                                            <td>In-Depth</td>
+                                            <td>Randy Jane</td>
+                                            <td>John Marshall</td>
+                                            <td>2021-04-09</td>
+                                            <td>2021-04-19</td>
+                                            <td>Awaiting Approval</td>
+                                            <td><a href="assets/Report.pdf" class="btnset btn_review" target="_blank">Review</a></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="pills-approved-insp" role="tabpanel" aria-labelledby="pills-approved-insp-tab" style="padding-bottom: 20px;">
+                            <h6>Inspection Completed List</h6>
+                            <div style="clear: both;">
+                                <div style="padding: 10px; overflow: auto; min-width: 400px;">
+                                    <table class="table table-sm" id="tbl_approved_insp">
+                                        <tr>
+                                            <th>Bridge no.</th>
+                                            <th>Bridge name</th>
+                                            <th>Type</th>
+                                            <th>Inspected by</th>
+                                            <th>Approved by</th>
+                                            <th>Completed on</th>
+                                            <th>Inspection Report</th>
+                                        </tr>
+                                        <tr>
+                                            <td>001-4/5-2.95(01210)</td>
+                                            <td>Alderson Bridge over Greenbrier River</td>
+                                            <td>Interim-Condition</td>
+                                            <td>William Jones</td>
+                                            <td>Irene Song</td>
+                                            <td>2021-03-02</td>
+                                            <td><a href="assets/Report.pdf" class="btnset btn_pdf" target="_blank" style="padding: 5px 8px;">View Report</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>001-4/5-2.95(01810)</td>
+                                            <td>Cane Hill Bridge over Little Red River</td>
+                                            <td>Periodic</td>
+                                            <td>Liam Davis</td>
+                                            <td>Irene Song</td>
+                                            <td>2021-03-15</td>
+                                            <td><a href="assets/Report.pdf" class="btnset btn_pdf" target="_blank" style="padding: 5px 8px;">View Report</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>005-4/5-2.95(01211)</td>
+                                            <td>B & O Railroad Potomac River Crossing</td>
+                                            <td>In-Depth</td>
+                                            <td>Rebecca Johnson</td>
+                                            <td>Irene Song</td>
+                                            <td>2021-03-27</td>
+                                            <td><a href="assets/Report.pdf" class="btnset btn_pdf" target="_blank" style="padding: 5px 8px;">View Report</a></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Inspector Contact Details Modal -->
+                        <div class="modal fade" tabindex="-1" role="dialog" id="inspector_contact_modal">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header"><h5 class="modal-title">Inspector Contact Details</h5></div>
+                                    <div class="modal-body">
+                                        <div class="form-group txtleft">
+                                            <label>Name</label><br>
+                                            <label for="inspector_name"><input type="text" id="inspector_name" class="form-control" value="William Jones" disabled></label>
+                                        </div>
+                                        <div class="form-group txtleft">
+                                            <label>Phone</label><br>
+                                            <label for="inspector_phone"><input type="text" id="inspector_phone" class="form-control" value="304-000-0000" disabled></label>
+                                        </div>
+                                        <div class="form-group txtleft">
+                                            <label>Email</label><br>
+                                            <label for="inspector_email"><input type="text" id="inspector_email" class="form-control" value="william.jones@marshall.bridge.edu" disabled></label>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btnset btn_ccl" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <!-- Inspector Comments Modal -->
+                        <div class="modal fade" tabindex="-1" role="dialog" id="inspector_comments_modal">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Inspector Decline Comments</h5>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <div class="txtleft">
+                                            <textarea id="inspector_comments" class="form-control" cols="80" rows="5" disabled>Based on my current schedule, I won’t be available on the week (April 1 - April 8).</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btnset btn_ccl" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    </body>
+</html>

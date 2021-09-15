@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        <script src="https://kit.fontawesome.com/7b2b0481fc.js" crossorigin="anonymous"></script>
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="assets/css/custom.css">
+        <!-- 3D -->
+        <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+        <title>Bridge Inspection Management</title>
+
+        <style>
+            .hs5 { background-color: lightgrey; }
+        </style>
+    </head>
+    
+    <body>
+        <nav class="navbar navbar-light" style="background-color: #005cbf; width: 100vw;">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#" style="color: white; vertical-align: middle;">
+                    <img src="img/wvdtlogo.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                    Bridge Inspection Management System
+                </a>
+                <span class="float-right" style="color: white; font-size: 0.9em;">
+                    <i class="fas fa-user-circle"></i>&nbsp;
+                    Loged in as Inspector &nbsp;|&nbsp; <a href="login.html" style="color: white; text-decoration: none;"> sign out</a>
+                </span>
+            </div>
+        </nav>
+
+        <div class="sidebar">
+            <div class="menubar">
+                <ul class="menu">
+                    <li><a id="IM" href='inspector_inspection_management.html'>Inspection Management</a></li>
+                    <li><a id="Intro" href='inspector_inspection_start.html'>Instructions &nbsp; <i class="fas fa-check"></i></a></li>
+                    <li><a id="NR" href='inspector_inspection_1narrative_1.html'>1&nbsp;&nbsp;Narrative Report &nbsp; <i class="fas fa-check"></i></a></li>
+                    <li style="background-color: #5e5e5e;"><a id="BE" href='inspector_inspection_2bridge.html'>2&nbsp;&nbsp;Bridge Elements</a></li>
+                    <li><a id="AE" href='inspector_inspection_3additional.html'>3&nbsp;&nbsp;Additional Elements</a></li>
+                    <li><a id="RV" href='inspector_inspection_4review.html'>4&nbsp;&nbsp;Review & Finish</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container">
+            
+
+            <div id="container">
+                <div id="maincontents">
+                    <div class="tab-content" style="margin-top: 10px; padding-bottom: 20px;"><br>
+                        <div class="institle">
+                            <h4>Vietnam Veterans Memorial Bridge</h4>
+                            <h6>111-3/5-5.95(01110)&nbsp;|&nbsp;035A123&nbsp;|&nbsp;I-470, Wheeling, WV 26003, United States&nbsp;|&nbsp;In-Depth&nbsp;|&nbsp;2021-11-29</b></h6>
+                        </div>
+        
+
+                        <div class="desc_insp">
+                            <div><p style="text-align: center;"><b>Upload Images</b></p></div>
+                
+                            <div class="upload_wrapper" style="font-size: 12px;">
+                                <form method="POST" enctype="multipart/form-data">
+                                    <label for="image">
+                                        <input type="file" class="form-control-file" name="image" style="display: block" required multiple>
+                                    </label>
+                                    <input type="submit" name="submit" value="Upload Images" class="btnset_insp btn_upload" style="height: 25px;">
+                                </form>
+                            </div>
+
+                            <div class="bridge_wrapper">
+                                <div id="bridge_element_desc">
+                                    <table class="table table-sm" id="bridge_element_tbl">
+                                        <tr><th>Bridge Element List</th></tr>
+                                        <tr><td><a onClick="toggleImage()" class="bel" href="#">Superstructure BEARINGS &nbsp; <i class="fas fa-check"></i></a></td></tr>
+                                        <tr><td><a onClick="toggleImage()" class="bel" href="#">Superstructure GIRDER &nbsp; <i class="fas fa-check"></i></a></td></tr>
+                                        <tr><td><a onClick="toggleImage()" class="bel" href="#">Substructure PIER &nbsp; <i class="fas fa-check"></i></a></td></tr>
+                                        <tr><td><a onClick="toggleImage()" class="bel" href="#">Substructure FLOOR BEAM &nbsp; <i class="fas fa-check"></i></a></td></tr>
+                                        <tr><td><a onClick="toggleImage()" class="bel" href="#">Deck ONE &nbsp; <i class="fas fa-check"></i></a></td></tr>
+                                        <tr><td><a onClick="toggleImage()" class="bel" href="#">Deck TWO</a></td></tr>
+                                    </table>
+                                </div>
+
+                                <div id="bridge_element_3d">
+                                    <model-viewer src="assets/Model060721.glb" camera-controls exposure="0.72" shadow-intensity="0" camera-orbit="27.23deg 78.62deg 181.9m" min-camera-orbit="auto auto auto" max-camera-orbit="auto auto 181.9m" >
+                                        <button class="Hotspot hs4" slot="hotspot-1" data-position="-10.1739862999297m 7.2626670004309535m 45.891232591660675m" data-normal="-0.32664745787836463m 0.017188132570477133m 0.9449899504017711m" data-visibility-attribute="visible">
+                                            <!-- <div class="HotspotAnnotation">FLOOR BEAM</div> --></button>
+                                        <button class="Hotspot hs4" slot="hotspot-2" data-position="3.088437165177318m 6.05021350274236m 16.747897238153026m" data-normal="0.9438577140777109m 0.05812376415448013m 0.32519877554583854m" data-visibility-attribute="visible">
+                                            <!-- <div class="HotspotAnnotation">BEARINGS</div> --></button>
+                                        <button class="Hotspot hs5" slot="hotspot-3" data-position="-3.82146871327482m 8.02698021550583m 15.617830659215763m" data-normal="-0.04933677729065374m 0.9981614058038522m -0.03520923700182004m" data-visibility-attribute="visible">
+                                            <!-- <div class="HotspotAnnotation">DECK 1</div> --></button>
+                                        <button class="Hotspot hs2" slot="hotspot-4" data-position="2.262199517661566m 7.769528697696511m -0.20548165891285208m" data-normal="-0.04933677729065374m 0.9981614058038522m -0.03520923700182004m" data-visibility-attribute="visible">
+                                            <!-- <div class="HotspotAnnotation">DECK 2</div> --></button>
+                                        <button class="Hotspot hs1" slot="hotspot-5" data-position="-0.16873490245083111m 7.198973951171171m 26.630652624436223m" data-normal="0.9085017010904776m 0.28141701591106116m 0.30891604404987133m" data-visibility-attribute="visible">
+                                            <!-- <div class="HotspotAnnotation">GIRDER</div> --></button>
+                                        <button class="Hotspot hs3" slot="hotspot-6" data-position="13.879840339710691m 3.0224059784682638m -13.145880733396405m" data-normal="0.9438577140777108m 0.05812376415448009m 0.3251987755458384m" data-visibility-attribute="visible">
+                                            <!-- <div class="HotspotAnnotation">PIER</div> --></button>
+                                    </model-viewer>
+                                </div>
+                            </div>
+
+                            <div id="tempRate" class="hidden" style="text-align: center; padding: 20px;">
+                                <img src="img/temp_bridge_element.png" style="width: 800px;">
+                            </div>
+                        </div>
+                    
+                        <div class="btn_carry">
+                            <button class="btnset_insp btn_back" onclick="location.href='inspector_inspection_1narrative_6.html'">Back</button>
+                            <button class="btnset_insp btn_save" onclick="location.href='inspector_inspection_3additional.html'">Next Step</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+        <!-- sidebar size -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!--
+        <script language="JavaScript" type="text/javascript">
+            $(document).ready(function(){ 
+                $('.sidebar').css('height', $(window).height()); 
+                $(window).resize(function() { 
+                    $('.sidebar').css('height', $(window).height()); 
+                }); 
+            });
+        </script>
+-->
+        <script>
+            function toggleImage(){
+                document.querySelector('#tempRate').classList.toggle('hidden');
+
+                var origHeight = "calc(100vh - 58px)";
+                var contHeight = $('.container').height();
+                var sideHeight = $('.sidebar').height();
+
+                if (contHeight > sideHeight) {
+                    $('.sidebar').height(contHeight);
+                } else {
+                    $('.sidebar').height(origHeight);
+                }
+            }
+        </script>
+    </body>
+</html>

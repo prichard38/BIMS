@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        <script src="https://kit.fontawesome.com/7b2b0481fc.js" crossorigin="anonymous"></script>
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="assets/css/custom.css">
+        <title>Bridge Inspection Management</title>
+        
+        <style>
+            .sidebar {
+                float: left;
+                width: 200px;
+                height: 100vh;
+                background-color: rgb(13, 60, 121);
+            }
+        </style>
+    </head>
+    
+    <body>
+        <nav class="navbar navbar-light" style="background-color: #005cbf; width: 100vw;">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#" style="color: white; vertical-align: middle;">
+                    <img src="img/wvdtlogo.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                    Bridge Inspection Management System
+                </a>
+                <span class="float-right" style="color: white; font-size: 0.9em;">
+                    <i class="fas fa-user-circle"></i>&nbsp;
+                    Loged in as Inspector &nbsp;|&nbsp; <a href="login.html" style="color: white; text-decoration: none;"> sign out</a>
+                </span>
+            </div>
+        </nav>
+
+        <div class="sidebar">
+            <div class="menubar">
+                <ul class="menu">
+                    <li><a id="IM" href='inspector_inspection_management.html'>Inspection Management</a></li>
+                    <li><a id="Intro" href='inspector_inspection_start.html'>Instructions &nbsp; <i class="fas fa-check"></i></a></li>
+                    <li style="background-color: #5e5e5e;">
+                        <a id="NR" href='inspector_inspection_1narrative_1.html'>1&nbsp;&nbsp;Narrative Report</a>
+                        <ul class="submenu">
+                            <li><a href='inspector_inspection_1narrative_1.html'>Procedure &nbsp; <i class="fas fa-check"></i></a></li>
+                            <li><a href='inspector_inspection_1narrative_2.html'>Summary &<br>Recommendations &nbsp; <i class="fas fa-check"></i></a></li>
+                            <li><a href='inspector_inspection_1narrative_3.html'>Engineers Comments &nbsp; <i class="fas fa-check"></i></a></li>
+                            <li><a href='inspector_inspection_1narrative_4.html'>Traffic Conditions</a></li>
+                            <li><a href='inspector_inspection_1narrative_5.html'>Waterway -<br>Feature Intersected</a></li>
+                            <li><a href='inspector_inspection_1narrative_6.html'>Environmental<br>Conditions</a></li>                        
+                        </ul>
+                    </li>
+                    <li><a id="BE" href='inspector_inspection_2bridge_1.html'>2&nbsp;&nbsp;Bridge Elements</a></li>
+                    <li><a id="AE" href='inspector_inspection_3additional.html'>3&nbsp;&nbsp;Additional Elements</a></li>
+                    <li><a id="RV" href='inspector_inspection_4review.html'>4&nbsp;&nbsp;Review & Finish</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container">
+            
+
+            <div id="container">
+                <div id="maincontents">
+                    <div class="tab-content" style="margin-top: 10px; padding-bottom: 20px;"><br>
+                        <div class="institle">
+                            <h4>Vietnam Veterans Memorial Bridge</h4>
+                            <h6>111-3/5-5.95(01110)&nbsp;|&nbsp;035A123&nbsp;|&nbsp;I-470, Wheeling, WV 26003, United States&nbsp;|&nbsp;In-Depth&nbsp;|&nbsp;2021-11-29</b></h6>
+                        </div>
+ 
+                        <div>
+                            <a href="assets/4TrafficConditions.pdf" class="btn_addi floatr" target="_blank">Preview Report</a>
+                        </div><br>               
+
+                        <div class="desc_insp">
+                            <h6>Section 1.4: Traffic Conditions</h6>
+                            <div>
+                                <p><b>1. Photos</b><br>
+                                    &emsp;&emsp; You can import photos stored on your computer or photos stored via the Inspection Mobile app. After adding or editing the information for all of your photos, click "Upload Images."    
+                                </p>
+                            </div>
+                
+                            <div class="upload_wrapper">
+                                <form method="POST" enctype="multipart/form-data">
+                                    <label for="image">
+                                        <input type="file" class="form-control-file" name="image" style="display: block" required multiple>
+                                    </label>
+                                    <input type="submit" name="submit" value="Upload Images" class="btnset_insp btn_upload" >
+                                </form>
+                            </div>
+
+                            <div>
+                                <p><b>2. Description</b><br>
+                                    &emsp;&emsp; Please enter the condition of the bridge and briefly summarize any deficiencies and your recommendations.    
+                                </p>
+                            </div>
+
+                            <div class="textarea_wrapper">
+                                <textarea name="description" cols="125" rows="8" class="pad" spellcheck="false">    The structure is posted for 13 tons in accordance with a Commissioner's Order dated December 24, 1987, currently on file. The posting, to the best of our knowledge, is being obeyed. The intersection with WV 4 at Abutment Two occasionally causes traffic to back up on the structure. The structure's narrow width (15'-9") restricts traffic flow to one direction at a time.</textarea>
+                            </div>
+                        </div>
+                    
+                        <div class="btn_carry">
+                            <button class="btnset_insp btn_back" onclick="location.href='inspector_inspection_1narrative_3.html'">Back</button>
+                            <button class="btnset_insp btn_save" onclick="location.href='inspector_inspection_1narrative_5.html'">Save & Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    </body>
+</html>
