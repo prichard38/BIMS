@@ -27,17 +27,17 @@
 
             // ** NOT SURE IF BELOW IS HOW ERIC WANTS THIS IMPLEMENTED **
 
-            // else if ($row['_LogIn_out'] == "supervisor"){
-            //     session_start();
-            //     $_SESSION["loggedAs"] = "Supervisor";
-            //     header("Location:supervisor_yearly_inspection_report.php");
-            // }
-            // else if ($row['_LogIn_out'] == "inspector"){
-            //     session_start();
-            //     $_SESSION["loggedAs"] = "Inspector";
-            //     header("Location:inspector_inspection_start.html");
-            // } 
-            //if user is NULL, display error
+            else if ($row['_LogIn_out'] == "supervisor"){
+                session_start();
+                $_SESSION["loggedAs"] = "Supervisor";
+                header("Location:supervisor_yearly_inspection_report.php");
+            }
+            else if ($row['_LogIn_out'] == "inspector"){
+                session_start();
+                $_SESSION["loggedAs"] = "Inspector";
+                header("Location:inspector_inspection_management.html");
+            } 
+            // if user is NULL, display error
             else {
                 header("Location:login-test.php?error=userdoesnotexist");
                 exit();
