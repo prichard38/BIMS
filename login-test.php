@@ -9,7 +9,7 @@
             $username = $_GET['Username'];
             $password = $_GET['Password'];
     
-            include 'dbConfig.php';
+            include 'dbConfig.inc.php';
 
             //get the role of the user. If user is not in database, then the role is NULL
             $conn->query("SET @user_role = NULL");
@@ -21,12 +21,26 @@
             //if user is admin, start session and redirect
             if ($row['_LogIn_out'] == "admin"){
                 session_start();
-                $_SESSION["loggedAs"] = "admin";
+                $_SESSION["loggedAs"] = "Admin";
                 header("Location:admin_report_management.html");
             }
+
+            // ** NOT SURE IF BELOW IS HOW ERIC WANTS THIS IMPLEMENTED **
+
+            // else if ($row['_LogIn_out'] == "supervisor"){
+            //     session_start();
+            //     $_SESSION["loggedAs"] = "Supervisor";
+            //     header("Location:supervisor_yearly_inspection_report.php");
+            // }
+            // else if ($row['_LogIn_out'] == "inspector"){
+            //     session_start();
+            //     $_SESSION["loggedAs"] = "Inspector";
+            //     header("Location:inspector_inspection_start.html");
+            // } 
             //if user is NULL, display error
             else {
-                echo "";
+                header("Location:login-test.php?error=userdoesnotexist");
+                exit();
             }
         }
     } 
