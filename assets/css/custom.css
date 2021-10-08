@@ -41,60 +41,10 @@ body {
 .floatl { float: left; }
 .floatr { float: right; }
 
-
-.tool-options{
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 11px;
-    margin-right: auto;
-    margin-left: auto;
-    display: flex;
-    flex-flow: row wrap;
+.search-box{
+    width: 30rem;
+    margin-right: 10px;
 }
-
-
-.year-selector{
-    width: 5rem;
-    height: 1.8rem;
-    line-height: 2.375rem;
-    border-color: #aaa;
-    margin-top: 0.28rem;
-}
-
-.has-search{
-    display:flex;
-    padding-left: 10px;
-}
-
-.has-search .form-control {
-    padding-left: 2.375rem;
-}
-
-.has-search .form-control-feedback {
-    position: absolute;
-    z-index: 2;
-    display: flex;
-    width: 2.375rem;
-    height: 2.375rem;
-    line-height: 2.375rem;
-    text-align: center;
-    pointer-events: none;
-    color: #aaa;
-    margin-left: 4.25rem;
-    
-}
-
-.has-search span {
-    padding-left: 20px;
-}
-
-.tool-label{
-    padding-left: 11px;
-    margin-top: 0.3rem;
-}
-
-
-
 
 .container {
     position: absolute;
