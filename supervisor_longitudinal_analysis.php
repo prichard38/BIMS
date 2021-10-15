@@ -566,9 +566,9 @@
                                           }
 
                                         if (!adjusted && datasetIndex % 2) {
-                                          el._model.x += 6;
-                                        } else {
                                           el._model.x -= 6;
+                                        } else {
+                                          el._model.x += 6;
                                         }
         
                                         adjustedMap.push({
@@ -618,7 +618,9 @@
                 var bridgeIndex;
                 var prevBridgeIndex;
                 var bridgeLabels = <?php echo json_encode($_SESSION['bridgeNames']); ?>;
-                console.log(bridgeLabels)
+                var pointColorsBridge1 = getPointColors(bridge1Ratings);
+                var pointColorsBridge2 = getPointColors(bridge2Ratings);
+                var pointColorsBridge3 = getPointColors(bridge3Ratings);
                 var lineData = {
                     // need to get labels from SESSION variable that is created after user selects years
                     labels: [
@@ -634,7 +636,7 @@
                         label: bridgeLabels[0],
                         data: bridge1Ratings,
                         backgroundColor: 'rgba(255, 255, 255, 0)',
-                        pointBackgroundColor: ['green', '#32b502', '#ffea00', '#ff0000', '#32b502', '#32b502'],
+                        pointBackgroundColor: pointColorsBridge1,
                         borderColor: 'darkgrey',
                         radius: 6
                     },
@@ -642,7 +644,7 @@
                         label: bridgeLabels[1],
                         data: bridge2Ratings,
                         backgroundColor: 'rgba(255, 255, 255, 0)',
-                        pointBackgroundColor: ['#ffea00','#ffea00','#ffea00','#ffea00','#ffea00','#ffea00'],
+                        pointBackgroundColor: pointColorsBridge2,
                         borderColor: 'navy',
                         radius: 6
                     },
@@ -650,7 +652,7 @@
                         label: bridgeLabels[2],
                         data: bridge3Ratings,
                         backgroundColor: 'rgba(255, 255, 255, 0)',
-                        pointBackgroundColor: ['#ffea00','#ffea00','#32b502','#32b502','#32b502','#32b502'],
+                        pointBackgroundColor: pointColorsBridge3,
                         borderColor: 'steelblue',
                         radius: 6
                     }
