@@ -41,14 +41,12 @@
     </head>
     
     <body>
+        <!-- init global var to track click events -->
+        <script>lastClick = 'inspectionClick';</script>
 
         <!-- Load inspection data for each bridge after user has selected bridges -->
         <script type="text/javascript">
             $(document).ready(function () {
-                console.log("loading inspeections from db")
-                console.log(<?php echo $_SESSION['hasData_bridge1'];?>)
-                console.log(<?php echo $_SESSION['hasData_bridge2'];?>)
-                console.log(<?php echo $_SESSION['hasData_bridge3'];?>)
                 $.ajax({
                     type: "POST",
                     url: "load-inspections-test.php",
@@ -229,7 +227,7 @@
                         <!-- /.row -->
 
 
-                        <!-- High Risk (1-3) -->
+                        <!-- Bridge 1 -->
                        
                         <div class="row tbox" id="rm_t1">
                             <div class="col-md-12">
@@ -281,7 +279,7 @@
                         
 
 
-                        <!-- Middle Risk (4-6) -->
+                        <!-- Bridge 2 -->
                         <div class="row tbox" id="rm_t2">
                           <div class="col-md-12">
                               <div class="card">
@@ -330,7 +328,7 @@
                         </div>
                         <!-- /.row -->
 
-                        <!-- Low Risk (6-9) -->
+                        <!-- Bridge 3 -->
                         <div class="row tbox" id="rm_t3">
                           <div class="col-md-12">
                               <div class="card">
@@ -521,6 +519,8 @@
 
         <!-- Charts -->
         <script>
+
+            // plugin to handle overlapping data point on line chart
             var jitterEffectPlugin = {
                         beforeDatasetDraw: function (ctx, args) {
                             if (ctx.animating) {
@@ -663,11 +663,10 @@
                         display: false,
                     },
                     'onClick' : function (evt, item) {
-                        
                         bridgeIndex = lineChart.getDatasetAtEvent(evt)[0]._datasetIndex + 1;
                         inspectionIndex = item[0]._index;
                         var inspection;
-
+                        
                         if(bridgeIndex == 1 && <?php echo $_SESSION['hasData_bridge1'];?>){
                             inspection = [bridge1Inspections.data[item[0]._index]];
                             loadTable('bridge1', inspection);
@@ -680,15 +679,28 @@
                             inspection = [bridge3Inspections.data[item[0]._index]];
                             loadTable('bridge3', inspection);
                         }
+
+                        $('#rm_t' + bridgeIndex + ' .card-title').text('Inspection');
                         $(".tbox").not("#rm_t" + bridgeIndex).hide();
-                        if(prevInspectionIndex == inspectionIndex || prevBridgeIndex != bridgeIndex){
-                            $('#rm_t' + bridgeIndex).toggle();
+
+                        if ( lastClick == 'bridgeClick'){
+                            if($('#rm_t' + bridgeIndex).is(':visible')){
+                                $('#rm_t' + bridgeIndex).show();
+                            } else{
+                                $('#rm_t' + bridgeIndex).toggle();
+                            }
+                        } else{
+                            if(prevInspectionIndex == inspectionIndex || prevBridgeIndex != bridgeIndex){
+                                $('#rm_t' + bridgeIndex).toggle();
+                            } else{
+                                $('#rm_t' + bridgeIndex).show();
+                            }
                         }
                         
                         prevInspectionIndex = inspectionIndex;
                         prevBridgeIndex = bridgeIndex;
-
-
+                        
+                        
                         contHeight_after = $('.container').height();
                         sideHeight = $('.sidebar').height();
                         if (contHeight_after >= sideHeight) {
@@ -705,6 +717,7 @@
                             $('.sidebar').height(origHeight);
                             contHeight_before = $('.sidebar').height();
                         }
+                        lastClick = "inspectionClick";
                     },
                     scales: {
                         yAxes: [{
@@ -803,21 +816,13 @@
             });
         </script>
 
-        <!-- Tables -->
+        <!-- Tables - Initialization -->
         <script>
             $(document).ready(function(){
                 $('#tbl_bridge_insp').DataTable({"order": [[ 6, "asc" ]]});
                 $('#tbl_bridge_insp_t1').DataTable({"order": [[ 6, "asc" ]]});
                 $('#tbl_bridge_insp_t2').DataTable({"order": [[ 6, "asc" ]]});
                 $('#tbl_bridge_insp_t3').DataTable({"order": [[ 6, "asc" ]]});
-                // $('#tbl_bridge_insp_t4').DataTable({"order": [[ 5, "asc" ]]});
-                // $('#tbl_bridge_insp_t5').DataTable({"order": [[ 5, "asc" ]]});
-                // $('#tbl_bridge_insp2').DataTable({"order": [[ 6, "asc" ]]});
-                // $('#tbl_bridge_insp2_t1').DataTable({"order": [[ 6, "asc" ]]});
-                // $('#tbl_bridge_insp2_t2').DataTable({"order": [[ 6, "asc" ]]});
-                // $('#tbl_bridge_insp2_t3').DataTable({"order": [[ 6, "asc" ]]});
-                // $('#tbl_bridge_insp2_t4').DataTable({"order": [[ 5, "asc" ]]});
-                // $('#tbl_bridge_insp2_t5').DataTable({"order": [[ 5, "asc" ]]});
             });
         </script>
 
@@ -914,10 +919,9 @@
         </script>
 
 
-<!-- SCRIPTS FOR TOGGLING INSPECTIONS (DRILL DOWN) -->
+<!-- TOGGLING BRIDGE INSPECTION LIST DATA TABLES (DRILL DOWN) -->
 
-    <script>
-        
+    <script>        
         $(document).ready(function(){
             
             $('#bridge1').on('click', function(){
@@ -928,45 +932,48 @@
                 .done(function (msg) {
                     $(".tbox").not("#rm_t1").hide();
                     
-                    if(!$('#rm_t1').is(':visible')){
+                    if(!$('#rm_t1').is(':visible') || ($('#rm_t1').is(':visible') && lastClick == 'inspectionClick')){
                         if(<?php echo $_SESSION['hasData_bridge1'];?>){
                             loadTable('bridge1');
                         }
-                        
+
+                        $('#rm_t1' + ' .card-title').text('Inspection List');
                         setTimeout(function(){
-                            $('#rm_t1').toggle();
+                            $('#rm_t1').show();
                         }, 70)
                         
                     } else{
                         $('#rm_t1').toggle();
                     }
+                    lastClick = "bridgeClick";
                 });
                 
                     
             });
 
 
-            $('#bridge2').on('click', function(){                
+            $('#bridge2').on('click', function(){    
                 $.ajax({
                     type: "POST",
                     url: "load-inspections-test.php",
                 })
                 .done(function (msg) {
                     $(".tbox").not("#rm_t2").hide();
-                    
-                    if(!$('#rm_t2').is(':visible')){
+                    if(!$('#rm_t2').is(':visible') || ($('#rm_t2').is(':visible') && lastClick == 'inspectionClick')){
                         
                         if(<?php echo $_SESSION['hasData_bridge2'];?>){
                             loadTable('bridge2');
                         }
-                        
+
+                        $('#rm_t2' + ' .card-title').text('Inspection List');
                         setTimeout(function(){
-                            $('#rm_t2').toggle();
+                            $('#rm_t2').show();
                         }, 70)
                         
                     } else{
                         $('#rm_t2').toggle();
                     }
+                    lastClick = "bridgeClick";            
                 });
                 
             });
@@ -980,19 +987,21 @@
                 .done(function (msg) {
                     $(".tbox").not("#rm_t3").hide();
                     
-                    if(!$('#rm_t3').is(':visible')){
+                    if(!$('#rm_t3').is(':visible') || ($('#rm_t3').is(':visible') && lastClick == 'inspectionClick')){
                         
                         if(<?php echo $_SESSION['hasData_bridge3'];?>){
                             loadTable('bridge3');
                         }
                         
+                        $('#rm_t3' + ' .card-title').text('Inspection List');
                         setTimeout(function(){
-                            $('#rm_t3').toggle();
+                            $('#rm_t3').show();
                         }, 70)
-    
+                        
                     } else{
                         $('#rm_t3').toggle();
                     }
+                    lastClick = "bridgeClick";
                 });
                 
             });
