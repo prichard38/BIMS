@@ -1,6 +1,6 @@
 <?php 
     session_start();
-    $_SESSION["bridgeNames"] = ['Cane Hill Bridge over Little Red River', 'Robert C. Byrd Bridge over Ohio River', 'East Huntington Bridge over Ohio River'];
+    // $_SESSION["bridgeNames"] = ['Cane Hill Bridge over Little Red River', 'Robert C. Byrd Bridge over Ohio River', 'East Huntington Bridge over Ohio River'];
 
     include 'dbConfig.inc.php';
 
