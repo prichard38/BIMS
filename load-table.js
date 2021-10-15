@@ -48,15 +48,7 @@ function loadTable(bridgeId, jsonObject){
                             {'data': 'report'}
                         ], 
                         "rowCallback": function(row, data){
-                            if(data.rating <= 3){
-                                $('td', row).eq(6).addClass('text-danger');
-                            }
-                            else if (data.rating <= 6){
-                                $('td', row).eq(6).addClass('text-warning');
-                            }
-                            else{
-                                $('td', row).eq(6).addClass('text-success');
-                            }
+                            $('td', row).eq(6).css("color", getPointColors([data.rating])[0]);
                         },
                         "responsive": true,
                         "order": [[ 6, "asc" ]]
