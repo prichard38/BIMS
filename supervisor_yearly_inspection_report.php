@@ -6,7 +6,6 @@
         die();
     }
 
-    echo "Logged in as " . $_SESSION["loggedAs"];
 ?>
 
 <!doctype html>

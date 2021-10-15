@@ -6,7 +6,9 @@
         header("Location:access_denied.php?error=supervisorsonly");
         die();
     }
-   
+
+    // Later we will get thee bridge names by POST after user has selected bridges, then set them as session vars
+   $_SESSION["bridgeNames"] = ['Cane Hill Bridge over Little Red River', 'Robert C. Byrd Bridge over Ohio River', 'East Huntington Bridge over Ohio River'];
 ?>
 
 
@@ -33,11 +35,24 @@
         <!-- 3D -->
         <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
         <script src="load-table.js"></script>
+        <script src="fetch-inspections.js"></script>
 
         <title>Bridge Management</title>
     </head>
     
     <body>
+
+        <!-- Load inspection data for each bridge after user has selected bridges -->
+        <script type="text/javascript">
+            
+            $(document).ready(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "load-inspections-test.php",
+                })
+            });
+         </script>
+
         <nav class="navbar navbar-light" style="background-color: #005cbf; width: 100vw;">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#" style="color: white; vertical-align: middle;">
@@ -138,7 +153,7 @@
                                   <div class="row" style="align-items: center;">
                                     <div class="col-sm-4 col-md-4">
                                         <div class="chart-responsive">
-                                            <canvas id="pieChart" height="200"></canvas>
+                                            <canvas id="lineChart" height="200"></canvas>
                                         </div>
                                         <div>
                                             <table id="InspectionStatus" class="table table-sm"> 
@@ -230,7 +245,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div style="padding: 10px; overflow: auto; min-width: 400px;">
-                                                    <table class="table table-sm" id="tbl_bridge_insp_t1">
+                                                    <table style="width:100%" class="table table-sm" id="tbl_bridge_insp_t1">
                                                         <thead>
                                                             <tr>
                                                                 <th data-orderable="true">Completed on</th>
@@ -281,7 +296,7 @@
                                       <div class="row">
                                           <div class="col-md-12">
                                               <div style="padding: 10px; overflow: auto; min-width: 400px;">
-                                                  <table class="table table-sm" id="tbl_bridge_insp_t2">
+                                                  <table style="width:100%" class="table table-sm" id="tbl_bridge_insp_t2">
                                                   <thead>
                                                             <tr>
                                                                 <th data-orderable="true">Completed on</th>
@@ -330,7 +345,7 @@
                                       <div class="row">
                                           <div class="col-md-12">
                                               <div style="padding: 10px; overflow: auto; min-width: 400px;">
-                                                  <table class="table table-sm" id="tbl_bridge_insp_t3">
+                                                  <table style="width:100%" class="table table-sm" id="tbl_bridge_insp_t3">
                                                   <thead>
                                                             <tr>
                                                                 <th data-orderable="true">Completed on</th>
@@ -512,10 +527,35 @@
                 var contHeight_after = "";
                 var sideHeight = "";
 
-                /* PIE CHART */
+                /* LINE CHART */
                 // 2021
-                var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-                var pieData = {
+                var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
+                var bridge1Inspections;
+                var bridge1Ratings;
+                var bridge2Inspections
+                var bridge2Ratings;
+                var bridge3Inspections;
+                var bridge3Ratings;
+                if(<?php echo $_SESSION['hasData_bridge1'];?>){
+                    bridge1Inspections = fetchInspections('bridge1');
+                    bridge1Ratings = getRatings(bridge1Inspections);
+                }
+                if(<?php echo $_SESSION['hasData_bridge2'];?>){
+                    bridge2Inspections = fetchInspections('bridge2');
+                    bridge2Ratings = getRatings(bridge2Inspections);
+                }
+                if(<?php echo $_SESSION['hasData_bridge3'];?>){
+                    bridge3Inspections = fetchInspections('bridge3');
+                    bridge3Ratings = getRatings(bridge3Inspections);
+                }
+
+                var inspectionIndex;
+                var prevInspectionIndex;
+                var bridgeIndex;
+                var prevBridgeIndex;
+
+                var lineData = {
+                    // need to get labels from SESSION variable that is created after user selects years
                     labels: [
                         '2016',
                         '2017',
@@ -526,24 +566,24 @@
                     ],
                     datasets: [
                     {
-                        // data: [2096, 236, 97, 553, 674],
-                        data: [9,8,4,2,7,9, 0],
+                        label: 'Bridge1',
+                        data: bridge1Ratings,
                         backgroundColor: 'rgba(255, 255, 255, 0)',
-                        pointBackgroundColor: ['#32b502', '#32b502', '#ffea00', '#ff0000', '#32b502', '#32b502'],
+                        pointBackgroundColor: ['green', '#32b502', '#ffea00', '#ff0000', '#32b502', '#32b502'],
                         borderColor: 'darkgrey',
                         radius: 4
                     },
                     {
-                        // data: [2096, 236, 97, 553, 674],
-                        data: [6, 6, 6, 6, 5, 5],
+                        label: 'Bridge2',
+                        data: bridge2Ratings,
                         backgroundColor: 'rgba(255, 255, 255, 0)',
                         pointBackgroundColor: ['#ffea00','#ffea00','#ffea00','#ffea00','#ffea00','#ffea00'],
                         borderColor: 'navy',
                         radius: 4
                     },
                     {
-                        // data: [2096, 236, 97, 553, 674],
-                        data: [4, 6, 8, 8, 8, 8],
+                        label: 'Bridge3',
+                        data: bridge3Ratings,
                         backgroundColor: 'rgba(255, 255, 255, 0)',
                         pointBackgroundColor: ['#ffea00','#ffea00','#32b502','#32b502','#32b502','#32b502'],
                         borderColor: 'steelblue',
@@ -551,18 +591,36 @@
                     }
                     ]
                 }
-                var pieOptions = {
+                var lineOptions = {
                     legend: {
                         display: false,
                     },
                     'onClick' : function (evt, item) {
-                        var e = item[0];
-                        var e_idx = e._index + 1;
+                        
+                        bridgeIndex = lineChart.getDatasetAtEvent(evt)[0]._datasetIndex + 1;
+                        inspectionIndex = item[0]._index;
+                        var inspection;
 
-                        if(e_idx > 0){
-                            $(".tbox").not("#rm_t" + e_idx).hide();
-                            $("#rm_t"+e_idx).toggle();
-                        } 
+                        if(bridgeIndex == 1 && <?php echo isset($_SESSION['hasData_bridge1']);?>){
+                            inspection = [bridge1Inspections.data[item[0]._index]];
+                            loadTable('bridge1', inspection);
+                        }
+                        else if (bridgeIndex == 2 && <?php echo isset($_SESSION['hasData_bridge2']);?>){
+                            inspection = [bridge2Inspections.data[item[0]._index]];
+                            loadTable('bridge2', inspection);
+                        }
+                        else if (bridgeIndex == 3 && <?php echo isset($_SESSION['hasData_bridge3']);?>){
+                            inspection = [bridge3Inspections.data[item[0]._index]];
+                            loadTable('bridge3', inspection);
+                        }
+                        $(".tbox").not("#rm_t" + bridgeIndex).hide();
+                        if(prevInspectionIndex == inspectionIndex || prevBridgeIndex != bridgeIndex){
+                            $('#rm_t' + bridgeIndex).toggle();
+                        }
+                        
+                        prevInspectionIndex = inspectionIndex;
+                        prevBridgeIndex = bridgeIndex;
+
 
                         contHeight_after = $('.container').height();
                         sideHeight = $('.sidebar').height();
@@ -592,10 +650,10 @@
                         
                     }
                 }
-                var pieChart = new Chart(pieChartCanvas, {
+                var lineChart = new Chart(lineChartCanvas, {
                     type: 'line',
-                    data: pieData,
-                    options: pieOptions
+                    data: lineData,
+                    options: lineOptions
                 })
 
                 // 2020
@@ -684,14 +742,14 @@
                 $('#tbl_bridge_insp_t1').DataTable({"order": [[ 6, "asc" ]]});
                 $('#tbl_bridge_insp_t2').DataTable({"order": [[ 6, "asc" ]]});
                 $('#tbl_bridge_insp_t3').DataTable({"order": [[ 6, "asc" ]]});
-                $('#tbl_bridge_insp_t4').DataTable({"order": [[ 5, "asc" ]]});
-                $('#tbl_bridge_insp_t5').DataTable({"order": [[ 5, "asc" ]]});
-                $('#tbl_bridge_insp2').DataTable({"order": [[ 6, "asc" ]]});
-                $('#tbl_bridge_insp2_t1').DataTable({"order": [[ 6, "asc" ]]});
-                $('#tbl_bridge_insp2_t2').DataTable({"order": [[ 6, "asc" ]]});
-                $('#tbl_bridge_insp2_t3').DataTable({"order": [[ 6, "asc" ]]});
-                $('#tbl_bridge_insp2_t4').DataTable({"order": [[ 5, "asc" ]]});
-                $('#tbl_bridge_insp2_t5').DataTable({"order": [[ 5, "asc" ]]});
+                // $('#tbl_bridge_insp_t4').DataTable({"order": [[ 5, "asc" ]]});
+                // $('#tbl_bridge_insp_t5').DataTable({"order": [[ 5, "asc" ]]});
+                // $('#tbl_bridge_insp2').DataTable({"order": [[ 6, "asc" ]]});
+                // $('#tbl_bridge_insp2_t1').DataTable({"order": [[ 6, "asc" ]]});
+                // $('#tbl_bridge_insp2_t2').DataTable({"order": [[ 6, "asc" ]]});
+                // $('#tbl_bridge_insp2_t3').DataTable({"order": [[ 6, "asc" ]]});
+                // $('#tbl_bridge_insp2_t4').DataTable({"order": [[ 5, "asc" ]]});
+                // $('#tbl_bridge_insp2_t5').DataTable({"order": [[ 5, "asc" ]]});
             });
         </script>
 
@@ -787,28 +845,99 @@
           }
         </script>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-       
-       <!-- SCRIPTS FOR TOGGLING INSPECTIONS (DRILL DOWN) -->
-       
-       <script>
+
+<!-- SCRIPTS FOR TOGGLING INSPECTIONS (DRILL DOWN) -->
+
+    <script>
         
-            $(document).ready(function(){
-               
-                var table;
-
-                $('#bridge1').on('click', function(){
-                    loadTable('#bridge1');
+        $(document).ready(function(){
+            
+            $('#bridge1').on('click', function(){
+                var hasData = false;
+                console.log(<?php echo isset($_SESSION['hasData_bridge1']);?>);
+                    
+                $.ajax({
+                    type: "POST",
+                    url: "load-inspections-test.php",
+                })
+                .done(function (msg) {
+                    $(".tbox").not("#rm_t1").hide();
+                    
+                    if(!$('#rm_t1').is(':visible')){
+                        if(<?php echo $_SESSION['hasData_bridge1'];?>){
+                            loadTable('bridge1');
+                        }
+                        
+                        setTimeout(function(){
+                            $('#rm_t1').toggle();
+                        }, 70)
+                        
+                    } else{
+                        $('#rm_t1').toggle();
+                    }
                 });
-                $('#bridge2').on('click', function(){
-                    loadTable('#bridge2');
-                });
-                $('#bridge3').on('click', function(){
-                    loadTable('#bridge3');
-                });
+                
+                    
             });
-        </script>
 
+
+            $('#bridge2').on('click', function(){                
+                $.ajax({
+                    type: "POST",
+                    url: "load-inspections-test.php",
+                })
+                .done(function (msg) {
+                    $(".tbox").not("#rm_t2").hide();
+                    
+                    if(!$('#rm_t2').is(':visible')){
+                        
+                        if(<?php echo $_SESSION['hasData_bridge2'];?>){
+                            loadTable('bridge2');
+                        }
+                        
+                        setTimeout(function(){
+                            $('#rm_t2').toggle();
+                        }, 70)
+                        
+                    } else{
+                        $('#rm_t2').toggle();
+                    }
+                });
+                
+            });
+
+
+            $('#bridge3').on('click', function(){
+                
+                var hasData = false;
+                
+                $.ajax({
+                    type: "POST",
+                    url: "load-inspections-test.php",
+                })
+                .done(function (msg) {
+                    $(".tbox").not("#rm_t3").hide();
+                    
+                    if(!$('#rm_t3').is(':visible')){
+                        
+                        if(<?php echo $_SESSION['hasData_bridge3'];?>){
+                            loadTable('bridge3');
+                        }
+                        
+                        setTimeout(function(){
+                            $('#rm_t3').toggle();
+                        }, 70)
+    
+                    } else{
+                        $('#rm_t3').toggle();
+                    }
+                });
+                
+            });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 
        
     </body>
