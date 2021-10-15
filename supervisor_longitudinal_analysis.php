@@ -44,8 +44,11 @@
 
         <!-- Load inspection data for each bridge after user has selected bridges -->
         <script type="text/javascript">
-            
             $(document).ready(function () {
+                console.log("loading inspeections from db")
+                console.log(<?php echo $_SESSION['hasData_bridge1'];?>)
+                console.log(<?php echo $_SESSION['hasData_bridge2'];?>)
+                console.log(<?php echo $_SESSION['hasData_bridge3'];?>)
                 $.ajax({
                     type: "POST",
                     url: "load-inspections-test.php",
@@ -518,6 +521,67 @@
 
         <!-- Charts -->
         <script>
+            var jitterEffectPlugin = {
+                        beforeDatasetDraw: function (ctx, args) {
+                            if (ctx.animating) {
+                                var _args = args,
+                                dataIndex = _args.index,
+                                meta = _args.meta;
+                                var points = meta.data.map(function (el) {
+                                  return {
+                                    x: el._model.x,
+                                    y: el._model.y
+                                  };
+                                });
+                                var dsLength = ctx.data.datasets.length;
+                                var adjustedMap = []; // keeps track of adjustments to prevent double offsets
+        
+                                for (var datasetIndex = 0; datasetIndex < dsLength; datasetIndex += 1) {
+                                  if (dataIndex !== datasetIndex) {
+                                    var datasetMeta = ctx.getDatasetMeta(datasetIndex);
+                                    datasetMeta.data.forEach(function (el) {
+                                      var overlapFilter = points.filter(function (point) {
+                                        return point.x === el._model.x && point.y === el._model.y;
+                                      });
+
+                                      var overlap = false;
+                                      var overObj = JSON.parse(JSON.stringify(overlapFilter));
+                                      for (var i = 0; i < overObj.length; i++) {
+                                          if(overObj[i]['x'] === el._model.x && overObj[i]['y'] === el._model.y){
+                                            overlap = true;
+                                            break;
+                                          }
+                                      }
+                                      if (overlap) {
+                                        var adjusted = false;
+                                        var adjustedFilter = adjustedMap.filter(function (item) {
+                                            return item.datasetIndex === datasetIndex && item.dataIndex === dataIndex;
+                                        });
+                                        var adjObj = JSON.parse(JSON.stringify(adjustedFilter));
+                                          for (var i = 0; i < adjObj.length; i++) {
+                                              if(adjObj[i]['datasetIndex'] === datasetIndex && adjObj[i]['dataIndex'] === dataIndex){
+                                                adjusted = true;
+                                                break;
+                                              }
+                                          }
+
+                                        if (!adjusted && datasetIndex % 2) {
+                                          el._model.x += 6;
+                                        } else {
+                                          el._model.x -= 6;
+                                        }
+        
+                                        adjustedMap.push({
+                                          datasetIndex: datasetIndex,
+                                          dataIndex: dataIndex
+                                        });
+                                      }
+                                    });
+                                  }
+                                }
+                            }
+                        }
+                    }
             $(function () {
                 'use strict'
 
@@ -553,7 +617,8 @@
                 var prevInspectionIndex;
                 var bridgeIndex;
                 var prevBridgeIndex;
-
+                var bridgeLabels = <?php echo json_encode($_SESSION['bridgeNames']); ?>;
+                console.log(bridgeLabels)
                 var lineData = {
                     // need to get labels from SESSION variable that is created after user selects years
                     labels: [
@@ -566,28 +631,28 @@
                     ],
                     datasets: [
                     {
-                        label: 'Bridge1',
+                        label: bridgeLabels[0],
                         data: bridge1Ratings,
                         backgroundColor: 'rgba(255, 255, 255, 0)',
                         pointBackgroundColor: ['green', '#32b502', '#ffea00', '#ff0000', '#32b502', '#32b502'],
                         borderColor: 'darkgrey',
-                        radius: 4
+                        radius: 6
                     },
                     {
-                        label: 'Bridge2',
+                        label: bridgeLabels[1],
                         data: bridge2Ratings,
                         backgroundColor: 'rgba(255, 255, 255, 0)',
                         pointBackgroundColor: ['#ffea00','#ffea00','#ffea00','#ffea00','#ffea00','#ffea00'],
                         borderColor: 'navy',
-                        radius: 4
+                        radius: 6
                     },
                     {
-                        label: 'Bridge3',
+                        label: bridgeLabels[2],
                         data: bridge3Ratings,
                         backgroundColor: 'rgba(255, 255, 255, 0)',
                         pointBackgroundColor: ['#ffea00','#ffea00','#32b502','#32b502','#32b502','#32b502'],
                         borderColor: 'steelblue',
-                        radius: 4
+                        radius: 6
                     }
                     ]
                 }
@@ -601,15 +666,15 @@
                         inspectionIndex = item[0]._index;
                         var inspection;
 
-                        if(bridgeIndex == 1 && <?php echo isset($_SESSION['hasData_bridge1']);?>){
+                        if(bridgeIndex == 1 && <?php echo $_SESSION['hasData_bridge1'];?>){
                             inspection = [bridge1Inspections.data[item[0]._index]];
                             loadTable('bridge1', inspection);
                         }
-                        else if (bridgeIndex == 2 && <?php echo isset($_SESSION['hasData_bridge2']);?>){
+                        else if (bridgeIndex == 2 && <?php echo $_SESSION['hasData_bridge2'];?>){
                             inspection = [bridge2Inspections.data[item[0]._index]];
                             loadTable('bridge2', inspection);
                         }
-                        else if (bridgeIndex == 3 && <?php echo isset($_SESSION['hasData_bridge3']);?>){
+                        else if (bridgeIndex == 3 && <?php echo $_SESSION['hasData_bridge3'];?>){
                             inspection = [bridge3Inspections.data[item[0]._index]];
                             loadTable('bridge3', inspection);
                         }
@@ -653,7 +718,8 @@
                 var lineChart = new Chart(lineChartCanvas, {
                     type: 'line',
                     data: lineData,
-                    options: lineOptions
+                    options: lineOptions,
+                    plugins: [jitterEffectPlugin]
                 })
 
                 // 2020
@@ -853,9 +919,6 @@
         $(document).ready(function(){
             
             $('#bridge1').on('click', function(){
-                var hasData = false;
-                console.log(<?php echo isset($_SESSION['hasData_bridge1']);?>);
-                    
                 $.ajax({
                     type: "POST",
                     url: "load-inspections-test.php",
@@ -908,9 +971,6 @@
 
 
             $('#bridge3').on('click', function(){
-                
-                var hasData = false;
-                
                 $.ajax({
                     type: "POST",
                     url: "load-inspections-test.php",
