@@ -118,6 +118,13 @@ function loadTable(bridgeId, jsonObject){
 
             
     })
+}
 
-    
+function getYears(beginYear, endYear){
+    years = [];
+    while(beginYear <= endYear){
+        years.push(''+beginYear);
+        beginYear++;
+    }
+    return years;
 }
