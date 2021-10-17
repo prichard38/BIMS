@@ -2,11 +2,13 @@
     include 'dbConfig.inc.php';
 
     $name = mysqli_real_escape_string($conn, $_POST['selectedBridgeName']);
-
+   
+    // $name = 'Cane Hill Bridge over Little Red River';
    
     $sql = "SELECT FinishedDate, Bridges.BridgeName, Bridges.BridgeNo, InspectionTypeName, OverallRating
         FROM Bridges, Inspections, InspectionTypeCode 
-        WHERE Bridges.BridgeName LIKE ? AND Inspections.Bridges_BridgeNo = Bridges.BridgeNo AND Inspections.InspectionTypeNo = InspectionTypeCode.InspectionTypeNo;";
+        WHERE Bridges.BridgeName LIKE ? AND Inspections.Bridges_BridgeNo = Bridges.BridgeNo AND Inspections.InspectionTypeNo = InspectionTypeCode.InspectionTypeNo
+        ORDER BY FinishedDate ASC";
     
     $stmt = mysqli_stmt_init($conn);
     if(!mysqli_stmt_prepare($stmt, $sql)){
@@ -42,23 +44,10 @@
             $jsonBridges = "{\"data\":";
             $jsonBridges .= json_encode($bridges);
             $jsonBridges .= "}";
-            $filename = 'bridgeData.json';
-    
-            if (!($file = fopen($filename, 'w+'))) {
-                echo "Cannot open file ($filename)";
-                exit;
-           }
-
-           if (fwrite($file, $jsonBridges) === FALSE) {
-            echo "Cannot write to file ($filename)";
-            exit;
-            }
-
-            fclose($file);
-
+            echo $jsonBridges;
         } 
         else {
-            echo "No Inspections Found";
+            echo null;
         }
     }
 
