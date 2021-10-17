@@ -594,6 +594,7 @@
                 var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
                 var ratings = [];
                 var pointColors = [];
+                var borderColors = ['darkgrey', 'navy', 'steelblue']
                 var inspectionIndex;
                 var prevInspectionIndex;
                 var bridgeIndex;
@@ -635,7 +636,7 @@
                             data: ratings[i],
                             backgroundColor: 'rgba(255, 255, 255, 0)',
                             pointBackgroundColor: pointColors[i],
-                            borderColor: 'navy',
+                            borderColor: borderColors[i],
                             radius: 6
                         });
                         i++;
