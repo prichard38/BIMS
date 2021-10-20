@@ -854,9 +854,10 @@
         $(document).ready(function(){
             
             $('#bridge1').on('click', function(){
-                fetchInspections(bridgeNames[1]).then(function(response) {            
+                fetchInspections(bridgeNames[0]).then(function(response) {            
                     $(".tbox").not("#rm_t1").hide();
                     if(!$('#rm_t1').is(':visible') || ($('#rm_t1').is(':visible') && lastClick == 'inspectionClick')){
+                        console.log(response.data);
                         loadTable('bridge1', response.data);
                         
                         
@@ -878,6 +879,7 @@
                 fetchInspections(bridgeNames[1]).then(function(response) {            
                     $(".tbox").not("#rm_t2").hide();
                     if(!$('#rm_t2').is(':visible') || ($('#rm_t2').is(':visible') && lastClick == 'inspectionClick')){
+                        console.log(response.data);
                         loadTable('bridge2', response.data);
                         
                         
@@ -895,9 +897,10 @@
 
 
             $('#bridge3').on('click', function(){
-                fetchInspections(bridgeNames[1]).then(function(response) {            
+                fetchInspections(bridgeNames[2]).then(function(response) {            
                     $(".tbox").not("#rm_t3").hide();
                     if(!$('#rm_t3').is(':visible') || ($('#rm_t3').is(':visible') && lastClick == 'inspectionClick')){
+                        console.log(response.data);
                         loadTable('bridge3', response.data);
                         
                         
