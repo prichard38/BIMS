@@ -21,11 +21,15 @@ SET time_zone = "+00:00";
 -- Database: `mydb`
 --
 
+DROP DATABASE BIMSdb IF EXISTS;
+CREATE DATABASE BIMSdb;
+USE BIMSdb;
+
 DELIMITER $$
 --
 -- Procedures
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `LogIn` (IN `user_id` VARCHAR(45), IN `user_password` VARCHAR(45), OUT `user_role` VARCHAR(45))  BEGIN
+CREATE PROCEDURE `LogIn` (IN `user_id` VARCHAR(45), IN `user_password` VARCHAR(45), OUT `user_role` VARCHAR(45))  BEGIN
 
 	DECLARE role_num INT;
     	DECLARE role_name VARCHAR(45);
