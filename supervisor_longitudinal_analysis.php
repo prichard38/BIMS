@@ -910,11 +910,6 @@
 
 
             $('#bridge3').on('click', function(){
-                let namesTest = fetchAllBridgeNames();
-                namesTest.then((res) => {
-                    namesTest = res;
-                })
-                console.log(namesTest);
                 fetchInspections(selectedBridgeNames[2]).then(function(response) {            
                     $(".tbox").not("#rm_t3").hide();
                     if(!$('#rm_t3').is(':visible') || ($('#rm_t3').is(':visible') && lastClick == 'inspectionClick')){
