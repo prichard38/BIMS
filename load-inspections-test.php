@@ -4,11 +4,11 @@
 
     include 'dbConfig.inc.php';
 
-    $bridgeNames = $_SESSION['bridgeNames'];
+    $selectedBridgeNames = $_SESSION['selectedBridgeNames'];
 
     $message = '';
 
-   for($i=0; $i<count($bridgeNames); $i++){
+   for($i=0; $i<count($selectedBridgeNames); $i++){
 
        $sql = "SELECT FinishedDate, Bridges.BridgeName, Bridges.BridgeNo, InspectionTypeName, OverallRating
            FROM Bridges, Inspections, InspectionTypeCode 
@@ -19,7 +19,7 @@
        if(!mysqli_stmt_prepare($stmt, $sql)){
            echo "SQL statement failed";
        } else{
-           mysqli_stmt_bind_param($stmt, "s", $bridgeNames[$i]);
+           mysqli_stmt_bind_param($stmt, "s", $selectedBridgeNames[$i]);
            mysqli_stmt_execute($stmt);
            $result = mysqli_stmt_get_result($stmt);
            
@@ -69,7 +69,7 @@
            } 
            else {
                $_SESSION["hasData_bridge" . $i+1] = 0; 
-               $message .= "No inspections found for " . $bridgeNames[$i] . " (bridge" . $i+1 . ")\n";
+               $message .= "No inspections found for " . $selectedBridgeNames[$i] . " (bridge" . $i+1 . ")\n";
            }
            echo $message;
    

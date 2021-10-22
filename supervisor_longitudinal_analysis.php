@@ -8,7 +8,7 @@
     }
 
     // Later we will get thee bridge names by POST after user has selected bridges, then set them as session vars
-   $_SESSION["bridgeNames"] = ['Cane Hill Bridge over Little Red River', 'Robert C. Byrd Bridge over Ohio River', 'East Huntington Bridge over Ohio River'];
+   $_SESSION["selectedBridgeNames"] = ['Cane Hill Bridge over Little Red River', 'Robert C. Byrd Bridge over Ohio River', 'East Huntington Bridge over Ohio River'];
    $_SESSION["yearBegin"] = [2016];
    $_SESSION["yearEnd"] = [2021];
 ?>
@@ -45,7 +45,8 @@
         <!-- init global vars -->
         <script>
             lastClick = 'inspectionClick';
-            bridgeNames = <?php echo json_encode($_SESSION['bridgeNames']); ?>;
+            selectedBridgeNames = <?php echo json_encode($_SESSION['selectedBridgeNames']); ?>;
+            bridgeNames = [];
             inspectionData = [];
             ratings = [];
             pointColors = [];
@@ -54,6 +55,18 @@
             bridgeIndex = -1;
             prevBridgeIndex = -1;
         </script>
+
+        <script>
+            fetchAllBridgeData().then(
+                (res) => {
+                    res.data.forEach(obj => {
+                    bridgeNames.push(obj['bridgeName'])
+                });
+                console.log(bridgeNames);
+            })
+        </script>
+
+
 
         <!-- Top Navbar -->
         <nav class="navbar navbar-light" style="background-color: #005cbf; width: 100vw;">
@@ -609,7 +622,7 @@
                 }
 
                 const fetchAllChartInspections = async () => {
-                    for (name of bridgeNames){
+                    for (name of selectedBridgeNames){
                         const bridgeInspections = await fetchInspections(name);
                         inspectionData.push(bridgeInspections);
                         var ratingsArray = getRatings(bridgeInspections);
@@ -854,7 +867,7 @@
         $(document).ready(function(){
             
             $('#bridge1').on('click', function(){
-                fetchInspections(bridgeNames[0]).then(function(response) {            
+                fetchInspections(selectedBridgeNames[0]).then(function(response) {            
                     $(".tbox").not("#rm_t1").hide();
                     if(!$('#rm_t1').is(':visible') || ($('#rm_t1').is(':visible') && lastClick == 'inspectionClick')){
                         console.log(response.data);
@@ -876,7 +889,7 @@
 
             $('#bridge2').on('click', function(){ 
                 
-                fetchInspections(bridgeNames[1]).then(function(response) {            
+                fetchInspections(selectedBridgeNames[1]).then(function(response) {            
                     $(".tbox").not("#rm_t2").hide();
                     if(!$('#rm_t2').is(':visible') || ($('#rm_t2').is(':visible') && lastClick == 'inspectionClick')){
                         console.log(response.data);
@@ -897,7 +910,12 @@
 
 
             $('#bridge3').on('click', function(){
-                fetchInspections(bridgeNames[2]).then(function(response) {            
+                let namesTest = fetchAllBridgeNames();
+                namesTest.then((res) => {
+                    namesTest = res;
+                })
+                console.log(namesTest);
+                fetchInspections(selectedBridgeNames[2]).then(function(response) {            
                     $(".tbox").not("#rm_t3").hide();
                     if(!$('#rm_t3').is(':visible') || ($('#rm_t3').is(':visible') && lastClick == 'inspectionClick')){
                         console.log(response.data);
