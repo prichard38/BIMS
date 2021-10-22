@@ -70,7 +70,7 @@
         <div class="sidebar">
             <div class="menubar">
                 <ul class="menu">
-                    <li style="background-color: #5e5e5e;"><a id="RM" href='supervisor_longitudinal_analysis.php'>Report Management</a>
+                    <li style="background-color: #5e5e5e;"><a id="RM" href='supervisor_longitudinal_analysis.php'>eport Management</a>
                         <ul class="submenu">
                             <li style="background-color: #5e5e5e;">
                                 <a id="RM" href='supervisor_yearly_inspection_report.php'>Yearly Inspection Report</a>
