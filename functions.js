@@ -25,6 +25,31 @@ function fetchInspections(bridgeName) {
     })
 }
 
+function fetchAllBridgeData() {
+    return new Promise(function(resolve, reject) {
+        
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                // console.log(this.responseText);
+            }
+        };
+        xhr.open('POST', 'load-bridge-names.php', true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+        xhr.onload = function() {
+            resolve(JSON.parse(this.responseText));
+        };
+
+        xhr.onerror = function() {
+            reject(new Error("Network Error"));
+        };
+        
+        xhr.send();
+        
+    })
+}
+
 function getRatings(inspectionsJson){
     ratings = [];
     inspectionsJson.data.forEach((item, index) => {
