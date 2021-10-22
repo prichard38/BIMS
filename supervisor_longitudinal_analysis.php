@@ -8,7 +8,9 @@
     }
 
     // Later we will get thee bridge names by POST after user has selected bridges, then set them as session vars
-   $_SESSION["bridgeNames"] = ['Cane Hill Bridge over Little Red River', 'Robert C. Byrd Bridge over Ohio River', 'East Huntington Bridge over Ohio River'];
+   $_SESSION["selectedBridgeNames"] = ['Cane Hill Bridge over Little Red River', 'Robert C. Byrd Bridge over Ohio River', 'East Huntington Bridge over Ohio River'];
+   $_SESSION["yearBegin"] = [2016];
+   $_SESSION["yearEnd"] = [2021];
 ?>
 
 
@@ -34,26 +36,39 @@
         -->
         <!-- 3D -->
         <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-        <script src="load-table.js"></script>
-        <script src="fetch-inspections.js"></script>
+        <script src="functions.js"></script>
 
         <title>Bridge Management</title>
     </head>
     
     <body>
-        <!-- init global var to track click events -->
-        <script>lastClick = 'inspectionClick';</script>
+        <!-- init global vars -->
+        <script>
+            lastClick = 'inspectionClick';
+            selectedBridgeNames = <?php echo json_encode($_SESSION['selectedBridgeNames']); ?>;
+            bridgeNames = [];
+            inspectionData = [];
+            ratings = [];
+            pointColors = [];
+            inspectionIndex = -1;
+            prevInspectionIndex = -1;
+            bridgeIndex = -1;
+            prevBridgeIndex = -1;
+        </script>
 
-        <!-- Load inspection data for each bridge after user has selected bridges -->
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $.ajax({
-                    type: "POST",
-                    url: "load-inspections-test.php",
-                })
-            });
-         </script>
+        <script>
+            fetchAllBridgeData().then(
+                (res) => {
+                    res.data.forEach(obj => {
+                    bridgeNames.push(obj['bridgeName'])
+                });
+                console.log(bridgeNames);
+            })
+        </script>
 
+
+
+        <!-- Top Navbar -->
         <nav class="navbar navbar-light" style="background-color: #005cbf; width: 100vw;">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#" style="color: white; vertical-align: middle;">
@@ -67,6 +82,7 @@
             </div>
         </nav>
 
+        <!-- Sidebar Menu -->
         <div class="sidebar">
             <div class="menubar">
                 <ul class="menu">
@@ -80,17 +96,11 @@
                             </li>
                         </ul>
                     </li>
-                    <!-- <li><a id="UM" href='#'>User Management</a></li> -->
                 </ul>
             </div>
         </div>
-
-        <!-- <div class="box">
-            <input type="text" id="formGroupExampleInput" placeholder="Search...">
-            <i class="fa fa-search" aria-hidden="true"></i>
-        </div> -->
         
-
+        <!-- Search Params -->
         <div class="container">
             <div class="main_title">
                 <h5> Report Management </h5>
@@ -227,7 +237,7 @@
                         <!-- /.row -->
 
 
-                        <!-- Bridge 1 -->
+                        <!-- **** Bridge 1 **** -->
                        
                         <div class="row tbox" id="rm_t1">
                             <div class="col-md-12">
@@ -279,7 +289,8 @@
                         
 
 
-                        <!-- Bridge 2 -->
+                        <!-- **** Bridge 2 **** -->
+
                         <div class="row tbox" id="rm_t2">
                           <div class="col-md-12">
                               <div class="card">
@@ -328,7 +339,10 @@
                         </div>
                         <!-- /.row -->
 
-                        <!-- Bridge 3 -->
+
+
+                        <!-- **** Bridge 3 **** -->
+
                         <div class="row tbox" id="rm_t3">
                           <div class="col-md-12">
                               <div class="card">
@@ -520,7 +534,7 @@
         <!-- Charts -->
         <script>
 
-            // plugin to handle overlapping data point on line chart
+            // plugin to handle overlapping data points on line chart
             var jitterEffectPlugin = {
                         beforeDatasetDraw: function (ctx, args) {
                             if (ctx.animating) {
@@ -566,9 +580,9 @@
                                           }
 
                                         if (!adjusted && datasetIndex % 2) {
-                                          el._model.x -= 6;
-                                        } else {
                                           el._model.x += 6;
+                                        } else {
+                                          el._model.x -= 6;
                                         }
         
                                         adjustedMap.push({
@@ -592,111 +606,85 @@
                 var sideHeight = "";
 
                 /* LINE CHART */
-                // 2021
                 var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
-                var bridge1Inspections;
-                var bridge1Ratings;
-                var bridge2Inspections
-                var bridge2Ratings;
-                var bridge3Inspections;
-                var bridge3Ratings;
-                if(<?php echo $_SESSION['hasData_bridge1'];?>){
-                    bridge1Inspections = fetchInspections('bridge1');
-                    bridge1Ratings = getRatings(bridge1Inspections);
-                }
-                if(<?php echo $_SESSION['hasData_bridge2'];?>){
-                    bridge2Inspections = fetchInspections('bridge2');
-                    bridge2Ratings = getRatings(bridge2Inspections);
-                }
-                if(<?php echo $_SESSION['hasData_bridge3'];?>){
-                    bridge3Inspections = fetchInspections('bridge3');
-                    bridge3Ratings = getRatings(bridge3Inspections);
-                }
-
+                var ratings = [];
+                var pointColors = [];
+                var borderColors = ['darkgrey', 'navy', 'steelblue']
                 var inspectionIndex;
                 var prevInspectionIndex;
                 var bridgeIndex;
                 var prevBridgeIndex;
-                var bridgeLabels = <?php echo json_encode($_SESSION['bridgeNames']); ?>;
-                var pointColorsBridge1 = getPointColors(bridge1Ratings);
-                var pointColorsBridge2 = getPointColors(bridge2Ratings);
-                var pointColorsBridge3 = getPointColors(bridge3Ratings);
+                var years = getYears(<?php echo json_encode($_SESSION['yearBegin']); ?>, 
+                                     <?php echo json_encode($_SESSION['yearEnd']); ?>);
                 var lineData = {
-                    // need to get labels from SESSION variable that is created after user selects years
-                    labels: [
-                        '2016',
-                        '2017',
-                        '2018',
-                        '2019',
-                        '2020',
-                        '2021'
-                    ],
-                    datasets: [
-                    {
-                        label: bridgeLabels[0],
-                        data: bridge1Ratings,
-                        backgroundColor: 'rgba(255, 255, 255, 0)',
-                        pointBackgroundColor: pointColorsBridge1,
-                        borderColor: 'darkgrey',
-                        radius: 6
-                    },
-                    {
-                        label: bridgeLabels[1],
-                        data: bridge2Ratings,
-                        backgroundColor: 'rgba(255, 255, 255, 0)',
-                        pointBackgroundColor: pointColorsBridge2,
-                        borderColor: 'navy',
-                        radius: 6
-                    },
-                    {
-                        label: bridgeLabels[2],
-                        data: bridge3Ratings,
-                        backgroundColor: 'rgba(255, 255, 255, 0)',
-                        pointBackgroundColor: pointColorsBridge3,
-                        borderColor: 'steelblue',
-                        radius: 6
-                    }
-                    ]
+                    labels: years,
+                    datasets: []
                 }
+
+                const fetchAllChartInspections = async () => {
+                    for (name of selectedBridgeNames){
+                        const bridgeInspections = await fetchInspections(name);
+                        inspectionData.push(bridgeInspections);
+                        var ratingsArray = getRatings(bridgeInspections);
+                        ratings.push(ratingsArray);
+                        var pointColorsArray = getPointColors(ratingsArray);
+                        pointColors.push(pointColorsArray);
+                    }
+                    return new Promise(function(resolve, reject) {
+                        resolve ({allInspectionsLoaded: true});
+                    })
+                }
+
+                const buildChartDatasets = async () => {
+                    const inspectionsLoaded = await fetchAllChartInspections();
+                    var i = 0;
+                    for(data of inspectionData){
+                        lineData.datasets.push({
+                            label: data.data[0].bridgeName,
+                            data: ratings[i],
+                            backgroundColor: 'rgba(255, 255, 255, 0)',
+                            pointBackgroundColor: pointColors[i],
+                            borderColor: borderColors[i],
+                            radius: 6
+                        });
+                        i++;
+                    }
+                    return new Promise(function(resolve, reject) {
+                        resolve({datasetsBuilt: true})
+                    });
+                }
+
                 var lineOptions = {
                     legend: {
                         display: false,
                     },
                     'onClick' : function (evt, item) {
-                        bridgeIndex = lineChart.getDatasetAtEvent(evt)[0]._datasetIndex + 1;
+                        bridgeIndex = lineChart.getDatasetAtEvent(evt)[0]._datasetIndex;
                         inspectionIndex = item[0]._index;
                         var inspection;
                         
-                        if(bridgeIndex == 1 && <?php echo $_SESSION['hasData_bridge1'];?>){
-                            inspection = [bridge1Inspections.data[item[0]._index]];
-                            loadTable('bridge1', inspection);
-                        }
-                        else if (bridgeIndex == 2 && <?php echo $_SESSION['hasData_bridge2'];?>){
-                            inspection = [bridge2Inspections.data[item[0]._index]];
-                            loadTable('bridge2', inspection);
-                        }
-                        else if (bridgeIndex == 3 && <?php echo $_SESSION['hasData_bridge3'];?>){
-                            inspection = [bridge3Inspections.data[item[0]._index]];
-                            loadTable('bridge3', inspection);
-                        }
-
-                        $('#rm_t' + bridgeIndex + ' .card-title').text('Inspection');
-                        $(".tbox").not("#rm_t" + bridgeIndex).hide();
-
+                        var inspection = [inspectionData[bridgeIndex].data[inspectionIndex]];
+                        var bridgeId = 'bridge' + (bridgeIndex+1);
+                        loadTable(bridgeId, inspection);
+                        
+                        $('#rm_t' + (bridgeIndex+1) + ' .card-title').text('Inspection');
+                        $(".tbox").not("#rm_t" + (bridgeIndex+1)).hide();
+                        
                         if ( lastClick == 'bridgeClick'){
-                            if($('#rm_t' + bridgeIndex).is(':visible')){
-                                $('#rm_t' + bridgeIndex).show();
+                            if($('#rm_t' + (bridgeIndex+1)).is(':visible')){
+                                $('#rm_t' + (bridgeIndex+1)).show();
                             } else{
-                                $('#rm_t' + bridgeIndex).toggle();
+                                $('#rm_t' + (bridgeIndex+1)).toggle();
                             }
                         } else{
                             if(prevInspectionIndex == inspectionIndex || prevBridgeIndex != bridgeIndex){
-                                $('#rm_t' + bridgeIndex).toggle();
+                                $('#rm_t' + (bridgeIndex+1)).toggle();
                             } else{
-                                $('#rm_t' + bridgeIndex).show();
+                                $('#rm_t' + (bridgeIndex+1)).show();
                             }
                         }
                         
+                        lastClick = "inspectionClick";
                         prevInspectionIndex = inspectionIndex;
                         prevBridgeIndex = bridgeIndex;
                         
@@ -717,7 +705,6 @@
                             $('.sidebar').height(origHeight);
                             contHeight_before = $('.sidebar').height();
                         }
-                        lastClick = "inspectionClick";
                     },
                     scales: {
                         yAxes: [{
@@ -730,70 +717,25 @@
                         
                     }
                 }
-                var lineChart = new Chart(lineChartCanvas, {
-                    type: 'line',
-                    data: lineData,
-                    options: lineOptions,
-                    plugins: [jitterEffectPlugin]
+
+                const buildLineChart = async (lineOptions) => {
+                    const datasetsBuilt = await buildChartDatasets();
+                    var lineChart = new Chart(lineChartCanvas, {
+                        type: 'line',
+                        data: lineData,
+                        options: lineOptions,
+                        plugins: [jitterEffectPlugin]
+                    });
+                    return lineChart;
+                }
+
+                var lineChart = buildLineChart(lineOptions); 
+                lineChart.then(function(response){
+                    lineChart = response;
                 })
 
-                // 2020
-                // var pieChartCanvas2 = $('#pieChart2').get(0).getContext('2d')
-                // var pieData2 = {
-                //     labels: [
-                //         'High Risk (1-3)',
-                //         'Middle Risk (4-6)',
-                //         'Low Risk (7-9)',
-                //         'In-Progress',
-                //         'Not Started'
-                //     ],
-                //     datasets: [
-                //     {
-                //         data: [2096, 1996, 3001, 71, 131],
-                //         backgroundColor: ['#ff0000', '#ffea00', '#32b502', '#999999', '#f7f7f7']
-                //     }
-                //     ]
-                // }
-                // var pieOptions2 = {
-                //     legend: {
-                //         display: false
-                //     },
-                //     'onClick' : function (evt, item) {
-                //         // //console.log('legend onClick', evt);
-                //         // //console.log('legd item', item);
-                //         // var e = item[0];
-                //         // var e_idx = e._index + 1;
-                //         // if(e_idx > 0){
-                //         //   $(".tbox").not("#rm_tt" + e_idx).hide();
-                //         //   $("#rm_tt" + e_idx).toggle();
-                //         // } else{
-                //         //   $(".tbox").hide();
-                //         // }
-
-                //         // contHeight_after = $('.container').height();
-                //         // sideHeight = $('.sidebar').height();
-                //         // if (contHeight_after >= sideHeight) {
-                //         //     $('.sidebar').height(contHeight_after);
-                //         //     contHeight_before = $('.sidebar').height();
-                //         // } else if (contHeight_after < sideHeight && contHeight_before == sideHeight) {
-                //         //     if (contHeight_after < origHeight) {
-                //         //         $('.sidebar').height(origHeight);
-                //         //     } else {
-                //         //         $('.sidebar').height(contHeight_after);
-                //         //     }
-                //         //     contHeight_before = $('.sidebar').height();
-                //         // } else {
-                //         //     $('.sidebar').height(origHeight);
-                //         //     contHeight_before = $('.sidebar').height();
-                //         // }
-                //     }
-                // }
-                // var pieChart2 = new Chart(pieChartCanvas2, {
-                //     type: 'pie',
-                //     data: pieData2,
-                //     options: pieOptions2
-                // })
             })
+
         </script>
         <!-- ChartJS -->
         <script src="plugins/chart.js/Chart.js"></script>
@@ -819,10 +761,10 @@
         <!-- Tables - Initialization -->
         <script>
             $(document).ready(function(){
-                $('#tbl_bridge_insp').DataTable({"order": [[ 6, "asc" ]]});
-                $('#tbl_bridge_insp_t1').DataTable({"order": [[ 6, "asc" ]]});
-                $('#tbl_bridge_insp_t2').DataTable({"order": [[ 6, "asc" ]]});
-                $('#tbl_bridge_insp_t3').DataTable({"order": [[ 6, "asc" ]]});
+                $('#tbl_bridge_insp').DataTable({"order": [[ 0, "asc" ]]});
+                $('#tbl_bridge_insp_t1').DataTable({"order": [[ 0, "asc" ]]});
+                $('#tbl_bridge_insp_t2').DataTable({"order": [[ 0, "asc" ]]});
+                $('#tbl_bridge_insp_t3').DataTable({"order": [[ 0, "asc" ]]});
             });
         </script>
 
@@ -919,24 +861,19 @@
         </script>
 
 
-<!-- TOGGLING BRIDGE INSPECTION LIST DATA TABLES (DRILL DOWN) -->
+<!-- On Click Bridges - TOGGLING BRIDGE INSPECTION LIST DATA TABLES -->
 
     <script>        
         $(document).ready(function(){
             
             $('#bridge1').on('click', function(){
-                $.ajax({
-                    type: "POST",
-                    url: "load-inspections-test.php",
-                })
-                .done(function (msg) {
+                fetchInspections(selectedBridgeNames[0]).then(function(response) {            
                     $(".tbox").not("#rm_t1").hide();
-                    
                     if(!$('#rm_t1').is(':visible') || ($('#rm_t1').is(':visible') && lastClick == 'inspectionClick')){
-                        if(<?php echo $_SESSION['hasData_bridge1'];?>){
-                            loadTable('bridge1');
-                        }
-
+                        console.log(response.data);
+                        loadTable('bridge1', response.data);
+                        
+                        
                         $('#rm_t1' + ' .card-title').text('Inspection List');
                         setTimeout(function(){
                             $('#rm_t1').show();
@@ -945,26 +882,20 @@
                     } else{
                         $('#rm_t1').toggle();
                     }
-                    lastClick = "bridgeClick";
-                });
-                
-                    
+                    lastClick = "bridgeClick";   
+                })
             });
 
 
-            $('#bridge2').on('click', function(){    
-                $.ajax({
-                    type: "POST",
-                    url: "load-inspections-test.php",
-                })
-                .done(function (msg) {
+            $('#bridge2').on('click', function(){ 
+                
+                fetchInspections(selectedBridgeNames[1]).then(function(response) {            
                     $(".tbox").not("#rm_t2").hide();
                     if(!$('#rm_t2').is(':visible') || ($('#rm_t2').is(':visible') && lastClick == 'inspectionClick')){
+                        console.log(response.data);
+                        loadTable('bridge2', response.data);
                         
-                        if(<?php echo $_SESSION['hasData_bridge2'];?>){
-                            loadTable('bridge2');
-                        }
-
+                        
                         $('#rm_t2' + ' .card-title').text('Inspection List');
                         setTimeout(function(){
                             $('#rm_t2').show();
@@ -973,25 +904,18 @@
                     } else{
                         $('#rm_t2').toggle();
                     }
-                    lastClick = "bridgeClick";            
-                });
-                
+                    lastClick = "bridgeClick";   
+                })
             });
 
 
             $('#bridge3').on('click', function(){
-                $.ajax({
-                    type: "POST",
-                    url: "load-inspections-test.php",
-                })
-                .done(function (msg) {
+                fetchInspections(selectedBridgeNames[2]).then(function(response) {            
                     $(".tbox").not("#rm_t3").hide();
-                    
                     if(!$('#rm_t3').is(':visible') || ($('#rm_t3').is(':visible') && lastClick == 'inspectionClick')){
+                        console.log(response.data);
+                        loadTable('bridge3', response.data);
                         
-                        if(<?php echo $_SESSION['hasData_bridge3'];?>){
-                            loadTable('bridge3');
-                        }
                         
                         $('#rm_t3' + ' .card-title').text('Inspection List');
                         setTimeout(function(){
@@ -1001,9 +925,8 @@
                     } else{
                         $('#rm_t3').toggle();
                     }
-                    lastClick = "bridgeClick";
-                });
-                
+                    lastClick = "bridgeClick";   
+                })
             });
         });
     </script>
