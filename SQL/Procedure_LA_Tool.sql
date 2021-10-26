@@ -1,42 +1,61 @@
-CREATE PROCEDURE getBridgeInspectionData(
-    IN bridge_name VARCHAR(45),
-    OUT inspection_id INT,
-    OUT bridge_no VARCHAR(45),
-    OUT rating INT,
-    OUT assign_date timestamp,
-    OUT finish_date timestamp,
-    OUT eval_firstname VARCHAR(45),
-    OUT eval_lastname VARCHAR(45),
-    OUT insp_firstname VARCHAR(45),
-    OUT insp_lastname VARCHAR(45)
-)
-BEGIN
-SELECT 
-@inspection_id = Inspections.InspectionID, 
-@bridge_no = Inspections.Bridges_BridgeNo,
-@rating = Inspections.OverallRating,
-@assign_date = Inspections.AssignedDate,
-@finish_date = Inspections.FinishedDate,
-@eval_firstname = Users.FirstName,
-@eval_lastname = Users.LastName
-FROM Users, Inspections WHERE UserNo IN  
-(
-    SELECT EvaluatorID FROM Inspections WHERE Bridges_BridgeNo IN 
-    (
-        SELECT BridgeNo FROM Bridges
-        WHERE Bridgename = bridge_name
-    )
-);
-SELECT 
-@insp_firstname = Users.FirstName, 
-@insp_lastname = Users.LastName
-FROM Users, Inspections WHERE UserNo IN  
-(
-    SELECT InspectorID FROM Inspections WHERE Bridges_BridgeNo IN 
-    (
-        SELECT BridgeNo FROM Bridges
-        WHERE BridgeName = bridge_name
-    )
-);
-END
+DELIMITER $$
 
+CREATE PROCEDURE selectBridgeInspectionData(IN bridge_name VARCHAR(45))
+BEGIN
+	SELECT i.FinishedDate, i.Bridges_BridgeNo, b.BridgeName, t.InspectionTypeName ,u.FirstName AS inspector_first, 
+	u.LastName AS inspector_last, u2.FirstName AS evaluator_first, u2.LastName AS evaluator_last, i.OverallRating
+	FROM Inspections i 
+	JOIN Bridges b ON i.Bridges_BridgeNo = b.BridgeNo
+	JOIN InspectionTypeCode t ON i.InspectionTypeNo = t.InspectionTypeNo
+	JOIN Users u ON i.InspectorID = u.UserNo
+	JOIN Users u2 ON i.EvaluatorID = u2.UserNo
+	WHERE Bridges_BridgeNo IN (
+		SELECT BridgeNo FROM Bridges WHERE BridgeName=bridge_name
+	);
+END$$
+
+DELIMITER;
+
+DELIMITER $$
+
+CREATE PROCEDURE selectBridgeInspectionData_OneYear(IN bridge_name VARCHAR(45), IN report_year int)
+BEGIN
+	SELECT i.FinishedDate, i.Bridges_BridgeNo, b.BridgeName, t.InspectionTypeName ,u.FirstName AS inspector_first, 
+	u.LastName AS inspector_last, u2.FirstName AS evaluator_first, u2.LastName AS evaluator_last, i.OverallRating
+	FROM Inspections i 
+	JOIN Bridges b ON i.Bridges_BridgeNo = b.BridgeNo
+	JOIN InspectionTypeCode t ON i.InspectionTypeNo = t.InspectionTypeNo
+	JOIN Users u ON i.InspectorID = u.UserNo
+	JOIN Users u2 ON i.EvaluatorID = u2.UserNo
+	WHERE Bridges_BridgeNo IN (
+		SELECT BridgeNo FROM Bridges WHERE BridgeName=bridge_name
+	) AND
+    YEAR(DATE(FinishedDate)) = report_year;
+END$$
+
+DELIMITER;
+
+DELIMITER$$
+
+CREATE PROCEDURE selectBridgeInspectionData_BetweenYears(IN bridge_name VARCHAR(45), IN begin_year int, IN end_year int)
+BEGIN
+	SELECT i.FinishedDate, i.Bridges_BridgeNo, b.BridgeName, t.InspectionTypeName ,u.FirstName AS inspector_first, 
+	u.LastName AS inspector_last, u2.FirstName AS evaluator_first, u2.LastName AS evaluator_last, i.OverallRating
+	FROM Inspections i 
+	JOIN Bridges b ON i.Bridges_BridgeNo = b.BridgeNo
+	JOIN InspectionTypeCode t ON i.InspectionTypeNo = t.InspectionTypeNo
+	JOIN Users u ON i.InspectorID = u.UserNo
+	JOIN Users u2 ON i.EvaluatorID = u2.UserNo
+	WHERE Bridges_BridgeNo IN (
+		SELECT BridgeNo FROM Bridges WHERE BridgeName=bridge_name
+	) 
+    AND YEAR(DATE(FinishedDate)) >= begin_year
+    AND YEAR(DATE(FinishedDate)) <= end_year;
+END$$
+
+DELIMITER;
+
+
+
+
+ 

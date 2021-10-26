@@ -104,7 +104,7 @@
         <div class="container">
             <div class="main_title">
                 <h5> Report Management </h5>
-                <p><br>
+                <!-- <p><br>
                     Bridge: 
                     <i class="fa fa-search" aria-hidden="true"></i>
                     <input type="text" class="search-box" placeholder="Search for a bridge...">
@@ -134,7 +134,7 @@
                         <option value="2013">2013</option>
                         <option value="2012">2012</option>
                     </select>
-                </p>
+                </p> -->
             </div>  
 
             <!-- Main contents -->

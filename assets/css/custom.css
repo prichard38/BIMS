@@ -4,6 +4,10 @@ body {
     background-color: #F0F5FF;
 }
 
+form {
+    all:inherit;
+}
+
 .sidebar {
     float: left;
     width: 200px;
