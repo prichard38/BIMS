@@ -55,6 +55,25 @@ END$$
 
 DELIMITER;
 
+DELIMITER$$
+
+CREATE PROCEDURE getEarliestYear(IN bridge1 VARCHAR(45), IN bridge2 VARCHAR(45), IN bridge3 VARCHAR(45))
+BEGIN
+SELECT MIN(YEAR(DATE(FinishedDate))) 
+FROM Inspections
+WHERE Bridges_BridgeNo IN (
+	SELECT BridgeNo FROM Bridges WHERE BridgeName=bridge1
+    OR BridgeName=bridge2
+    OR BridgeName=bridge3
+);
+END$$
+
+DELIMITER;
+
+
+
+
+
 
 
 
