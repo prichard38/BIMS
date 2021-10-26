@@ -39,7 +39,7 @@
             } 
             // if user is NULL, display error
             else {
-                header("Location:login-test.php?error=userdoesnotexist");
+                header("Location:login-test.php?error=".$row['_LogIn_out']);
                 exit();
             }
         }
