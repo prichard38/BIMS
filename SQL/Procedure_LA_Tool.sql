@@ -1,4 +1,4 @@
-
+DELIMITER $$
 
 CREATE PROCEDURE selectBridgeInspectionData(IN bridge_name VARCHAR(45))
 BEGIN
@@ -12,8 +12,11 @@ BEGIN
 	WHERE Bridges_BridgeNo IN (
 		SELECT BridgeNo FROM Bridges WHERE BridgeName=bridge_name
 	);
-END 
+END$$
 
+DELIMITER;
+
+DELIMITER $$
 
 CREATE PROCEDURE selectBridgeInspectionData_OneYear(IN bridge_name VARCHAR(45), IN report_year int)
 BEGIN
@@ -28,7 +31,9 @@ BEGIN
 		SELECT BridgeNo FROM Bridges WHERE BridgeName=bridge_name
 	) AND
     YEAR(DATE(FinishedDate)) = report_year;
-END 
+END$$
+
+DELIMITER;
 
 
 
