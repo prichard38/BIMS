@@ -1,5 +1,5 @@
 
-DELIMITER //
+
 CREATE PROCEDURE selectBridgeInspectionData(IN bridge_name VARCHAR(45))
 BEGIN
 	SELECT i.FinishedDate, i.Bridges_BridgeNo, b.BridgeName, t.InspectionTypeName ,u.FirstName AS inspector_first, 
@@ -14,7 +14,7 @@ BEGIN
 	);
 END 
 
-DELIMITER //
+
 CREATE PROCEDURE selectBridgeInspectionData_OneYear(IN bridge_name VARCHAR(45), IN report_year int)
 BEGIN
 	SELECT i.FinishedDate, i.Bridges_BridgeNo, b.BridgeName, t.InspectionTypeName ,u.FirstName AS inspector_first, 
