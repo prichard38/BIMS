@@ -104,7 +104,7 @@
         <div class="container">
             <div class="main_title">
                 <h5> Report Management </h5>
-                <p><br>
+                <!-- <p><br>
                     Bridge: 
                     <i class="fa fa-search" aria-hidden="true"></i>
                     <input type="text" class="search-box" placeholder="Search for a bridge...">
@@ -124,7 +124,7 @@
                         <option value="2018">2018</option>
                         <option value="2017">2017</option>
                     </select>
-                </p>
+                </p> -->
             </div>  
 
             <!-- Main contents -->
@@ -910,11 +910,6 @@
 
 
             $('#bridge3').on('click', function(){
-                let namesTest = fetchAllBridgeNames();
-                namesTest.then((res) => {
-                    namesTest = res;
-                })
-                console.log(namesTest);
                 fetchInspections(selectedBridgeNames[2]).then(function(response) {            
                     $(".tbox").not("#rm_t3").hide();
                     if(!$('#rm_t3').is(':visible') || ($('#rm_t3').is(':visible') && lastClick == 'inspectionClick')){
