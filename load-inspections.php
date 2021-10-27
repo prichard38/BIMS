@@ -3,7 +3,7 @@
 
     $name = mysqli_real_escape_string($conn, $_POST['selectedBridgeName']);
    
-    // $name = 'Cane Hill Bridge over Little Red River';
+    // When Stored Procedure is integrated, use $_SESSION["yearBegin"] and $_SESSION["yearEnd"] as args
    
     $sql = "SELECT FinishedDate, Bridges.BridgeName, Bridges.BridgeNo, InspectionTypeName, OverallRating
         FROM Bridges, Inspections, InspectionTypeCode 

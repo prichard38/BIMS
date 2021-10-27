@@ -44,16 +44,7 @@
     <body>
         <!-- init global vars -->
         <script>
-            lastClick = 'inspectionClick';
-            selectedBridgeNames = <?php echo json_encode($_SESSION['selectedBridgeNames']); ?>;
             bridgeNames = [];
-            inspectionData = [];
-            ratings = [];
-            pointColors = [];
-            inspectionIndex = -1;
-            prevInspectionIndex = -1;
-            bridgeIndex = -1;
-            prevBridgeIndex = -1;
         </script>
 
         <script>
@@ -279,7 +270,7 @@
         <script>
 
             nextBridgeIndex = 1;
-            awaitingConfirmation = true;
+            // awaitingConfirmation = true;
             isValid = false;
             numConfirmed = 0;
             
@@ -294,6 +285,8 @@
             var addBridge = document.getElementById('add-bridge');
             var addBridgeLabel = document.getElementById('add-bridge-label');
             var removeBridge1 = document.getElementById('remove-bridge-1');
+            var awaitingConfirmation1 = true;
+
             
             submitBridgeSelectionsButton.onclick = function() {
                 if(isValid){
@@ -317,14 +310,15 @@
             }
 
             submitButtonYear.onclick = function(){
-               
+               // TODO: Get the bridge names, begin year, and end year and create PHP Session variables.
+               // $_SESSION["selectedBridgeNames"] $_SESSION["yearBegin"] $_SESSION["yearEnd"]
             }
 
             confirmSearch1.onclick = function(){
                 //validate user input
                 isValid = bridgeNames.includes(this.parentElement.children[1].value)        
                 if(isValid){
-                    awaitingConfirmation = false;
+                    awaitingConfirmation1 = false;
                     nextBridgeIndex++;
                     numConfirmed++;
                     updateConfirmationCount(numConfirmed);
@@ -348,14 +342,14 @@
                     
                     bridge1.remove();
                     updateBridgeIds();
-                    if(!awaitingConfirmation){
+                    if(!awaitingConfirmation1){
                         nextBridgeIndex -= 1;
                         numConfirmed -=1;
                         updateConfirmationCount(numConfirmed);
                     } else{
-                        awaitingConfirmation = false;
+                        awaitingConfirmation1 = false;
                     }
-                    if((numBridges-1) < 3 && !awaitingConfirmation){
+                    if((numBridges-1) < 3 && !awaitingConfirmation1){
                         addBridge.hidden = false;
                         addBridgeLabel.hidden = false;
                     } 
@@ -366,6 +360,7 @@
             
             
             addBridge.onclick = function(){
+                var awaitingConfirmation = true;
                 isValid = false;
                 disableButton(document.getElementById('submit-btn-bridges'))
                 var numBridges = document.getElementsByClassName("bridge").length;
