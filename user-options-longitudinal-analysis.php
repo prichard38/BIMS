@@ -117,10 +117,10 @@
                 <form action="">
                     <p id="bridges"><br>
                         <span id="bridge1">
-                            <i id='search-icon' class="fa fa-search" aria-hidden="true"></i>
-                            <input type="text" class="search-box border" placeholder="Search for a bridge">
-                            <i id="confirm-search" class="fas fa-sign-in-alt"></i>
-                            <i hidden='true' id="remove-bridge-1" class="far fa-minus-square"></i>
+                            <i style="margin-right: 0.3rem;" id='search-icon' class="fa fa-search" aria-hidden="true"></i>
+                            <input style="margin-right: 0.3rem;" type="text" class="search-box border" placeholder="Search for a bridge">
+                            <i style="margin-left: 0.3rem;" id="confirm-search" class="fas fa-sign-in-alt"></i>
+                            <i style="margin-left: 0.08rem;" hidden='true' id="remove-bridge-1" class="far fa-minus-square"></i>
                             <br><br>
                         </span>
                     </p>
@@ -130,7 +130,7 @@
                     <br>
                     <p>
                         
-                        <button id='submit-btn' class="btn btn-secondary btn-sm disabled" type='button'>Submit</button>
+                        <button id='submit-btn' class="btn btn-secondary btn-sm disabled" type='button'>Submit Bridge Selections</button>
                     </p>
 
                 </form>
@@ -195,7 +195,7 @@
                         </span>
                         <br>
                         <br>
-                        <button hidden=true id='submit-btn-year' class="btn btn-secondary btn-sm disabled" type='submit'>Submit</button>
+                        <button hidden=true id='submit-btn-year' class="btn btn-secondary btn-sm disabled" type='submit'>Submit Timeframe Selection</button>
                     </p>
                 </form>
             </div>  
@@ -285,10 +285,12 @@
             
             addBridge.onclick = function(){
                 isValid = false;
+                console.log(removeIndex)
                 document.getElementById('submit-btn').classList.remove('btn-primary');
                 document.getElementById('submit-btn').classList.add('disabled');
                 document.getElementById('submit-btn').classList.add('btn-secondary');
                 removeIndex += 1;
+                console.log(removeIndex)
                 if(bridges.children.length  <= 3) {
 
                     var bridgeSpan = document.createElement('span');
@@ -300,11 +302,14 @@
                     searchIcon.setAttribute('class', 'fa fa-search')
                     searchIcon.setAttribute('aria-hidden', 'true');
                     searchIcon.setAttribute('id', 'search-icon');
+                    searchIcon.setAttribute('style', 'margin-right: 0.3rem;');
+                    searchInput.setAttribute('style', 'margin-right: 0.3rem;');
                     searchInput.setAttribute('type', 'text');
                     searchInput.setAttribute('class', 'search-box border');
                     searchInput.setAttribute('placeholder', 'Search for a bridge');
                     confirmSearchIcon.setAttribute('id', 'confirm-search');
                     confirmSearchIcon.setAttribute('class', 'fas fa-sign-in-alt');
+                    confirmSearchIcon.setAttribute('style', 'margin-left: 0.3rem; margin-right: 0.6rem');
                     bridgeSpan.setAttribute('id', 'bridge' + bridges.children.length);
 
                     this.hidden = true;
@@ -313,6 +318,15 @@
                     bridgeSpan.appendChild(searchIcon);
                     bridgeSpan.appendChild(searchInput);
                     bridgeSpan.appendChild(confirmSearchIcon);
+
+
+                    var removeBridgeIcon = document.createElement('icon');
+                    removeBridgeIcon.setAttribute('id', 'remove-bridge-'+ (removeIndex + 2) );
+                    console.log('remove-bridge-'+ (removeIndex + 1))
+                    removeBridgeIcon.setAttribute('class', 'far fa-minus-square');
+                    removeBridgeIcon.setAttribute('style', 'margin-left: 0.3rem;');
+                    bridgeSpan.appendChild(removeBridgeIcon);
+
                     bridgeSpan.appendChild(document.createElement('br'));
                     bridgeSpan.appendChild(document.createElement('br'));
                     bridges.appendChild(bridgeSpan);
@@ -334,11 +348,11 @@
                             bridgeSpan.removeChild(searchIcon);
                             bridgeSpan.removeChild(this);
                             hasConfirmSearchIcon = false;
-                            var removeBridgeIcon = document.createElement('icon');
-                            removeBridgeIcon.setAttribute('id', 'remove-bridge-'+ (removeIndex + 1) );
-                            console.log('remove-bridge'+removeIndex)
-                            removeBridgeIcon.setAttribute('class', 'far fa-minus-square');
-                            bridgeSpan.appendChild(removeBridgeIcon);
+                            // var removeBridgeIcon = document.createElement('icon');
+                            // removeBridgeIcon.setAttribute('id', 'remove-bridge-'+ (removeIndex + 1) );
+                            // console.log('remove-bridge'+removeIndex)
+                            // removeBridgeIcon.setAttribute('class', 'far fa-minus-square');
+                            // bridgeSpan.appendChild(removeBridgeIcon);
                             bridgeSpan.appendChild(document.createElement('br'));
                             bridgeSpan.appendChild(document.createElement('br'));
                             console.log(bridges.children.length )
