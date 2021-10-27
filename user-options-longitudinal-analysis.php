@@ -75,7 +75,55 @@
                 document.getElementById('submit-btn-year').classList.remove('btn-secondary');
                 document.getElementById('submit-btn-year').classList.add('btn-primary');
             }
-        </script>
+
+            function disableButton(button){
+                button.classList.remove('btn-primary');
+                button.classList.add('disabled');
+                button.classList.add('btn-secondary');
+            }
+
+            function enableButton(button){
+                button.classList.add('btn-primary');
+                button.classList.remove('disabled');
+                button.classList.remove('btn-secondary');
+            }
+
+            function showValidFeedback(element){
+                element.disabled=true;
+                element.classList.remove("border-danger");
+                element.classList.add("border-2");
+                element.classList.add("border-success");
+            }
+
+            function showInvalidFeedback(element){
+                element.disabled=false;
+                element.classList.add("border-danger");
+                element.classList.add("border-2");
+                element.classList.remove("border-success");
+            }
+
+            function updateBridgeIds(){
+                var bridges = document.getElementsByClassName("bridge");
+                for(var i = 0 ; i < bridges.length ; i++){
+                    bridges[i].children[0].innerHTML = "Bridge " + (i+1);
+                }
+            }
+
+            function updateConfirmationCount(count){
+                var countElement = document.getElementById('confirmation-count');
+                countElement.innerHTML = count;
+                if(count > 0){
+                    console.log("green")
+                    countElement.classList.remove('text-danger');
+                    countElement.classList.add('text-success');
+                } else{
+                    console.log("red")
+                    countElement.classList.remove('text-success');
+                    countElement.classList.add('text-danger');
+                }
+            }
+
+            </script>
 
 
         <!-- Top Navbar -->
@@ -113,35 +161,62 @@
         <!-- Search Params -->
         <div class="container">
             <div id='main' class="main_title">
-                <h5> Select Up To 3 Bridges: </h5>
-                <form action="">
-                    <p id="bridges"><br>
-                        <span id="bridge1">
-                            <i style="margin-right: 0.3rem;" id='search-icon' class="fa fa-search" aria-hidden="true"></i>
-                            <input style="margin-right: 0.3rem;" type="text" class="search-box border" placeholder="Search for a bridge">
-                            <i style="margin-left: 0.3rem;" id="confirm-search" class="fas fa-sign-in-alt"></i>
-                            <i style="margin-left: 0.08rem;" hidden='true' id="remove-bridge-1" class="far fa-minus-square"></i>
-                            <br><br>
-                        </span>
-                    </p>
+                <h5> Report Management</h5>
+                <h5 class="card-title" style="font-size: 0.95em; margin-top: 0.3rem;">Longitudinal Analysis - Bridge and Timeframe Selection</h5>
+                <br>
+
+                <hr>
+                <p><strong>First, select up to 3 bridges to analyze.</strong> </p>
+                <p><strong>Then, after your bridge selections are submitted, you will be prompted to provide a time period for the analysis.</strong></p>
+                <br>
+                <p>* <em>To confirm a bridge selection, click the "enter" icon to the right of the selection.</em></p>
+                <p>* <em>To remove a bridge selection, click the "dash" icon to the right of the selection.</em></p>
+                <br>  
+                <br>              
+                <h6>Select Up To 3 Bridges:</h6>
+                <form>
+                    <div id="bridges">
+                        <br>
+                        <div id="bridge1" class="bridge">
+                            <h6>Bridge 1</h6>
+                            <p>
+                                <i style="margin-right: 0.3rem;" id='search-icon-1' class="fa fa-search option-icon" aria-hidden="true"></i>
+                                <input style="margin-right: 0.3rem;" type="text" class="search-box border" placeholder="Search for a bridge">
+                                <i style="margin-left: 0.3rem;" id="confirm-search-1" class="fas fa-sign-in-alt option-icon"></i>
+                                <i style="margin-left: 0.08rem;" hidden='true' id="remove-bridge-1" class="far fa-minus-square option-icon"></i>
+                                <br><br>
+                            </p>
+                        </div>
+                    </div>
                     <i hidden='true' id="add-bridge" class="far fa-plus-square"></i>
                     <span hidden ='true' id="add-bridge-label">&nbspAdd Another Bridge</span>
                     <br>
                     <br>
                     <p>
-                        
-                        <button id='submit-btn' class="btn btn-secondary btn-sm disabled" type='button'>Submit Bridge Selections</button>
+                        <br>
+                        <h6 id="confirmation-message">You have confirmed <span id="confirmation-count" class="text-danger">0</span> bridge selections.</h6> 
+                        <br>
+                        <button id='submit-btn-bridges' class="btn btn-secondary btn-sm disabled" type='button'>Submit Bridge Selections</button>
                     </p>
 
                 </form>
-                <br><br>
-                <h5 id='timeframe-label' hidden='true'>Select a Timeframe:</h5>
+                <hr>
+                <div id="timeframe-instructions" hidden='true'>
+                    <p><strong>Select a timeframe that you want to analyze by choosing "From" and "To" years.</strong> </p>
+                    <p><strong>Note that a maximum range of 10 years is allowed.</strong></p>
+                    <br>
+                    <p>* <em>Earliest selectable "From" year is determined by the oldest existing inspection among selected bridges.</em></p>
+                    <p>* <em>When more than one bridge is selected, it is possible that not all selected bridges have inspection data for the selected timeframe.</em></p>
+                    <br>  
+                    <br>              
+                    <h6>Select a Timeframe:</h6>
+                </div>
                 <br>
                 <form action="supervisor_longitudinal_analysis.php" method="POST">
                         <p>
 
                         <span id="begin-year" hidden='true'>
-                            Begin:
+                            From:
                             <select name="begin" id="begin-year" onchange="showEndYearSelector();" onfocus="this.selectedIndex=-1;" required>
                                 <option value="2001">2001</option>
                                 <option value="2002">2002</option>
@@ -168,8 +243,8 @@
                         </span>
                         &nbsp&nbsp
                         <span id='end-year' hidden='true'>
-                            End:
-                            <select name="end" id="end-year" onchange="submitQueryParams();" onfocus="this.selectedIndex=-1;" required>
+                            To:
+                            <select name="end" id="end-year" onchange="enableButton(document.getElementById('submit-btn-years'));" onfocus="this.selectedIndex=-1;" required>
                                 <option value="2001">2001</option>
                                 <option value="2002">2002</option>
                                 <option value="2003">2003</option>
@@ -195,7 +270,7 @@
                         </span>
                         <br>
                         <br>
-                        <button hidden=true id='submit-btn-year' class="btn btn-secondary btn-sm disabled" type='submit'>Submit Timeframe Selection</button>
+                        <button hidden=true id='submit-btn-years' class="btn btn-secondary btn-sm disabled" type='submit'>Submit Timeframe Selection</button>
                     </p>
                 </form>
             </div>  
@@ -203,42 +278,41 @@
         
         <script>
 
-
-            
-            
-
+            nextBridgeIndex = 1;
+            awaitingConfirmation = true;
             isValid = false;
-            var submitButton = document.getElementById('submit-btn');
-            var submitButtonYear = document.getElementById('submit-btn-year');
+            numConfirmed = 0;
+            
+            
+
+            var submitBridgeSelectionsButton = document.getElementById('submit-btn-bridges');
+            var submitButtonYear = document.getElementById('submit-btn-years');
             var bridges = document.getElementById('bridges');
             var bridge1 = document.getElementById('bridge1');
-            var confirmSearch = document.getElementById('confirm-search');
-            var searchIcon = document.getElementById('search-icon');
+            var confirmSearch1 = document.getElementById('confirm-search-1');
+            var searchIcon1 = document.getElementById('search-icon-1');
             var addBridge = document.getElementById('add-bridge');
             var addBridgeLabel = document.getElementById('add-bridge-label');
             var removeBridge1 = document.getElementById('remove-bridge-1');
-            var inputTags = document.getElementsByTagName('input');
-            var breaks = document.getElementsByTagName('br');
-            removeIndex = 0;
-            hasConfirmSearchIcon = true;
             
-            submitButton.onclick = function() {
+            submitBridgeSelectionsButton.onclick = function() {
                 if(isValid){
-                    for(var i = 1 ; i < bridges.children.length ; i++){
-                        console.log(bridges.children[i].children[0].value);
+                    // remove icons from all bridge inputs so no more changes can be made
+                    var icons = document.getElementsByClassName("option-icon");
+                    for(var i = 0 ; i < icons.length ; i++){
+                        icons[i].hidden = true;
                     }
-                    this.hidden = true;
-                    addBridge.hidden = true;
-                    addBridgeLabel.hidden = true;
-                    removeBridge1.hidden = true;
-                    var removeBridge2 = document.getElementById('remove-bridge-2');
-                    var removeBridge3 = document.getElementById('remove-bridge-3');
-                    if(removeBridge2){removeBridge2.hidden = true}
-                    if(removeBridge3){removeBridge3.hidden = true}
+                    // hide the "submit bridge selections" button
+                    this.remove()
+
+                    // hide the add bridge icon and label
+                    addBridge.remove()
+                    addBridgeLabel.remove()
+           
+                    // show the begin year selector
                     document.getElementById('begin-year').hidden = false;
-                    document.getElementById('timeframe-label').hidden = false;
-                    document.getElementById('timeframe-label').hidden = false;
-                    document.getElementById('submit-btn-year').hidden = false;
+                    document.getElementById('timeframe-instructions').hidden = false;
+                    document.getElementById('submit-btn-years').hidden = false;
                 }
             }
 
@@ -246,137 +320,148 @@
                
             }
 
-            confirmSearch.onclick = function(){
+            confirmSearch1.onclick = function(){
                 //validate user input
                 isValid = bridgeNames.includes(this.parentElement.children[1].value)        
                 if(isValid){
-
-                    this.parentElement.children[1].disabled=true;
-                    this.parentElement.children[1].classList.remove("border-danger");
-                    this.parentElement.children[1].classList.add("border-2");
-                    this.parentElement.children[1].classList.add("border-success");
-                    bridge1.removeChild(searchIcon);
-                    bridge1.removeChild(this);
+                    awaitingConfirmation = false;
+                    nextBridgeIndex++;
+                    numConfirmed++;
+                    updateConfirmationCount(numConfirmed);
+                    showValidFeedback(this.parentElement.children[1]);
+                    searchIcon1.remove();
+                    this.remove();
                     hasConfirmSearchIcon = false;
                     addBridge.hidden = false;
                     addBridgeLabel.hidden = false;
                     removeBridge1.hidden = false;
-                    document.getElementById('submit-btn').classList.remove('disabled');
-                    document.getElementById('submit-btn').classList.remove('btn-secondary');
-                    document.getElementById('submit-btn').classList.add('btn-primary');
+                    enableButton(document.getElementById('submit-btn-bridges'));
                 } else {
-                    this.parentElement.children[1].classList.remove("border-success");
-                    this.parentElement.children[1].classList.add("border-danger");
+                    showInvalidFeedback(this.parentElement.children[1]);
                 }
             }
 
             removeBridge1.onclick = function() {
-                if(bridges.children.length > 2){
-                    if(bridges.children.length  <= 4 && !hasConfirmSearchIcon){
+                // console.log(document.getElementsByClassName("bridge").length);
+                var numBridges = document.getElementsByClassName("bridge").length
+                if(numBridges > 1){
+                    
+                    bridge1.remove();
+                    updateBridgeIds();
+                    if(!awaitingConfirmation){
+                        nextBridgeIndex -= 1;
+                        numConfirmed -=1;
+                        updateConfirmationCount(numConfirmed);
+                    } else{
+                        awaitingConfirmation = false;
+                    }
+                    if((numBridges-1) < 3 && !awaitingConfirmation){
                         addBridge.hidden = false;
                         addBridgeLabel.hidden = false;
                     } 
-                    
-                    bridges.removeChild(bridge1);
-                    removeIndex -= 1;
+                } else{
+                    alert("You must select at least one bridge.")
                 }
             }
             
             
             addBridge.onclick = function(){
                 isValid = false;
-                console.log(removeIndex)
-                document.getElementById('submit-btn').classList.remove('btn-primary');
-                document.getElementById('submit-btn').classList.add('disabled');
-                document.getElementById('submit-btn').classList.add('btn-secondary');
-                removeIndex += 1;
-                console.log(removeIndex)
-                if(bridges.children.length  <= 3) {
+                disableButton(document.getElementById('submit-btn-bridges'))
+                var numBridges = document.getElementsByClassName("bridge").length;
+                if(numBridges  < 3) {
 
-                    var bridgeSpan = document.createElement('span');
-                    var searchIcon = document.createElement('icon');
-                    var searchInput = document.createElement('input');
-                    var confirmSearchIcon = document.createElement('icon');
-
-
-                    searchIcon.setAttribute('class', 'fa fa-search')
+                    var bridgeDiv = document.createElement('div');
+                    bridgeDiv.setAttribute('id', ('bridge'+nextBridgeIndex));
+                    bridgeDiv.setAttribute('class', 'bridge');
+                    
+                    var bridgeHeader = document.createElement('h6');
+                    bridgeHeader.innerHTML = 'Bridge ' + nextBridgeIndex;
+                    console.log(bridgeHeader.innerHTML);
+                    
+                    var bridgeParagraph = document.createElement('p');
+                    
+                    var searchIcon = document.createElement('i');
+                    searchIcon.setAttribute('class', 'fa fa-search option-icon')
                     searchIcon.setAttribute('aria-hidden', 'true');
                     searchIcon.setAttribute('id', 'search-icon');
                     searchIcon.setAttribute('style', 'margin-right: 0.3rem;');
+
+                    var searchInput = document.createElement('input');
                     searchInput.setAttribute('style', 'margin-right: 0.3rem;');
                     searchInput.setAttribute('type', 'text');
                     searchInput.setAttribute('class', 'search-box border');
                     searchInput.setAttribute('placeholder', 'Search for a bridge');
+
+                    var confirmSearchIcon = document.createElement('i');
                     confirmSearchIcon.setAttribute('id', 'confirm-search');
-                    confirmSearchIcon.setAttribute('class', 'fas fa-sign-in-alt');
+                    confirmSearchIcon.setAttribute('class', 'fas fa-sign-in-alt option-icon');
                     confirmSearchIcon.setAttribute('style', 'margin-left: 0.3rem; margin-right: 0.6rem');
-                    bridgeSpan.setAttribute('id', 'bridge' + bridges.children.length);
+
+                    var removeBridgeIcon = document.createElement('i');
+                    removeBridgeIcon.setAttribute('id', ('remove-bridge-'+ nextBridgeIndex) );
+                    removeBridgeIcon.setAttribute('class', 'far fa-minus-square option-icon');
+                    removeBridgeIcon.setAttribute('style', 'margin-left: 0.3rem;');
 
                     this.hidden = true;
                     addBridgeLabel.hidden = true;
     
-                    bridgeSpan.appendChild(searchIcon);
-                    bridgeSpan.appendChild(searchInput);
-                    bridgeSpan.appendChild(confirmSearchIcon);
+                    bridgeParagraph.appendChild(searchIcon);
+                    bridgeParagraph.appendChild(searchInput);
+                    bridgeParagraph.appendChild(confirmSearchIcon);
+                    bridgeParagraph.appendChild(removeBridgeIcon);
+                    bridgeParagraph.appendChild(document.createElement('br'));
+                    bridgeParagraph.appendChild(document.createElement('br'));
+                    
+                    bridgeDiv.appendChild(bridgeHeader);
+                    bridgeDiv.appendChild(bridgeParagraph);
+                    bridges.append(bridgeDiv);
 
-
-                    var removeBridgeIcon = document.createElement('icon');
-                    removeBridgeIcon.setAttribute('id', 'remove-bridge-'+ (removeIndex + 2) );
-                    console.log('remove-bridge-'+ (removeIndex + 1))
-                    removeBridgeIcon.setAttribute('class', 'far fa-minus-square');
-                    removeBridgeIcon.setAttribute('style', 'margin-left: 0.3rem;');
-                    bridgeSpan.appendChild(removeBridgeIcon);
-
-                    bridgeSpan.appendChild(document.createElement('br'));
-                    bridgeSpan.appendChild(document.createElement('br'));
-                    bridges.appendChild(bridgeSpan);
-                    hasConfirmSearchIcon = true;
+                    removeBridgeIcon.onclick = function() {
+                        var numBridges = document.getElementsByClassName("bridge").length;
+                        if(numBridges > 1){
+                            bridgeDiv.remove();
+                            updateBridgeIds();
+                            if(!awaitingConfirmation){
+                                nextBridgeIndex -= 1;
+                                numConfirmed -=1;
+                                updateConfirmationCount(numConfirmed);
+                            } else{
+                                awaitingConfirmation = false;
+                            }
+                            if((numBridges-1) < 3 && !awaitingConfirmation){
+                                addBridge.hidden = false;
+                                addBridgeLabel.hidden = false;
+                            }
+                        } else {
+                            alert("You must select at least one bridge");
+                        }
+                    }
+                    
+                    awaitingConfirmation = true;
 
                     confirmSearchIcon.onclick = function(){
                         //validate user input
                         isValid = bridgeNames.includes(this.parentElement.children[1].value)
                         if(isValid){
-                            this.parentElement.children[1].disabled=true;
-                            this.parentElement.children[1].classList.remove("border-danger");
-                            this.parentElement.children[1].classList.add("border-2");
-                            this.parentElement.children[1].classList.add("border-success");
-                            document.getElementById('submit-btn').classList.remove('disabled');
-                            document.getElementById('submit-btn').classList.remove('btn-secondary');
-                            document.getElementById('submit-btn').classList.add('btn-primary');
-                            bridgeSpan.removeChild(bridgeSpan.children[bridgeSpan.children.length - 1]);
-                            bridgeSpan.removeChild(bridgeSpan.children[bridgeSpan.children.length - 1]);
-                            bridgeSpan.removeChild(searchIcon);
-                            bridgeSpan.removeChild(this);
-                            hasConfirmSearchIcon = false;
-                            // var removeBridgeIcon = document.createElement('icon');
-                            // removeBridgeIcon.setAttribute('id', 'remove-bridge-'+ (removeIndex + 1) );
-                            // console.log('remove-bridge'+removeIndex)
-                            // removeBridgeIcon.setAttribute('class', 'far fa-minus-square');
-                            // bridgeSpan.appendChild(removeBridgeIcon);
-                            bridgeSpan.appendChild(document.createElement('br'));
-                            bridgeSpan.appendChild(document.createElement('br'));
-                            console.log(bridges.children.length )
+                            awaitingConfirmation = false;
+                            nextBridgeIndex++;
+                            numConfirmed++;
+                            updateConfirmationCount(numConfirmed);
+                            showValidFeedback(this.parentElement.children[1]);
+                            enableButton(document.getElementById('submit-btn-bridges'))
+                            // bridgeDiv.removeChild(bridgeSpan.children[bridgeSpan.children.length - 1]);
+                            // bridgeDiv.removeChild(bridgeSpan.children[bridgeSpan.children.length - 1]);
+                            searchIcon.remove();
+                            this.remove();
                             
-                            if(bridges.children.length <= 3){
+                            var numBridges = document.getElementsByClassName("bridge").length;
+                            if(numBridges < 3){
                                 addBridge.hidden = false;
                                 addBridgeLabel.hidden = false;
                             } 
-                            
-                            removeBridgeIcon.onclick = function() {
-                                if(bridges.children.length > 2){
-                                    if(bridges.children.length  <= 4 && !hasConfirmSearchIcon){
-                                        addBridge.hidden = false;
-                                        addBridgeLabel.hidden = false;
-                                    } 
-                                    
-                                    bridges.removeChild(bridgeSpan);
-                                    removeIndex -= 1;
-                                }
-                                
-                            }
                         } else {
-                            this.parentElement.children[1].classList.remove("border-success");
-                            this.parentElement.children[1].classList.add("border-danger");
+                            showInvalidFeedback(this.parentElement.children[1]);
                         }
                         
                     }
