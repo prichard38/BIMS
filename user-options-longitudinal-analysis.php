@@ -270,7 +270,6 @@
         <script>
 
             nextBridgeIndex = 1;
-            // awaitingConfirmation = true;
             isValid = false;
             numConfirmed = 0;
             
