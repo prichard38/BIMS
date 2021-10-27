@@ -56,18 +56,6 @@
             prevBridgeIndex = -1;
         </script>
 
-        <script>
-            fetchAllBridgeData().then(
-                (res) => {
-                    res.data.forEach(obj => {
-                    bridgeNames.push(obj['bridgeName'])
-                });
-                console.log(bridgeNames);
-            })
-        </script>
-
-
-
         <!-- Top Navbar -->
         <nav class="navbar navbar-light" style="background-color: #005cbf; width: 100vw;">
             <div class="container-fluid">

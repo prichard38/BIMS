@@ -44,16 +44,7 @@
     <body>
         <!-- init global vars -->
         <script>
-            lastClick = 'inspectionClick';
-            selectedBridgeNames = <?php echo json_encode($_SESSION['selectedBridgeNames']); ?>;
             bridgeNames = [];
-            inspectionData = [];
-            ratings = [];
-            pointColors = [];
-            inspectionIndex = -1;
-            prevInspectionIndex = -1;
-            bridgeIndex = -1;
-            prevBridgeIndex = -1;
         </script>
 
         <script>
@@ -317,7 +308,8 @@
             }
 
             submitButtonYear.onclick = function(){
-               
+               // TODO: Get the bridge names, begin year, and end year and create PHP Session variables.
+               // $_SESSION["selectedBridgeNames"] $_SESSION["yearBegin"] $_SESSION["yearEnd"]
             }
 
             confirmSearch1.onclick = function(){
