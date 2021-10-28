@@ -57,6 +57,10 @@
         </script>
 
         <script>
+            /******************************************************************************
+            ********************** helper functions  **************************************
+            ******************************************************************************/
+            
             function showEndYearSelector (){
                 document.getElementById('end-year').hidden = false;
             }
@@ -104,15 +108,15 @@
                 var countElement = document.getElementById('confirmation-count');
                 countElement.innerHTML = count;
                 if(count > 0){
-                    console.log("green")
                     countElement.classList.remove('text-danger');
                     countElement.classList.add('text-success');
                 } else{
-                    console.log("red")
                     countElement.classList.remove('text-success');
                     countElement.classList.add('text-danger');
                 }
             }
+            /*****************************************************************************
+            *****************************************************************************/
 
             </script>
 
@@ -268,16 +272,20 @@
         </div>
         
         <script>
-
+            // global tracker vars for control flow
             nextBridgeIndex = 1;
             isValid = false;
             numConfirmed = 0;
             
             
-
+            // submit buttons
             var submitBridgeSelectionsButton = document.getElementById('submit-btn-bridges');
             var submitButtonYear = document.getElementById('submit-btn-years');
+            
+            // bridges element. parent to all bridge divs
             var bridges = document.getElementById('bridges');
+
+            // elements for bridge 1
             var bridge1 = document.getElementById('bridge1');
             var confirmSearch1 = document.getElementById('confirm-search-1');
             var searchIcon1 = document.getElementById('search-icon-1');
@@ -313,6 +321,11 @@
                // $_SESSION["selectedBridgeNames"] $_SESSION["yearBegin"] $_SESSION["yearEnd"]
             }
 
+
+
+            /******************************************************************************
+            ********************** Bridge 1 onclick functions  ****************************
+            ******************************************************************************/
             confirmSearch1.onclick = function(){
                 //validate user input
                 isValid = bridgeNames.includes(this.parentElement.children[1].value)        
@@ -335,7 +348,6 @@
             }
 
             removeBridge1.onclick = function() {
-                // console.log(document.getElementsByClassName("bridge").length);
                 var numBridges = document.getElementsByClassName("bridge").length
                 if(numBridges > 1){
                     
@@ -356,8 +368,9 @@
                     alert("You must select at least one bridge.")
                 }
             }
-            
-            
+            /**************************************************************************
+            **************************************************************************/
+
             addBridge.onclick = function(){
                 var awaitingConfirmation = true;
                 isValid = false;
@@ -371,7 +384,6 @@
                     
                     var bridgeHeader = document.createElement('h6');
                     bridgeHeader.innerHTML = 'Bridge ' + nextBridgeIndex;
-                    console.log(bridgeHeader.innerHTML);
                     
                     var bridgeParagraph = document.createElement('p');
                     
@@ -411,6 +423,10 @@
                     bridgeDiv.appendChild(bridgeParagraph);
                     bridges.append(bridgeDiv);
 
+
+                    /******************************************************************************
+                    ********************** Additional Bridge onclick functions  *******************
+                    ******************************************************************************/
                     removeBridgeIcon.onclick = function() {
                         var numBridges = document.getElementsByClassName("bridge").length;
                         if(numBridges > 1){
@@ -444,8 +460,6 @@
                             updateConfirmationCount(numConfirmed);
                             showValidFeedback(this.parentElement.children[1]);
                             enableButton(document.getElementById('submit-btn-bridges'))
-                            // bridgeDiv.removeChild(bridgeSpan.children[bridgeSpan.children.length - 1]);
-                            // bridgeDiv.removeChild(bridgeSpan.children[bridgeSpan.children.length - 1]);
                             searchIcon.remove();
                             this.remove();
                             
@@ -457,8 +471,10 @@
                         } else {
                             showInvalidFeedback(this.parentElement.children[1]);
                         }
-                        
                     }
+                    /**************************************************************************
+                    **************************************************************************/
+
                 }
             }
 
