@@ -1,4 +1,5 @@
 <?php 
+    
     include 'dbConfig.inc.php';
 
     // old SELECT; replaced with stored procedure
@@ -7,12 +8,11 @@
         WHERE Bridges.BridgeName LIKE ? AND Inspections.Bridges_BridgeNo = Bridges.BridgeNo AND Inspections.InspectionTypeNo = InspectionTypeCode.InspectionTypeNo
         ORDER BY FinishedDate ASC";
     */
+    session_start();
     
     $name = mysqli_real_escape_string($conn, $_POST['selectedBridgeName']);
-
-    //Not sure why yet, but using $_SESSION["yearBegin"] and $_SESSION["yearEnd"] breaks this.
-    //I tried a few things like changing the session variables to strings in supervisor_longitudinal_analysis, but it didnt matter. 
-    $sql = "CALL selectBridgeInspectionData_BetweenYears(?,2016,2021);";
+    
+    $sql = "CALL selectBridgeInspectionData_BetweenYears(?,".(string) json_encode($_SESSION['yearBegin']).",".(string) json_encode($_SESSION['yearEnd']).");";
     $stmt = mysqli_stmt_init($conn);
     if(!mysqli_stmt_prepare($stmt, $sql)){
         echo "SQL statement failed";
