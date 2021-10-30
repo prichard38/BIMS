@@ -9,8 +9,8 @@
 
     // Later we will get thee bridge names by POST after user has selected bridges, then set them as session vars
    $_SESSION["selectedBridgeNames"] = ['Cane Hill Bridge over Little Red River', 'Robert C. Byrd Bridge over Ohio River', 'East Huntington Bridge over Ohio River'];
-   $_SESSION["yearBegin"] = [2016];
-   $_SESSION["yearEnd"] = [2021];
+   $_SESSION["yearBegin"] = 2016;
+   $_SESSION["yearEnd"] = 2021;
 ?>
 
 
