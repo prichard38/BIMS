@@ -50,7 +50,8 @@ BEGIN
 		SELECT BridgeNo FROM Bridges WHERE BridgeName=bridge_name
 	) 
     AND YEAR(DATE(FinishedDate)) >= begin_year
-    AND YEAR(DATE(FinishedDate)) <= end_year;
+    AND YEAR(DATE(FinishedDate)) <= end_year
+	ORDER BY i.FinishedDate;
 END$$
 
 DELIMITER;
