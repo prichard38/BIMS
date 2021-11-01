@@ -8,7 +8,7 @@
     }
 
     // Later we will get thee bridge names by POST after user has selected bridges, then set them as session vars
-   $_SESSION["selectedBridgeNames"] = ['Cane Hill Bridge over Little Red River', 'Robert C. Byrd Bridge over Ohio River', 'East Huntington Bridge over Ohio River'];
+   $_SESSION["selectedBridgeNames"] = ['East Huntington Bridge over Ohio River'];
    $_SESSION["yearBegin"] = 2016;
    $_SESSION["yearEnd"] = 2021;
 ?>
@@ -190,19 +190,19 @@
 
                                                 </tr>
                                                 <tr id="bridge1">
-                                                    <td class="bridge-name txtl"><i class="fas fa-circle" style="color: darkgrey;"></i> Cane Hill Bridge over Little Red River </td>
-                                                    <td class="bridge-no txtl">001-4/5-2.95(01810)</td>
-                                                    <td class="txtl">Wyoming</td>
+                                                    <td id="bridge-name-1" class="bridge-name txtl"></td>
+                                                    <td class="bridge-no txtl"></td>
+                                                    <td class="txtl"></td>
                                                 </tr>
                                                 <tr id="bridge2">
-                                                    <td class="bridge-name txtl"><i class="fas fa-circle" style="color: navy;"></i> Robert C. Byrd Bridge over Ohio River </td>
-                                                    <td class="bridge-no txtl">006-3/4-8.65(03148)</td>
-                                                    <td class="txtl">Cabell</td>
+                                                    <td id="bridge-name-2" class="bridge-name txtl"></td>
+                                                    <td class="bridge-no txtl"></td>
+                                                    <td class="txtl"></td>
                                                 </tr>
                                                 <tr id="bridge3">
-                                                    <td class="bridge-name txtl"><i class="fas fa-circle" style="color: steelblue;"></i> East Huntington Bridge over Ohio River </td>
-                                                    <td class="bridge-no txtl">004-4/5-2.95(01210)</td>
-                                                    <td class="txtl">Cabell</td>
+                                                    <td id="bridge-name-3" class="bridge-name txtl"></td>
+                                                    <td class="bridge-no txtl"></td>
+                                                    <td class="txtl"></td>
                                                 </tr>
                                                 <tr class="ttlcolor">
                                                     <td></td>
@@ -245,7 +245,7 @@
                                         <br>
                                         <h6 style="font-size: small; font-weight: bold; color: darkgrey"><span id="bridgeName1"></span></h6>
                                         <script>
-                                        var bridgeName = $('#bridge1 .bridge-name').text();
+                                        var bridgeName = selectedBridgeNames[0];
                                         document.getElementById('bridgeName1').innerHTML = bridgeName;
                                         </script>
                                     </div>
@@ -297,7 +297,7 @@
                                       <br>
                                         <h6 style="font-size: small; font-weight: bold; color: navy"><span id="bridgeName2"></span></h6>
                                         <script>
-                                        var bridgeName = $('#bridge2 .bridge-name').text();
+                                        var bridgeName = selectedBridgeNames[1];
                                         document.getElementById('bridgeName2').innerHTML = bridgeName;
                                         </script>
                                   </div>
@@ -349,7 +349,7 @@
                                       <br>
                                         <h6 style="font-size: small; font-weight: bold; color: steelblue"><span id="bridgeName3"></span></h6>
                                         <script>
-                                        var bridgeName = $('#bridge3 .bridge-name').text();
+                                        var bridgeName = selectedBridgeNames[2];
                                         document.getElementById('bridgeName3').innerHTML = bridgeName;
                                         </script>
                                   </div>
@@ -653,6 +653,8 @@
                 }
 
                 var lineOptions = {
+       
+                    
                     legend: {
                         display: false,
                     },
@@ -709,6 +711,10 @@
                             scaleLabel: {
                                 display: true,
                                 labelString: "Inspection Rating"
+                            },
+                            ticks: {
+                                max: 9,
+                                min: 1
                             }
                         }]
 
@@ -927,6 +933,19 @@
                 })
             });
         });
+    </script>
+
+    <script>
+        function setBridgeHTML(){
+            let colors = ['darkgrey', 'navy', 'steelblue'];
+            for(let i = 0 ; i < selectedBridgeNames.length ; i++){
+                let id = 'bridge-name-'+(i+1);
+                document.getElementById(`${id}`).innerHTML = `<i class="fas fa-circle" style="color: ${colors[i]};"></i> ${selectedBridgeNames[i]}`;
+            }
+        }
+        setBridgeHTML();
+
+        //TODO: set bridge numbers and counties
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
