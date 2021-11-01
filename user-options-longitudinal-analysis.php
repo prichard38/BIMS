@@ -25,6 +25,7 @@
         <script src="https://kit.fontawesome.com/7b2b0481fc.js" crossorigin="anonymous"></script>
         <!-- Custom CSS -->
         <link rel="stylesheet" href="assets/css/custom.css">
+        
         <!-- jQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
         <!-- Table Design -->
@@ -42,16 +43,13 @@
     </head>
     
     <body>
-        <!-- init global vars -->
-        <script>
-            bridgeNames = [];
-        </script>
 
         <script>
+            bridgeData = [];
             fetchAllBridgeData().then(
                 (res) => {
                     res.data.forEach(obj => {
-                    bridgeNames.push(obj['bridgeName'])
+                    bridgeData.push(obj['bridgeNo'] + ' : ' + obj['bridgeName'])
                 });
             })
         </script>
@@ -96,6 +94,13 @@
                 element.classList.add("border-2");
                 element.classList.remove("border-success");
             }
+            
+            function removeFeedback(element){
+                element.disabled=false;
+                element.classList.remove("border-2");
+                element.classList.remove("border-danger");
+                element.classList.remove("border-success");
+            }
 
             function updateBridgeIds(){
                 var bridges = document.getElementsByClassName("bridge");
@@ -115,8 +120,184 @@
                     countElement.classList.add('text-danger');
                 }
             }
-            /*****************************************************************************
-            *****************************************************************************/
+
+            function buildBridgeElement(){
+                var awaitingConfirmation = true;
+
+                var bridgeDiv = document.createElement('div');
+                bridgeDiv.setAttribute('id', ('bridge'+nextBridgeIndex));
+                bridgeDiv.setAttribute('class', 'bridge');
+                
+                var bridgeHeader = document.createElement('h6');
+                bridgeHeader.innerHTML = 'Bridge ' + nextBridgeIndex;
+                
+                var containerSearchDiv = document.createElement('div');
+                containerSearchDiv.setAttribute('class', 'container-search');
+                containerSearchDiv.setAttribute('id', 'container-search');
+
+                var wrapperDiv = document.createElement('div');
+                wrapperDiv.setAttribute('class', 'wrapper');
+                wrapperDiv.setAttribute('id', 'wrapper'+nextBridgeIndex);
+
+                var searchInput = document.createElement('input');
+                searchInput.setAttribute('id', 'search'+nextBridgeIndex);
+                searchInput.setAttribute('type', 'text');
+                searchInput.setAttribute('class', 'border');
+                searchInput.setAttribute('placeholder', 'Search for a bridge name/number');
+                searchInput.setAttribute('autocomplete','chrome-off');
+
+                var searchButton = document.createElement('button');
+                searchButton.setAttribute('type','button');
+                searchButton.setAttribute('id','search-btn');
+                var searchIcon = document.createElement('i');
+                searchIcon.setAttribute('class', 'fa fa-search');
+                searchButton.appendChild(searchIcon);
+
+                var resultsDiv = document.createElement('div');
+                resultsDiv.setAttribute('class', 'results')
+                resultsDiv.setAttribute('id', 'results'+nextBridgeIndex);
+                resultsDiv.appendChild(document.createElement('ul'));
+
+                wrapperDiv.appendChild(searchInput);
+                wrapperDiv.appendChild(searchButton);
+                wrapperDiv.appendChild(resultsDiv);
+                
+                containerSearchDiv.appendChild(wrapperDiv);
+
+                var confirmButton = document.createElement('button');
+                confirmButton.setAttribute('type', 'button');
+                confirmButton.setAttribute('class', 'confirm-btn');
+                confirmButton.setAttribute('id', 'confirm-btn'+nextBridgeIndex);
+                var confirmIcon = document.createElement('i');
+                confirmIcon.setAttribute('id', 'confirm-search-'+nextBridgeIndex);
+                confirmIcon.setAttribute('class', 'fas fa-sign-in-alt option-icon');
+                confirmButton.appendChild(confirmIcon);
+
+                var removeButton = document.createElement('button');
+                removeButton.setAttribute('type', 'button');
+                removeButton.setAttribute('class', 'remove-btn');
+                removeButton.setAttribute('id', 'remove-btn'+nextBridgeIndex);
+                var removeIcon = document.createElement('i');
+                removeIcon.setAttribute('id', 'remove-bridge-'+nextBridgeIndex);
+                removeIcon.setAttribute('class', 'fa fa-minus-circle option-icon');
+                removeButton.appendChild(removeIcon);
+
+                containerSearchDiv.appendChild(confirmButton);
+                containerSearchDiv.appendChild(removeButton);
+
+                var inputFeedback = document.createElement('span');
+                inputFeedback.setAttribute('hidden', 'true');
+                inputFeedback.setAttribute('class', 'input-feedback text-danger');
+                inputFeedback.setAttribute('id', 'input-feedback'+nextBridgeIndex);
+                inputFeedback.innerHTML = 'No matching records'
+                
+                this.hidden = true;
+                addBridgeLabel.hidden = true;
+
+                bridgeDiv.appendChild(bridgeHeader);
+                bridgeDiv.appendChild(containerSearchDiv);
+                bridgeDiv.appendChild(inputFeedback);
+                bridgeDiv.appendChild(document.createElement('br'));
+                bridgeDiv.appendChild(document.createElement('br'));
+
+
+                /******************************************************************************
+                ********************** Bridge x search functionality  *************************
+                ******************************************************************************/
+                searchInput.addEventListener('keyup', () => {
+                    let results = [];
+                    let input = searchInput.value;
+                    if (input.length) {
+                        results = bridgeData.filter((item) => {
+                        return item.toLowerCase().includes(input.toLowerCase());
+                        });
+                    }
+                    renderResults(results);
+                    let autoSuggestions = document.getElementsByTagName('li');
+
+                    for(let i = 0 ; i < autoSuggestions.length ; i++){
+                        let suggestion = autoSuggestions[i];
+                        suggestion.onclick = function(){
+                            searchInput.value = suggestion.innerText;
+                            wrapperDiv.classList.remove('show');
+                            removeFeedback(searchInput);
+                            inputFeedback.hidden=true;
+                        } 
+                    }
+                });
+
+                function renderResults(results) {
+                    if (!results.length) {
+                        return wrapperDiv.classList.remove('show');
+                    }
+
+                    const content = results.slice(0,7)
+                        .map((item) => {
+                        return `<li class="result">${item}</li>`;
+                        })
+                        .join('');
+
+                    wrapperDiv.classList.add('show');
+                    resultsDiv.innerHTML = `<ul>${content}</ul>`;
+                }
+
+                /******************************************************************************
+                ********************** Bridge x onclick functions  ****************************
+                ******************************************************************************/
+                removeButton.onclick = function() {
+                    var numBridges = document.getElementsByClassName("bridge").length;
+                    if(numBridges > 1){
+                        bridgeDiv.remove();
+                        updateBridgeIds();
+                        if(!awaitingConfirmation){
+                            nextBridgeIndex -= 1;
+                            numConfirmed -=1;
+                            updateConfirmationCount(numConfirmed);
+                        } else{
+                            awaitingConfirmation = false;
+                            awaitingAnyConfirmation = false;
+                            isValid = true;
+                            enableButton(document.getElementById('submit-btn-bridges'));
+                            document.getElementsByClassName('submission-feedback')[0].hidden=true;
+                        }
+                        if((numBridges-1) < 3 && !awaitingAnyConfirmation){
+                            addBridge.hidden = false;
+                            addBridgeLabel.hidden = false;
+                        }
+                    } else {
+                        alert("You must select at least one bridge");
+                    }
+                }
+                    
+                confirmButton.onclick = function(){
+                    //validate user input
+                    isValid = bridgeData.includes(searchInput.value);
+                    if(isValid){
+                        inputFeedback.hidden=true;
+                        awaitingConfirmation = false;
+                        awaitingAnyConfirmation = false;
+                        nextBridgeIndex++;
+                        numConfirmed++;
+                        updateConfirmationCount(numConfirmed);
+                        showValidFeedback(searchInput);
+                        enableButton(document.getElementById('submit-btn-bridges'));
+                        document.getElementsByClassName('submission-feedback')[0].hidden=true;
+                        searchButton.remove();
+                        this.remove();
+                        removeButton.style='margin-left: 0px;'
+                        var numBridges = document.getElementsByClassName("bridge").length;
+                        if(numBridges < 3){
+                            addBridge.hidden = false;
+                            addBridgeLabel.hidden = false;
+                        } 
+                    } else {
+                        showInvalidFeedback(searchInput);
+                        inputFeedback.hidden=false;
+                    }
+                }
+
+                return bridgeDiv;
+            }
 
             </script>
 
@@ -161,30 +342,42 @@
                 <br>
 
                 <hr>
-                <p><strong>First, select up to 3 bridges to analyze.</strong> </p>
-                <p><strong>Then, after your bridge selections are submitted, you will be prompted to provide a time period for the analysis.</strong></p>
-                <br>
-                <p>* <em>To confirm a bridge selection, click the "enter" icon to the right of the selection.</em></p>
-                <p>* <em>To remove a bridge selection, click the "dash" icon to the right of the selection.</em></p>
-                <br>  
-                <br>              
-                <h6>Select Up To 3 Bridges:</h6>
+                <div id='search-instructions'>
+                    <p><strong>First, select up to 3 bridges to analyze. Search by bridge name or number.</strong> </p>
+                    <p><strong>Then, after your bridge selections are submitted, you will be prompted to provide a time period for the analysis.</strong></p>
+                    <br>
+                    <p>* <em>To confirm a bridge selection, click the "enter" icon to the right of the selection.</em></p>
+                    <p>* <em>To remove a bridge selection, click the "dash" icon to the right of the selection.</em></p>
+                    <br>  
+                    <br>              
+                    <h6>Select Up To 3 Bridges:</h6>
+                </div>
                 <form>
                     <div id="bridges">
                         <br>
                         <div id="bridge1" class="bridge">
                             <h6>Bridge 1</h6>
-                            <p>
-                                <i style="margin-right: 0.3rem;" id='search-icon-1' class="fa fa-search option-icon" aria-hidden="true"></i>
-                                <input style="margin-right: 0.3rem;" type="text" class="search-box border" placeholder="Search for a bridge">
-                                <i style="margin-left: 0.3rem;" id="confirm-search-1" class="fas fa-sign-in-alt option-icon"></i>
-                                <i style="margin-left: 0.08rem;" hidden='true' id="remove-bridge-1" class="far fa-minus-square option-icon"></i>
-                                <br><br>
-                            </p>
+
+                            <div class="container-search" id="container-search">
+                                <div class="wrapper">
+                                    <input class="border" type="text" name="search" id="search" placeholder="Search for a bridge name or number" autocomplete="chrome-off">
+                                    <button type='button' id="search-btn"><i class="fa fa-search"></i></button>
+                                    <div class="results">
+                                        <ul>
+                                        </ul>
+                                    </div>
+                                        
+                                </div>
+                                <button  type='button' class='confirm-btn'><i id="confirm-search-1" class="fas fa-sign-in-alt option-icon"></i></button>
+                                <button  type='button' class='remove-btn' id="remove-bridge-1" ><i class="fa fa-minus-circle option-icon"></i></button>
+                            </div>
+                            <span hidden='true' class='input-feedback text-danger' id='input-feedback-1'>No matching records</span>
+                            <br><br>
+                            
                         </div>
                     </div>
-                    <i hidden='true' id="add-bridge" class="far fa-plus-square"></i>
-                    <span hidden ='true' id="add-bridge-label">&nbspAdd Another Bridge</span>
+                    <button type='button' hidden='true' class='add-bridge' id="add-bridge"><i class="far fa-plus-square"></i></button>
+                    <span  hidden='true' id="add-bridge-label">&nbspAdd Another Bridge</span>
                     <br>
                     <br>
                     <p>
@@ -192,6 +385,7 @@
                         <h6 id="confirmation-message">You have confirmed <span id="confirmation-count" class="text-danger">0</span> bridge selections.</h6> 
                         <br>
                         <button id='submit-btn-bridges' class="btn btn-secondary btn-sm disabled" type='button'>Submit Bridge Selections</button>
+                        <span hidden='true' class='submission-feedback text-danger'><em>&nbsp&nbspTo submit your selections, confirm or delete any unconfirmed selections</em></span>
                     </p>
 
                 </form>
@@ -272,6 +466,52 @@
         </div>
         
         <script>
+
+            
+            /******************************************************************************
+            ********************** Bridge 1 search functionality  *************************
+            ******************************************************************************/
+            const searchInput = document.getElementById('search');
+            const searchWrapper = document.querySelector('.wrapper');
+            const resultsWrapper = document.querySelector('.results');
+
+            searchInput.addEventListener('keyup', () => {
+                let results = [];
+                let input = searchInput.value;
+                if (input.length) {
+                    results = bridgeData.filter((item) => {
+                    return item.toLowerCase().includes(input.toLowerCase());
+                    });
+                }
+                renderResults(results);
+                let autoSuggestions = document.getElementsByTagName('li');
+
+                for(let i = 0 ; i < autoSuggestions.length ; i++){
+                    let suggestion = autoSuggestions[i];
+                    suggestion.onclick = function(){
+                        searchInput.value = suggestion.innerText;
+                        searchWrapper.classList.remove('show');
+                        removeFeedback(searchInput);
+                        document.getElementById('input-feedback-1').hidden=true;
+                    } 
+                }
+            });
+
+            function renderResults(results) {
+                if (!results.length) {
+                    return searchWrapper.classList.remove('show');
+                }
+
+                const content = results.slice(0,7)
+                    .map((item) => {
+                    return `<li class="result">${item}</li>`;
+                    })
+                    .join('');
+
+                searchWrapper.classList.add('show');
+                resultsWrapper.innerHTML = `<ul>${content}</ul>`;
+            }
+
             // global tracker vars for control flow
             nextBridgeIndex = 1;
             isValid = false;
@@ -288,24 +528,28 @@
             // elements for bridge 1
             var bridge1 = document.getElementById('bridge1');
             var confirmSearch1 = document.getElementById('confirm-search-1');
-            var searchIcon1 = document.getElementById('search-icon-1');
+            var searchButton1 = document.getElementById('search-btn');
             var addBridge = document.getElementById('add-bridge');
             var addBridgeLabel = document.getElementById('add-bridge-label');
             var removeBridge1 = document.getElementById('remove-bridge-1');
             var awaitingConfirmation1 = true;
+            awaitingAnyConfirmation = true;
 
             
             submitBridgeSelectionsButton.onclick = function() {
                 if(isValid){
-                    // remove icons from all bridge inputs so no more changes can be made
+                    document.getElementById('search-instructions').hidden = 'true';
+                    bridges.children[bridges.children.length -1].removeChild(bridges.children[bridges.children.length -1].lastChild);
+                    bridges.children[bridges.children.length -1].removeChild(bridges.children[bridges.children.length -1].lastChild);
+                    // hide icons from all bridge inputs so no more changes can be made
                     var icons = document.getElementsByClassName("option-icon");
                     for(var i = 0 ; i < icons.length ; i++){
                         icons[i].hidden = true;
                     }
-                    // hide the "submit bridge selections" button
+                    // remove the "submit bridge selections" button
                     this.remove()
 
-                    // hide the add bridge icon and label
+                    // remove the add bridge icon and label
                     addBridge.remove()
                     addBridgeLabel.remove()
            
@@ -328,22 +572,25 @@
             ******************************************************************************/
             confirmSearch1.onclick = function(){
                 //validate user input
-                isValid = bridgeNames.includes(this.parentElement.children[1].value)        
+                isValid = bridgeData.includes(searchInput.value)        
                 if(isValid){
                     awaitingConfirmation1 = false;
+                    awaitingAnyConfirmation = false;
                     nextBridgeIndex++;
                     numConfirmed++;
                     updateConfirmationCount(numConfirmed);
-                    showValidFeedback(this.parentElement.children[1]);
-                    searchIcon1.remove();
+                    showValidFeedback(searchInput);
+                    document.getElementById('input-feedback-1').hidden=true;
+                    searchButton1.remove();
                     this.remove();
-                    hasConfirmSearchIcon = false;
+                    removeBridge1.style='margin-left: 0px;'
                     addBridge.hidden = false;
                     addBridgeLabel.hidden = false;
                     removeBridge1.hidden = false;
                     enableButton(document.getElementById('submit-btn-bridges'));
                 } else {
-                    showInvalidFeedback(this.parentElement.children[1]);
+                    showInvalidFeedback(searchInput);
+                    document.getElementById('input-feedback-1').hidden=false;
                 }
             }
 
@@ -353,14 +600,11 @@
                     
                     bridge1.remove();
                     updateBridgeIds();
-                    if(!awaitingConfirmation1){
-                        nextBridgeIndex -= 1;
-                        numConfirmed -=1;
-                        updateConfirmationCount(numConfirmed);
-                    } else{
-                        awaitingConfirmation1 = false;
-                    }
-                    if((numBridges-1) < 3 && !awaitingConfirmation1){
+                    nextBridgeIndex -= 1;
+                    numConfirmed -=1;
+                    updateConfirmationCount(numConfirmed);
+                    
+                    if((numBridges-1) < 3 && !awaitingAnyConfirmation){
                         addBridge.hidden = false;
                         addBridgeLabel.hidden = false;
                     } 
@@ -372,116 +616,20 @@
             **************************************************************************/
 
             addBridge.onclick = function(){
-                var awaitingConfirmation = true;
+                awaitingAnyConfirmation = true;
                 isValid = false;
-                disableButton(document.getElementById('submit-btn-bridges'))
+                disableButton(document.getElementById('submit-btn-bridges'));
+                document.getElementsByClassName('submission-feedback')[0].hidden=false;
                 var numBridges = document.getElementsByClassName("bridge").length;
                 if(numBridges  < 3) {
-
-                    var bridgeDiv = document.createElement('div');
-                    bridgeDiv.setAttribute('id', ('bridge'+nextBridgeIndex));
-                    bridgeDiv.setAttribute('class', 'bridge');
-                    
-                    var bridgeHeader = document.createElement('h6');
-                    bridgeHeader.innerHTML = 'Bridge ' + nextBridgeIndex;
-                    
-                    var bridgeParagraph = document.createElement('p');
-                    
-                    var searchIcon = document.createElement('i');
-                    searchIcon.setAttribute('class', 'fa fa-search option-icon')
-                    searchIcon.setAttribute('aria-hidden', 'true');
-                    searchIcon.setAttribute('id', 'search-icon');
-                    searchIcon.setAttribute('style', 'margin-right: 0.3rem;');
-
-                    var searchInput = document.createElement('input');
-                    searchInput.setAttribute('style', 'margin-right: 0.3rem;');
-                    searchInput.setAttribute('type', 'text');
-                    searchInput.setAttribute('class', 'search-box border');
-                    searchInput.setAttribute('placeholder', 'Search for a bridge');
-
-                    var confirmSearchIcon = document.createElement('i');
-                    confirmSearchIcon.setAttribute('id', 'confirm-search');
-                    confirmSearchIcon.setAttribute('class', 'fas fa-sign-in-alt option-icon');
-                    confirmSearchIcon.setAttribute('style', 'margin-left: 0.3rem; margin-right: 0.6rem');
-
-                    var removeBridgeIcon = document.createElement('i');
-                    removeBridgeIcon.setAttribute('id', ('remove-bridge-'+ nextBridgeIndex) );
-                    removeBridgeIcon.setAttribute('class', 'far fa-minus-square option-icon');
-                    removeBridgeIcon.setAttribute('style', 'margin-left: 0.3rem;');
-
+                    var bridgeDiv = buildBridgeElement();
+                    bridges.append(bridgeDiv);
                     this.hidden = true;
                     addBridgeLabel.hidden = true;
-    
-                    bridgeParagraph.appendChild(searchIcon);
-                    bridgeParagraph.appendChild(searchInput);
-                    bridgeParagraph.appendChild(confirmSearchIcon);
-                    bridgeParagraph.appendChild(removeBridgeIcon);
-                    bridgeParagraph.appendChild(document.createElement('br'));
-                    bridgeParagraph.appendChild(document.createElement('br'));
-                    
-                    bridgeDiv.appendChild(bridgeHeader);
-                    bridgeDiv.appendChild(bridgeParagraph);
-                    bridges.append(bridgeDiv);
-
-
-                    /******************************************************************************
-                    ********************** Additional Bridge onclick functions  *******************
-                    ******************************************************************************/
-                    removeBridgeIcon.onclick = function() {
-                        var numBridges = document.getElementsByClassName("bridge").length;
-                        if(numBridges > 1){
-                            bridgeDiv.remove();
-                            updateBridgeIds();
-                            if(!awaitingConfirmation){
-                                nextBridgeIndex -= 1;
-                                numConfirmed -=1;
-                                updateConfirmationCount(numConfirmed);
-                            } else{
-                                awaitingConfirmation = false;
-                            }
-                            if((numBridges-1) < 3 && !awaitingConfirmation){
-                                addBridge.hidden = false;
-                                addBridgeLabel.hidden = false;
-                            }
-                        } else {
-                            alert("You must select at least one bridge");
-                        }
-                    }
-                    
-                    awaitingConfirmation = true;
-
-                    confirmSearchIcon.onclick = function(){
-                        //validate user input
-                        isValid = bridgeNames.includes(this.parentElement.children[1].value)
-                        if(isValid){
-                            awaitingConfirmation = false;
-                            nextBridgeIndex++;
-                            numConfirmed++;
-                            updateConfirmationCount(numConfirmed);
-                            showValidFeedback(this.parentElement.children[1]);
-                            enableButton(document.getElementById('submit-btn-bridges'))
-                            searchIcon.remove();
-                            this.remove();
-                            
-                            var numBridges = document.getElementsByClassName("bridge").length;
-                            if(numBridges < 3){
-                                addBridge.hidden = false;
-                                addBridgeLabel.hidden = false;
-                            } 
-                        } else {
-                            showInvalidFeedback(this.parentElement.children[1]);
-                        }
-                    }
-                    /**************************************************************************
-                    **************************************************************************/
-
                 }
             }
 
-                
-            
-
         </script>
-           
-    </body>
+  
+    </body> 
 </html>

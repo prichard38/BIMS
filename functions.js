@@ -34,7 +34,7 @@ function fetchAllBridgeData() {
                 // console.log(this.responseText);
             }
         };
-        xhr.open('POST', 'load-bridge-names.php', true);
+        xhr.open('POST', 'load-bridge-data.php', true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
         xhr.onload = function() {
