@@ -2,7 +2,7 @@
     include 'dbConfig.inc.php';
 
       
-    $sql = "SELECT BridgeName FROM Bridges";
+    $sql = "SELECT BridgeName, BridgeNo FROM Bridges";
     
     $stmt = mysqli_stmt_init($conn);
     if(!mysqli_stmt_prepare($stmt, $sql)){
@@ -14,13 +14,14 @@
         if(mysqli_num_rows($result) > 0){
             while($row = mysqli_fetch_assoc($result)){
                 $bridgeName = $row["BridgeName"];
-
-                $bridgeNames[] = array('bridgeName' => $bridgeName);
+                $bridgeNo = $row["BridgeNo"];
+                $bridgeData[] = array('bridgeName' => $bridgeName,
+                                        'bridgeNo' => $bridgeNo);
             }
-            $jsonBridgeNames = "{\"data\":";
-            $jsonBridgeNames .= json_encode($bridgeNames);
-            $jsonBridgeNames .= "}";
-            echo $jsonBridgeNames;
+            $jsonBridgeData = "{\"data\":";
+            $jsonBridgeData .= json_encode($bridgeData);
+            $jsonBridgeData .= "}";
+            echo $jsonBridgeData;
         } 
         else {
             echo "TEST";
