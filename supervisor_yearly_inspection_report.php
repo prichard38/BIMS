@@ -59,7 +59,7 @@
                                 <a id="RM" href='supervisor_yearly_inspection_report.php'>Yearly Inspection Report</a>
                             </li>
                             <li style="background-color: #5e5e5e;">
-                                <a id="RM" href='supervisor_longitudinal_analysis.php'>Longitudinal Analysis</a>
+                                <a id="RM" href='user-options-longitudinal-analysis.php'>Longitudinal Analysis</a>
                             </li>
                         </ul>
                     </li>

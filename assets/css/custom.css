@@ -992,7 +992,10 @@ thead {
   
   .results {
     padding: 0px;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
+  
   
   .results ul {margin: 0; padding: 0; }
   .results ul li {
@@ -1002,6 +1005,8 @@ thead {
     display: none;
     padding: 8px 12px;
     transition: all .5s linear;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
   
   .show .results ul li {

@@ -7,8 +7,7 @@
         die();
     }
 
-    // Later we will get thee bridge names by POST after user has selected bridges, then set them as session vars
-   $_SESSION["selectedBridgeNames"] = ['East Huntington Bridge over Ohio River'];
+    // Later these session vars will have already been set in the user-options page. these declarations will not be here.
    $_SESSION["yearBegin"] = 2016;
    $_SESSION["yearEnd"] = 2021;
 ?>
@@ -46,6 +45,10 @@
         <script>
             lastClick = 'inspectionClick';
             selectedBridgeNames = <?php echo json_encode($_SESSION['selectedBridgeNames']); ?>;
+            selectedBridgeNumbers = <?php echo json_encode($_SESSION['selectedBridgeNumbers']); ?>;
+            selectedBridgeCounties = <?php echo json_encode($_SESSION['selectedBridgeCounties']); ?>;
+            yearBegin = <?php echo json_encode($_SESSION['yearBegin']); ?>;
+            yearEnd = <?php echo json_encode($_SESSION['yearEnd']); ?>;
             bridgeNames = [];
             inspectionData = [];
             ratings = [];
@@ -80,7 +83,7 @@
                                 <a id="RM" href='supervisor_yearly_inspection_report.php'>Yearly Inspection Report</a>
                             </li>
                             <li style="background-color: #5e5e5e;">
-                                <a id="RM" href='supervisor_longitudinal_analysis.php'>Longitudinal Analysis</a>
+                                <a id="RM" href='user-options-longitudinal-analysis.php'>Longitudinal Analysis</a>
                             </li>
                         </ul>
                     </li>
@@ -123,8 +126,10 @@
                             <div class="col-md-12">
                               <div class="card">
                                 <div class="card-header">
-                                  <h5 class="card-title">Longitudinal Analysis (2016 - 2021)</h5>
-                                  
+                                  <h5 id=la-card-title class="card-title"></h5>
+                                  <script>
+                                      document.getElementById('la-card-title').innerHTML = `Longitudinal Analysis (${yearBegin} - ${yearEnd})`;
+                                  </script>
                                   <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                       <i class="fas fa-minus"></i>
@@ -181,18 +186,18 @@
                                                 </tr>
                                                 <tr id="bridge1">
                                                     <td id="bridge-name-1" class="bridge-name txtl"></td>
-                                                    <td class="bridge-no txtl"></td>
-                                                    <td class="txtl"></td>
+                                                    <td id="bridge-number-1" class="bridge-no txtl"></td>
+                                                    <td id="bridge-county-1" class="txtl"></td>
                                                 </tr>
-                                                <tr id="bridge2">
+                                                <tr hidden=true id="bridge2">
                                                     <td id="bridge-name-2" class="bridge-name txtl"></td>
-                                                    <td class="bridge-no txtl"></td>
-                                                    <td class="txtl"></td>
+                                                    <td id="bridge-number-2" class="bridge-no txtl"></td>
+                                                    <td id="bridge-county-2" class="txtl"></td>
                                                 </tr>
-                                                <tr id="bridge3">
+                                                <tr hidden=true id="bridge3">
                                                     <td id="bridge-name-3" class="bridge-name txtl"></td>
-                                                    <td class="bridge-no txtl"></td>
-                                                    <td class="txtl"></td>
+                                                    <td id="bridge-number-3" class="bridge-no txtl"></td>
+                                                    <td id="bridge-county-3" class="txtl"></td>
                                                 </tr>
                                                 <tr class="ttlcolor">
                                                     <td></td>
@@ -864,7 +869,6 @@
                 fetchInspections(selectedBridgeNames[0]).then(function(response) {            
                     $(".tbox").not("#rm_t1").hide();
                     if(!$('#rm_t1').is(':visible') || ($('#rm_t1').is(':visible') && lastClick == 'inspectionClick')){
-                        console.log(response.data);
                         loadTable('bridge1', response.data);
                         
                         
@@ -886,7 +890,6 @@
                 fetchInspections(selectedBridgeNames[1]).then(function(response) {            
                     $(".tbox").not("#rm_t2").hide();
                     if(!$('#rm_t2').is(':visible') || ($('#rm_t2').is(':visible') && lastClick == 'inspectionClick')){
-                        console.log(response.data);
                         loadTable('bridge2', response.data);
                         
                         
@@ -907,7 +910,6 @@
                 fetchInspections(selectedBridgeNames[2]).then(function(response) {            
                     $(".tbox").not("#rm_t3").hide();
                     if(!$('#rm_t3').is(':visible') || ($('#rm_t3').is(':visible') && lastClick == 'inspectionClick')){
-                        console.log(response.data);
                         loadTable('bridge3', response.data);
                         
                         
@@ -929,13 +931,18 @@
         function setBridgeHTML(){
             let colors = ['darkgrey', 'navy', 'steelblue'];
             for(let i = 0 ; i < selectedBridgeNames.length ; i++){
-                let id = 'bridge-name-'+(i+1);
-                document.getElementById(`${id}`).innerHTML = `<i class="fas fa-circle" style="color: ${colors[i]};"></i> ${selectedBridgeNames[i]}`;
+                let nameId = 'bridge-name-'+(i+1);
+                let numberId = 'bridge-number-'+(i+1);
+                let countyId = 'bridge-county-'+(i+1);
+                let rowId = 'bridge'+(i+1);
+                document.getElementById(`${nameId}`).innerHTML = `<i class="fas fa-circle" style="color: ${colors[i]};"></i> ${selectedBridgeNames[i]}`;
+                document.getElementById(`${rowId}`).hidden=false;
+                document.getElementById(`${numberId}`).innerHTML = `${selectedBridgeNumbers[i]}`;
+                document.getElementById(`${countyId}`).innerHTML = `${selectedBridgeCounties[i]}`;
             }
         }
         setBridgeHTML();
 
-        //TODO: set bridge numbers and counties
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>

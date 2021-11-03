@@ -8,7 +8,6 @@
     // }
 
     // Later we will get thee bridge names by POST after user has selected bridges, then set them as session vars
-   $_SESSION["selectedBridgeNames"] = ['Cane Hill Bridge over Little Red River', 'Robert C. Byrd Bridge over Ohio River', 'East Huntington Bridge over Ohio River'];
    $_SESSION["yearBegin"] = [2016];
    $_SESSION["yearEnd"] = [2021];
 ?>
@@ -49,7 +48,7 @@
             fetchAllBridgeData().then(
                 (res) => {
                     res.data.forEach(obj => {
-                    bridgeData.push(obj['bridgeNo'] + ' : ' + obj['bridgeName'])
+                    bridgeData.push(obj['bridgeNo'] + ' : ' + obj['bridgeName'] + ', ' + obj['countyName'] + ' County');
                 });
             })
         </script>
@@ -104,8 +103,14 @@
 
             function updateBridgeIds(){
                 var bridges = document.getElementsByClassName("bridge");
+                var inputElements = document.getElementsByTagName("input");
                 for(var i = 0 ; i < bridges.length ; i++){
+                    // set bridge div id
+                    bridges[i].setAttribute("id", "bridge"+(i+1))
+                    // set the header for bridge
                     bridges[i].children[0].innerHTML = "Bridge " + (i+1);
+                    // set the search input id
+                    inputElements[i].setAttribute("id", "search"+(i+1))
                 }
             }
 
@@ -141,6 +146,7 @@
 
                 var searchInput = document.createElement('input');
                 searchInput.setAttribute('id', 'search'+nextBridgeIndex);
+                searchInput.setAttribute('name', 'search'+nextBridgeIndex);
                 searchInput.setAttribute('type', 'text');
                 searchInput.setAttribute('class', 'border');
                 searchInput.setAttribute('placeholder', 'Search for a bridge name/number');
@@ -320,13 +326,13 @@
         <div class="sidebar">
             <div class="menubar">
                 <ul class="menu">
-                    <li style="background-color: #5e5e5e;"><a id="RM" href='supervisor_longitudinal_analysis.php'>Report Management</a>
+                    <li style="background-color: #5e5e5e;"><a id="RM" href='supervisor_yearly_inspection_report.php'>Report Management</a>
                         <ul class="submenu">
                             <li style="background-color: #5e5e5e;">
                                 <a id="RM" href='supervisor_yearly_inspection_report.php'>Yearly Inspection Report</a>
                             </li>
                             <li style="background-color: #5e5e5e;">
-                                <a id="RM" href='supervisor_longitudinal_analysis.php'>Longitudinal Analysis</a>
+                                <a id="RM" href='user-options-longitudinal-analysis.php'>Longitudinal Analysis</a>
                             </li>
                         </ul>
                     </li>
@@ -360,7 +366,7 @@
 
                             <div class="container-search" id="container-search">
                                 <div class="wrapper">
-                                    <input class="border" type="text" name="search" id="search" placeholder="Search for a bridge name or number" autocomplete="chrome-off">
+                                    <input class="border" type="text" name="search1" id="search1" placeholder="Search for a bridge name or number" autocomplete="chrome-off">
                                     <button type='button' id="search-btn"><i class="fa fa-search"></i></button>
                                     <div class="results">
                                         <ul>
@@ -471,7 +477,7 @@
             /******************************************************************************
             ********************** Bridge 1 search functionality  *************************
             ******************************************************************************/
-            const searchInput = document.getElementById('search');
+            const searchInput = document.getElementById('search1');
             const searchWrapper = document.querySelector('.wrapper');
             const resultsWrapper = document.querySelector('.results');
 
@@ -511,6 +517,8 @@
                 searchWrapper.classList.add('show');
                 resultsWrapper.innerHTML = `<ul>${content}</ul>`;
             }
+            /**************************************************************************
+            **************************************************************************/
 
             // global tracker vars for control flow
             nextBridgeIndex = 1;
@@ -557,12 +565,39 @@
                     document.getElementById('begin-year').hidden = false;
                     document.getElementById('timeframe-instructions').hidden = false;
                     document.getElementById('submit-btn-years').hidden = false;
+
+                    var inputElements = document.getElementsByTagName("input");
+                    var bridgeNames = [];
+                    var bridgeNumbers = [];
+                    var bridgeCounties = [];
+                    for(var i = 0 ; i < inputElements.length ; i++){
+                        var splitData = inputElements[i].value.split(":");
+                        bridgeNumbers.push(splitData[0].trim());
+                        var nameAndCounty = splitData[1].split(",");
+                        bridgeNames.push(nameAndCounty[0].trim());
+                        bridgeCounties.push(nameAndCounty[1].trim());
+                    }
+                    $(document).ready(function() {
+                        $.ajax({
+                            type: 'POST',
+                            url: 'set-bridge-session-vars.php',
+                            data: {selectedBridgeNames : JSON.stringify(bridgeNames), selectedBridgeNumbers : JSON.stringify(bridgeNumbers), selectedBridgeCounties: JSON.stringify(bridgeCounties)},
+                            dataType: "json",
+                            success: function(res){
+                                if(!res){
+                                    console.warn("Could not submit selected bridge data");
+                                }
+                            },
+                            error: function(res){
+                                console.warn(res)
+                            }
+                        })
+                    })
                 }
             }
 
             submitButtonYear.onclick = function(){
-               // TODO: Get the bridge names, begin year, and end year and create PHP Session variables.
-               // $_SESSION["selectedBridgeNames"] $_SESSION["yearBegin"] $_SESSION["yearEnd"]
+                //TODO: use AJAX to POST From and To years selections and call php script to set session vars for beginYear and endYear         
             }
 
 
