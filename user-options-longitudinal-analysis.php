@@ -56,6 +56,8 @@
                     bridgeData.push(obj['bridgeNo'] + ' : ' + obj['bridgeName'] + ', ' + obj['countyName'] + ' County');
                 });
             })
+
+            bridgesSoFar = [];
         </script>
 
         <script>
@@ -92,11 +94,12 @@
                 element.classList.add("border-success");
             }
 
-            function showInvalidFeedback(element){
+            function showInvalidFeedback(element, feedbackMessageElement){
                 element.disabled=false;
                 element.classList.add("border-danger");
                 element.classList.add("border-2");
                 element.classList.remove("border-success");
+                feedbackMessageElement.hidden=false;
             }
             
             function removeFeedback(element){
@@ -197,18 +200,25 @@
                 containerSearchDiv.appendChild(confirmButton);
                 containerSearchDiv.appendChild(removeButton);
 
-                let inputFeedback = document.createElement('span');
-                inputFeedback.setAttribute('hidden', 'true');
-                inputFeedback.setAttribute('class', 'input-feedback text-danger');
-                inputFeedback.setAttribute('id', 'input-feedback'+nextBridgeIndex);
-                inputFeedback.innerHTML = 'No matching records'
+                let noMatchFeedback = document.createElement('span');
+                noMatchFeedback.setAttribute('hidden', 'true');
+                noMatchFeedback.setAttribute('class', 'input-feedback text-danger');
+                noMatchFeedback.setAttribute('id', 'no-match-feedback'+nextBridgeIndex);
+                noMatchFeedback.innerHTML = 'No matching records'
+                
+                let duplicateFeedback = document.createElement('span');
+                duplicateFeedback.setAttribute('hidden', 'true');
+                duplicateFeedback.setAttribute('class', 'input-feedback text-danger');
+                duplicateFeedback.setAttribute('id', 'duplicate-feedback'+nextBridgeIndex);
+                duplicateFeedback.innerHTML = 'Cannot confirm duplicate bridge selection'
                 
                 this.hidden = true;
                 addBridgeLabel.hidden = true;
 
                 bridgeDiv.appendChild(bridgeHeader);
                 bridgeDiv.appendChild(containerSearchDiv);
-                bridgeDiv.appendChild(inputFeedback);
+                bridgeDiv.appendChild(noMatchFeedback);
+                bridgeDiv.appendChild(duplicateFeedback);
                 bridgeDiv.appendChild(document.createElement('br'));
                 bridgeDiv.appendChild(document.createElement('br'));
 
@@ -233,7 +243,8 @@
                             searchInput.value = suggestion.innerText;
                             wrapperDiv.classList.remove('show');
                             removeFeedback(searchInput);
-                            inputFeedback.hidden=true;
+                            noMatchFeedback.hidden=true;
+                            duplicateFeedback.hidden=true;
                         } 
                     }
                 });
@@ -262,6 +273,7 @@
                         bridgeDiv.remove();
                         updateBridgeIds();
                         if(!awaitingConfirmation){
+                            bridgesSoFar.splice(bridgesSoFar.indexOf(searchInput.value), 1)
                             nextBridgeIndex -= 1;
                             numConfirmed -=1;
                             updateConfirmationCount(numConfirmed);
@@ -283,9 +295,23 @@
                     
                 confirmButton.onclick = function(){
                     //validate user input
-                    isValid = bridgeData.includes(searchInput.value);
+                    let inputElements = document.getElementsByTagName("input");
+                    if(bridgeData.includes(searchInput.value)){
+                        if(!bridgesSoFar.includes(searchInput.value)){
+                            isValid = true;
+                            hasDuplicate = false;
+                        } else{
+                            isValid = false;
+                            hasDuplicate = true;
+                        }
+                    } else{
+                        isValid = false;
+                        hasDuplicate = false;
+                    }
                     if(isValid){
-                        inputFeedback.hidden=true;
+                        bridgesSoFar.push(searchInput.value)
+                        noMatchFeedback.hidden=true;
+                        duplicateFeedback.hidden=true;
                         awaitingConfirmation = false;
                         awaitingAnyConfirmation = false;
                         nextBridgeIndex++;
@@ -303,8 +329,11 @@
                             addBridgeLabel.hidden = false;
                         } 
                     } else {
-                        showInvalidFeedback(searchInput);
-                        inputFeedback.hidden=false;
+                        if(hasDuplicate){
+                            showInvalidFeedback(searchInput, duplicateFeedback);
+                        } else{
+                            showInvalidFeedback(searchInput, noMatchFeedback);
+                        }
                     }
                 }
 
@@ -383,7 +412,8 @@
                                 <button  type='button' class='confirm-btn btn btn-primary btn-sm' id="confirm-search-1">Confirm Selection</button>
                                 <button  type='button' class='remove-btn' id="remove-bridge-1" ><i class="fa fa-minus-circle option-icon"></i></button>
                             </div>
-                            <span hidden='true' class='input-feedback text-danger' id='input-feedback-1'>No matching records</span>
+                            <span hidden='true' class='input-feedback text-danger' id='no-match-feedback-1'>No matching records</span>
+                            <span hidden='true' class='input-feedback text-danger' id='duplicate-feedback-1'>Cannot confirm duplicate bridge selection</span>
                             <br><br>
                             
                         </div>
@@ -507,7 +537,8 @@
                         searchInput.value = suggestion.innerText;
                         searchWrapper.classList.remove('show');
                         removeFeedback(searchInput);
-                        document.getElementById('input-feedback-1').hidden=true;
+                        document.getElementById('no-match-feedback-1').hidden=true;
+                        document.getElementById('duplicate-feedback-1').hidden=true;
                     } 
                 }
             });
@@ -532,6 +563,7 @@
             // global tracker lets for control flow
             nextBridgeIndex = 1;
             isValid = false;
+            hasDuplicate = false;
             numConfirmed = 0;
             
             
@@ -654,15 +686,27 @@
             ******************************************************************************/
             confirmSearch1.onclick = function(){
                 //validate user input
-                isValid = bridgeData.includes(searchInput.value)        
+                if(bridgeData.includes(searchInput.value)){
+                        if(!bridgesSoFar.includes(searchInput.value)){
+                            isValid = true;
+                            hasDuplicate = false;
+                        } else{
+                            isValid = false;
+                            hasDuplicate = true;
+                        }
+                } else{
+                    isValid = false;
+                }      
                 if(isValid){
+                    bridgesSoFar.push(searchInput.value)
                     awaitingConfirmation1 = false;
                     awaitingAnyConfirmation = false;
                     nextBridgeIndex++;
                     numConfirmed++;
                     updateConfirmationCount(numConfirmed);
                     showValidFeedback(searchInput);
-                    document.getElementById('input-feedback-1').hidden=true;
+                    document.getElementById('no-match-feedback-1').hidden=true;
+                    document.getElementById('duplicate-feedback-1').hidden=true;
                     searchButton1.remove();
                     this.remove();
                     removeBridge1.style='margin-left: 0px;'
@@ -671,8 +715,11 @@
                     removeBridge1.hidden = false;
                     enableButton(document.getElementById('submit-btn-bridges'));
                 } else {
-                    showInvalidFeedback(searchInput);
-                    document.getElementById('input-feedback-1').hidden=false;
+                    if(hasDuplicate){
+                        showInvalidFeedback(searchInput, document.getElementById('duplicate-feedback-1'));
+                    } else{
+                        showInvalidFeedback(searchInput, document.getElementById('no-match-feedback-1'));
+                    }
                 }
             }
 
@@ -680,6 +727,7 @@
                 let numBridges = document.getElementsByClassName("bridge").length
                 if(numBridges > 1){
                     
+                    bridgesSoFar.splice(bridgesSoFar.indexOf(document.getElementById('search1').value), 1)
                     bridge1.remove();
                     updateBridgeIds();
                     nextBridgeIndex -= 1;
