@@ -18,14 +18,20 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <script src="functions.js"></script>
+        
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
         <link href="plugins/components.css" rel="stylesheet">
         <script src="https://kit.fontawesome.com/7b2b0481fc.js" crossorigin="anonymous"></script>
+        
         <!-- Custom CSS -->
         <link rel="stylesheet" href="assets/css/custom.css">
+        
         <!-- jQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+       
         <!-- Table Design -->
         <script type="text/javascript" src="plugins/DataTables/datatables.min.js"></script>
         <link rel="stylesheet" type="text/css" href="plugins/DataTables/datatables.min.css"/>
@@ -35,7 +41,6 @@
         -->
         <!-- 3D -->
         <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-        <script src="functions.js"></script>
 
         <title>Bridge Management</title>
     </head>
@@ -521,6 +526,10 @@
         <!-- Cards -->
         <!--<script src="plugins/CardWidget.js"></script>-->
 
+        <script>        
+            setBridgeHTML();
+        </script>
+        
         <!-- Charts -->
         <script>
 
@@ -632,7 +641,6 @@
                             var pointColorsArray = getPointColors(ratingsArray);
                             pointColors.push(pointColorsArray);
                             
-                            // var bridgeWithNoInspections = document.getElementById('bridge'+(i+1));
                             renderInspectionlessBridgeHTML(document.getElementById('bridge'+(i+1)))
                             alert("There are no inspections for " + name + " for the specified timeframe.")
                           
@@ -950,60 +958,6 @@
                 })
             });
         });
-    </script>
-
-    <script>
-        function setBridgeHTML(){
-            let colors = ['darkgrey', 'navy', 'steelblue'];
-            for(let i = 0 ; i < selectedBridgeNames.length ; i++){
-                let nameId = 'bridge-name-'+(i+1);
-                let numberId = 'bridge-number-'+(i+1);
-                let countyId = 'bridge-county-'+(i+1);
-                let rowId = 'bridge'+(i+1);
-                document.getElementById(`${nameId}`).innerHTML = `<i id="bridge-icon-${i+1}" class="fas fa-circle" style="color: ${colors[i]};"></i> ${selectedBridgeNames[i]}`;
-                document.getElementById(`${rowId}`).hidden=false;
-                document.getElementById(`${numberId}`).innerHTML = `${selectedBridgeNumbers[i]}`;
-                document.getElementById(`${countyId}`).innerHTML = `${selectedBridgeCounties[i]}`;
-            }
-        }
-        setBridgeHTML();
-
-        function renderInspectionlessBridgeHTML(bridgeElementWithNoInspections){
-            bridgeElementWithNoInspections.classList.add('text');
-            bridgeElementWithNoInspections.classList.add('text-danger');
-            bridgeElementWithNoInspections.setAttribute('style', 'font-style: italic;')
-        }
-
-        function fillMissingInspections(bridgeName, bridgeInspectionsJsonObject){
-            var inspectionYears = [];
-            /* The "corrected" inspections data with null insertion for missing inspections. 
-                * This is required for chart.js line chart to render line correctly with missing inspections.*/
-            var correctedInspections = {data:[]};
-            
-            // Get all inspection years that exist in inspection data for this bridge
-            for(var i = 0 ; i < bridgeInspectionsJsonObject.data.length ; i++){
-                inspectionYears.push(parseInt(bridgeInspectionsJsonObject.data[i]['finishedDate'].slice(0,4)));
-            }
-
-            // get the years for which there are missing inspections by filtering against selected years timeframe array
-            var difference = years.filter(year => !inspectionYears.includes(parseInt(year)));
-            
-            // fill correctedInspections, filling in null values where there are missing inspections
-            for(var j = 0 ; j < years.length ; j++){
-                if(difference.includes(years[j])){
-                    var index = difference.indexOf(years[j]);
-                    if(index != -1){
-                        difference.splice(index, 1)
-                    }
-                    correctedInspections.data[j] = null;
-                } else{
-                    var nextInsp = bridgeInspectionsJsonObject.data.shift();
-                    correctedInspections.data[j] = nextInsp;
-                }
-            }
-            return correctedInspections;
-        }
-        
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>

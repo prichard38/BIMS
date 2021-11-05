@@ -161,3 +161,53 @@ function getYears(beginYear, endYear){
     }
     return years;
 }
+
+function setBridgeHTML(){
+    let colors = ['darkgrey', 'navy', 'steelblue'];
+    for(let i = 0 ; i < selectedBridgeNames.length ; i++){
+        let nameId = 'bridge-name-'+(i+1);
+        let numberId = 'bridge-number-'+(i+1);
+        let countyId = 'bridge-county-'+(i+1);
+        let rowId = 'bridge'+(i+1);
+        document.getElementById(`${nameId}`).innerHTML = `<i id="bridge-icon-${i+1}" class="fas fa-circle" style="color: ${colors[i]};"></i> ${selectedBridgeNames[i]}`;
+        document.getElementById(`${rowId}`).hidden=false;
+        document.getElementById(`${numberId}`).innerHTML = `${selectedBridgeNumbers[i]}`;
+        document.getElementById(`${countyId}`).innerHTML = `${selectedBridgeCounties[i]}`;
+    }
+}
+
+function renderInspectionlessBridgeHTML(bridgeElementWithNoInspections){
+    bridgeElementWithNoInspections.classList.add('text');
+    bridgeElementWithNoInspections.classList.add('text-danger');
+    bridgeElementWithNoInspections.setAttribute('style', 'font-style: italic;')
+}
+
+function fillMissingInspections(bridgeName, bridgeInspectionsJsonObject){
+    var inspectionYears = [];
+    /* The "corrected" inspections data with null insertion for missing inspections. 
+        * This is required for chart.js line chart to render line correctly with missing inspections.*/
+    var correctedInspections = {data:[]};
+    
+    // Get all inspection years that exist in inspection data for this bridge
+    for(var i = 0 ; i < bridgeInspectionsJsonObject.data.length ; i++){
+        inspectionYears.push(parseInt(bridgeInspectionsJsonObject.data[i]['finishedDate'].slice(0,4)));
+    }
+
+    // get the years for which there are missing inspections by filtering against selected years timeframe array
+    var difference = years.filter(year => !inspectionYears.includes(parseInt(year)));
+    
+    // fill correctedInspections, filling in null values where there are missing inspections
+    for(var j = 0 ; j < years.length ; j++){
+        if(difference.includes(years[j])){
+            var index = difference.indexOf(years[j]);
+            if(index != -1){
+                difference.splice(index, 1)
+            }
+            correctedInspections.data[j] = null;
+        } else{
+            var nextInsp = bridgeInspectionsJsonObject.data.shift();
+            correctedInspections.data[j] = nextInsp;
+        }
+    }
+    return correctedInspections;
+}

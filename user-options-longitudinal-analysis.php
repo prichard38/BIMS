@@ -18,15 +18,20 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script src="functions.js"></script>
+        
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
         <link href="plugins/components.css" rel="stylesheet">
         <script src="https://kit.fontawesome.com/7b2b0481fc.js" crossorigin="anonymous"></script>
+        
         <!-- Custom CSS -->
         <link rel="stylesheet" href="assets/css/custom.css">
         
         <!-- jQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+        
         <!-- Table Design -->
         <script type="text/javascript" src="plugins/DataTables/datatables.min.js"></script>
         <link rel="stylesheet" type="text/css" href="plugins/DataTables/datatables.min.css"/>
@@ -36,7 +41,6 @@
         -->
         <!-- 3D -->
         <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-        <script src="functions.js"></script>
 
         <title>Bridge Management</title>
     </head>
