@@ -2,10 +2,10 @@
 
     session_start();
 
-    // if($_SESSION["loggedAs"] != "Supervisor"){
-    //     header("Location:access_denied.php?error=supervisorsonly");
-    //     die();
-    // }
+    if($_SESSION["loggedAs"] != "Supervisor"){
+        header("Location:access_denied.php?error=supervisorsonly");
+        die();
+    }
 
     // Later we will get thee bridge names by POST after user has selected bridges, then set them as session vars
    $_SESSION["yearBegin"] = [2016];
@@ -174,14 +174,16 @@
                 
                 containerSearchDiv.appendChild(wrapperDiv);
 
+                //<button  type='button' class='confirm-btn btn btn-primary btn-sm' id="confirm-search-1">Confirm Selection</button>
+
                 var confirmButton = document.createElement('button');
                 confirmButton.setAttribute('type', 'button');
                 confirmButton.setAttribute('class', 'confirm-btn');
-                confirmButton.setAttribute('id', 'confirm-btn'+nextBridgeIndex);
-                var confirmIcon = document.createElement('i');
-                confirmIcon.setAttribute('id', 'confirm-search-'+nextBridgeIndex);
-                confirmIcon.setAttribute('class', 'fas fa-sign-in-alt option-icon');
-                confirmButton.appendChild(confirmIcon);
+                confirmButton.classList.add('btn');
+                confirmButton.classList.add('btn-primary');
+                confirmButton.classList.add('btn-sm');
+                confirmButton.setAttribute('id', 'confirm-search-'+nextBridgeIndex);
+                confirmButton.innerHTML= 'Confirm Selection'
 
                 var removeButton = document.createElement('button');
                 removeButton.setAttribute('type', 'button');
@@ -356,8 +358,8 @@
                     <p><strong>First, select up to 3 bridges to analyze. Search by bridge name or number.</strong> </p>
                     <p><strong>Then, after your bridge selections are submitted, you will be prompted to provide a time period for the analysis.</strong></p>
                     <br>
-                    <p>* <em>To confirm a bridge selection, click the "enter" icon to the right of the selection.</em></p>
-                    <p>* <em>To remove a bridge selection, click the "dash" icon to the right of the selection.</em></p>
+                    <p>* <em>Selections must be confirmed to add additional bridges.</em></p>
+                    <p>* <em>To remove a bridge selection, click the "minus" icon to the right of the selection.</em></p>
                     <br>  
                     <br>              
                     <h6>Select Up To 3 Bridges:</h6>
@@ -378,7 +380,7 @@
                                     </div>
                                         
                                 </div>
-                                <button  type='button' class='confirm-btn'><i id="confirm-search-1" class="fas fa-sign-in-alt option-icon"></i></button>
+                                <button  type='button' class='confirm-btn btn btn-primary btn-sm' id="confirm-search-1">Confirm Selection</button>
                                 <button  type='button' class='remove-btn' id="remove-bridge-1" ><i class="fa fa-minus-circle option-icon"></i></button>
                             </div>
                             <span hidden='true' class='input-feedback text-danger' id='input-feedback-1'>No matching records</span>
@@ -394,7 +396,9 @@
                         <br>
                         <h6 id="confirmation-message">You have confirmed <span id="confirmation-count" class="text-danger">0</span> bridge selections.</h6> 
                         <br>
+                        <button hidden='true' id='edit-btn-bridges' class="btn btn-primary btn-sm" type='button'>Edit Bridge Selections</button>
                         <button id='submit-btn-bridges' class="btn btn-secondary btn-sm disabled" type='button'>Submit Bridge Selections</button>
+                        <span hidden='true' style="font-size: 0.85em;" class='edit-feedback text-danger'><em>&nbsp&nbspChanging your bridge selections will reset the selected timeframe</em></span>
                         <span hidden='true' class='submission-feedback text-danger'><em>&nbsp&nbspTo submit your selections, confirm or delete any unconfirmed selections</em></span>
                     </p>
 
@@ -469,6 +473,7 @@
                         </span>
                         <br>
                         <br>
+                        <br>
                         <button hidden=true id='submit-btn-years' class="btn btn-secondary btn-sm disabled" type='submit'>Submit Timeframe Selection</button>
                     </p>
                 </form>
@@ -533,6 +538,8 @@
             // submit buttons
             var submitBridgeSelectionsButton = document.getElementById('submit-btn-bridges');
             var submitButtonYear = document.getElementById('submit-btn-years');
+            var editBridgesButton = document.getElementById('edit-btn-bridges');
+
             
             // bridges element. parent to all bridge divs
             var bridges = document.getElementById('bridges');
@@ -550,7 +557,7 @@
             
             submitBridgeSelectionsButton.onclick = function() {
                 if(isValid){
-                    document.getElementById('search-instructions').hidden = 'true';
+                    document.getElementById('search-instructions').hidden = true;
                     bridges.children[bridges.children.length -1].removeChild(bridges.children[bridges.children.length -1].lastChild);
                     bridges.children[bridges.children.length -1].removeChild(bridges.children[bridges.children.length -1].lastChild);
                     // hide icons from all bridge inputs so no more changes can be made
@@ -558,12 +565,14 @@
                     for(var i = 0 ; i < icons.length ; i++){
                         icons[i].hidden = true;
                     }
-                    // remove the "submit bridge selections" button
-                    this.remove()
+                    // hide the "submit bridge selections" button
+                    this.hidden = true;
+                    editBridgesButton.hidden=false;
+                    document.getElementsByClassName('edit-feedback')[0].hidden=false;
 
-                    // remove the add bridge icon and label
-                    addBridge.remove()
-                    addBridgeLabel.remove()
+                    // hide the add bridge icon and label
+                    addBridge.hidden = true;
+                    addBridgeLabel.hidden = true;
            
                     // show the begin year selector
                     document.getElementById('begin-year').hidden = false;
@@ -598,6 +607,34 @@
                         })
                     })
                 }
+            }
+
+            editBridgesButton.onclick = function(){
+                document.getElementById('search-instructions').hidden = false;
+                bridges.children[bridges.children.length -1].appendChild(document.createElement('br'));
+                bridges.children[bridges.children.length -1].appendChild(document.createElement('br'));
+                // show icons from all bridge inputs so changes can be made
+                var icons = document.getElementsByClassName("option-icon");
+                for(var i = 0 ; i < icons.length ; i++){
+                    icons[i].hidden = false;
+                }
+                // show the "submit bridge selections" button
+                this.hidden = true;
+                submitBridgeSelectionsButton.hidden=false;
+                document.getElementsByClassName('edit-feedback')[0].hidden=true;
+
+
+                // show the add bridge icon and label if less than 3 bridges
+                var numBridges = document.getElementsByClassName("bridge").length
+                if(numBridges < 3){
+                    addBridge.hidden = false;
+                    addBridgeLabel.hidden = false;
+                }
+        
+                // hide the begin year selector
+                document.getElementById('begin-year').hidden = true;
+                document.getElementById('timeframe-instructions').hidden = true;
+                document.getElementById('submit-btn-years').hidden = true;
             }
 
             submitButtonYear.onclick = function(){

@@ -69,8 +69,17 @@ form {
     color: #5e5e5e;
 }
 
+
+.above-card-button{
+    margin-top: 15px;
+    margin-bottom: 0px;
+    margin-right: 16px;
+    display: flex;
+    justify-content: flex-end;
+}
+
 .contents {
-    padding: 10px 20px;
+    padding: 0px 20px;
     margin: 0;
 }
 
@@ -908,7 +917,7 @@ thead {
 
 .remove-btn {
     position: absolute;
-    margin-left: 30px;
+    margin-left: 160px;
     border: none;
     background-color: transparent;
     color: #b92a2a;
@@ -918,11 +927,6 @@ thead {
 
 .confirm-btn {
     position: absolute;
-    border: none;
-    background-color: transparent;
-    color: #3a414e;
-    line-height: 30px;
-    font-size: 16px;
 }
 
 .add-bridge{
@@ -951,78 +955,80 @@ thead {
     min-width: 425px;  
     margin-right: 10px;
 
-  }
+}
   
-  .bridge input {
-    width:100%;
-    border: none;
-    height: 30px;
-    border-radius: 5px;
-    padding: 0px 40px 0px 10px;
-    font-size: 16px;
-    box-shadow: 0px 1px 4px rgba(0,0,0,0.1);
-  }
-  
-  .bridge input:focus {
-    outline: none;
-  }
-  
-  #search-btn {
-    position: absolute;
-    border: none;
-    background: none;
-    top: 0;
-    right: 0;
-    height: 30px;
-    line-height: 30px;
-    padding: 0;
-    width: 30px;
-  }
-  
-  #search-btn:focus {
-    outline: none;
-  }
-  
-  #search-btn i {
-    width: 100%;
-    color: #6d7b98;
-    line-height: 30px;
-    font-size: 16px;
-  }
-  
-  .results {
-    padding: 0px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-  }
-  
-  
-  .results ul {margin: 0; padding: 0; }
-  .results ul li {
-    list-style: none;
-    border-radius: 3px;
-    opacity: 0;
-    display: none;
-    padding: 8px 12px;
-    transition: all .5s linear;
-    text-overflow: ellipsis;
-    overflow: hidden;
-  }
-  
-  .show .results ul li {
-    opacity: 1;
-    display: block;
-  }
-  
-  .show .results {
-    padding: 10px;
-  }
-  
-  .results ul li:hover {
-    background: #ececec
-  }
+.bridge input {
+width:100%;
+border: none;
+height: 30px;
+border-radius: 5px;
+padding: 0px 40px 0px 10px;
+font-size: 16px;
+box-shadow: 0px 1px 4px rgba(0,0,0,0.1);
+}
 
-  .submission-feedback, .input-feedback{
-      font-size: 0.85em;
-  }
+.bridge input:focus {
+outline: none;
+}
+
+#search-btn {
+position: absolute;
+border: none;
+background: none;
+top: 0;
+right: 0;
+height: 30px;
+line-height: 30px;
+padding: 0;
+width: 30px;
+}
+
+#search-btn:focus {
+outline: none;
+}
+
+#search-btn i {
+width: 100%;
+color: #6d7b98;
+line-height: 30px;
+font-size: 16px;
+}
+
+.results {
+padding: 0px;
+text-overflow: ellipsis;
+overflow: hidden;
+}
+
+
+.results ul {margin: 0; padding: 0; }
+.results ul li {
+list-style: none;
+border-radius: 3px;
+opacity: 0;
+display: none;
+padding: 8px 12px;
+transition: all .5s linear;
+text-overflow: ellipsis;
+overflow: hidden;
+}
+
+.show .results ul li {
+opacity: 1;
+display: block;
+}
+
+.show .results {
+padding: 10px;
+}
+
+.results ul li:hover {
+background: #ececec
+}
+
+.submission-feedback, 
+.input-feedback, 
+.edit-feedback{
+    font-size: 0.85em;
+}
 

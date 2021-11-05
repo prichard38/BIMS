@@ -96,7 +96,14 @@
         <!-- Search Params -->
         <div class="container">
             <div class="main_title">
-                <h5> Report Management </h5>
+                <div class='la-header'>
+                    <h5> Report Management </h5>
+                    <form action="reset-session-longitudinal-analysis.php" method="POST">
+                        <div class='above-card-button'>
+                            <button name="new-report-btn" id='new-report-btn' class="btn btn-primary btn-sm" type='submit'>New Longitudinal Analysis</button>
+                        </div>
+                    </form>
+                </div>
                 <!-- <p><br>
                     Bridge: 
                     <i class="fa fa-search" aria-hidden="true"></i>
@@ -960,6 +967,19 @@
         });
     </script>
 
+    <script>
+        
+        // document.getElementById('new-report-btn').onclick = function(){
+        //     lastClick = 'inspectionClick';
+        //     inspectionData = [];
+        //     inspectionIndex = -1;
+        //     prevInspectionIndex = -1;
+        //     bridgeIndex = -1;
+        //     prevBridgeIndex = -1;
+
+        //     // window.location = "user-options-longitudinal-analysis.php";
+        // }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 
        
