@@ -8,7 +8,7 @@
     }
 
     // Later these session vars will have already been set in the user-options page. these declarations will not be here.
-   $_SESSION["yearBegin"] = 2016;
+   $_SESSION["yearBegin"] = 2010;
    $_SESSION["yearEnd"] = 2021;
 ?>
 
@@ -634,8 +634,10 @@
                         // There is inspection data for the bridge
                         if(bridgeInspections.data != null){
                             var correctedInspections = fillMissingInspections(name, bridgeInspections);
+                            console.log(correctedInspections)
                             inspectionData.push(correctedInspections);
                             var ratingsArray = getRatings(correctedInspections);
+                            console.log(ratingsArray)
                             ratings.push(ratingsArray);
                             var pointColorsArray = getPointColors(ratingsArray);
                             pointColors.push(pointColorsArray);
@@ -754,7 +756,8 @@
                         }]
 
                         
-                    }
+                    },
+                    spanGaps: true
                 }
 
                 const buildLineChart = async (lineOptions) => {

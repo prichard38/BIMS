@@ -60,7 +60,9 @@ function getRatings(inspectionsJson){
         // if the inspection exists, get its rating and push it to ratings
         if(inspection != null ){
             ratings.push(inspection.rating);
-        } 
+        } else{
+            ratings.push(null);
+        }
     });
     return ratings;
 }
