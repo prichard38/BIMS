@@ -7,7 +7,7 @@
         die();
     }
 
-    // Later we will get thee bridge names by POST after user has selected bridges, then set them as session vars
+    // Later we will get thee bridge names by POST after user has selected bridges, then set them as session lets
    $_SESSION["yearBegin"] = [2016];
    $_SESSION["yearEnd"] = [2021];
 ?>
@@ -42,12 +42,13 @@
         <!-- 3D -->
         <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
+        
         <title>Bridge Management</title>
     </head>
     
     <body>
-
         <script>
+            
             bridgeData = [];
             fetchAllBridgeData().then(
                 (res) => {
@@ -106,9 +107,9 @@
             }
 
             function updateBridgeIds(){
-                var bridges = document.getElementsByClassName("bridge");
-                var inputElements = document.getElementsByTagName("input");
-                for(var i = 0 ; i < bridges.length ; i++){
+                let bridges = document.getElementsByClassName("bridge");
+                let inputElements = document.getElementsByTagName("input");
+                for(let i = 0 ; i < bridges.length ; i++){
                     // set bridge div id
                     bridges[i].setAttribute("id", "bridge"+(i+1))
                     // set the header for bridge
@@ -119,7 +120,7 @@
             }
 
             function updateConfirmationCount(count){
-                var countElement = document.getElementById('confirmation-count');
+                let countElement = document.getElementById('confirmation-count');
                 countElement.innerHTML = count;
                 if(count > 0){
                     countElement.classList.remove('text-danger');
@@ -131,24 +132,24 @@
             }
 
             function buildBridgeElement(){
-                var awaitingConfirmation = true;
+                let awaitingConfirmation = true;
 
-                var bridgeDiv = document.createElement('div');
+                let bridgeDiv = document.createElement('div');
                 bridgeDiv.setAttribute('id', ('bridge'+nextBridgeIndex));
                 bridgeDiv.setAttribute('class', 'bridge');
                 
-                var bridgeHeader = document.createElement('h6');
+                let bridgeHeader = document.createElement('h6');
                 bridgeHeader.innerHTML = 'Bridge ' + nextBridgeIndex;
                 
-                var containerSearchDiv = document.createElement('div');
+                let containerSearchDiv = document.createElement('div');
                 containerSearchDiv.setAttribute('class', 'container-search');
                 containerSearchDiv.setAttribute('id', 'container-search');
 
-                var wrapperDiv = document.createElement('div');
+                let wrapperDiv = document.createElement('div');
                 wrapperDiv.setAttribute('class', 'wrapper');
                 wrapperDiv.setAttribute('id', 'wrapper'+nextBridgeIndex);
 
-                var searchInput = document.createElement('input');
+                let searchInput = document.createElement('input');
                 searchInput.setAttribute('id', 'search'+nextBridgeIndex);
                 searchInput.setAttribute('name', 'search'+nextBridgeIndex);
                 searchInput.setAttribute('type', 'text');
@@ -156,14 +157,14 @@
                 searchInput.setAttribute('placeholder', 'Search for a bridge name/number');
                 searchInput.setAttribute('autocomplete','chrome-off');
 
-                var searchButton = document.createElement('button');
+                let searchButton = document.createElement('button');
                 searchButton.setAttribute('type','button');
                 searchButton.setAttribute('id','search-btn');
-                var searchIcon = document.createElement('i');
+                let searchIcon = document.createElement('i');
                 searchIcon.setAttribute('class', 'fa fa-search');
                 searchButton.appendChild(searchIcon);
 
-                var resultsDiv = document.createElement('div');
+                let resultsDiv = document.createElement('div');
                 resultsDiv.setAttribute('class', 'results')
                 resultsDiv.setAttribute('id', 'results'+nextBridgeIndex);
                 resultsDiv.appendChild(document.createElement('ul'));
@@ -176,7 +177,7 @@
 
                 //<button  type='button' class='confirm-btn btn btn-primary btn-sm' id="confirm-search-1">Confirm Selection</button>
 
-                var confirmButton = document.createElement('button');
+                let confirmButton = document.createElement('button');
                 confirmButton.setAttribute('type', 'button');
                 confirmButton.setAttribute('class', 'confirm-btn');
                 confirmButton.classList.add('btn');
@@ -185,19 +186,18 @@
                 confirmButton.setAttribute('id', 'confirm-search-'+nextBridgeIndex);
                 confirmButton.innerHTML= 'Confirm Selection'
 
-                var removeButton = document.createElement('button');
+                let removeButton = document.createElement('button');
                 removeButton.setAttribute('type', 'button');
                 removeButton.setAttribute('class', 'remove-btn');
-                removeButton.setAttribute('id', 'remove-btn'+nextBridgeIndex);
-                var removeIcon = document.createElement('i');
-                removeIcon.setAttribute('id', 'remove-bridge-'+nextBridgeIndex);
+                removeButton.setAttribute('id', 'remove-bridge-'+nextBridgeIndex);
+                let removeIcon = document.createElement('i');
                 removeIcon.setAttribute('class', 'fa fa-minus-circle option-icon');
                 removeButton.appendChild(removeIcon);
 
                 containerSearchDiv.appendChild(confirmButton);
                 containerSearchDiv.appendChild(removeButton);
 
-                var inputFeedback = document.createElement('span');
+                let inputFeedback = document.createElement('span');
                 inputFeedback.setAttribute('hidden', 'true');
                 inputFeedback.setAttribute('class', 'input-feedback text-danger');
                 inputFeedback.setAttribute('id', 'input-feedback'+nextBridgeIndex);
@@ -257,7 +257,7 @@
                 ********************** Bridge x onclick functions  ****************************
                 ******************************************************************************/
                 removeButton.onclick = function() {
-                    var numBridges = document.getElementsByClassName("bridge").length;
+                    let numBridges = document.getElementsByClassName("bridge").length;
                     if(numBridges > 1){
                         bridgeDiv.remove();
                         updateBridgeIds();
@@ -297,7 +297,7 @@
                         searchButton.remove();
                         this.remove();
                         removeButton.style='margin-left: 0px;'
-                        var numBridges = document.getElementsByClassName("bridge").length;
+                        let numBridges = document.getElementsByClassName("bridge").length;
                         if(numBridges < 3){
                             addBridge.hidden = false;
                             addBridgeLabel.hidden = false;
@@ -362,9 +362,9 @@
                     <p>* <em>To remove a bridge selection, click the "minus" icon to the right of the selection.</em></p>
                     <br>  
                     <br>              
-                    <h6>Select Up To 3 Bridges:</h6>
                 </div>
-                <form>
+                <h6 id="search-header">Select Up To 3 Bridges:</h6>
+                <form id='search-form'>
                     <div id="bridges">
                         <br>
                         <div id="bridge1" class="bridge">
@@ -412,15 +412,15 @@
                     <p>* <em>When more than one bridge is selected, it is possible that not all selected bridges have inspection data for the selected timeframe.</em></p>
                     <br>  
                     <br>              
-                    <h6>Select a Timeframe:</h6>
                 </div>
+                <h6 id="timeframe-header" hidden='true'>Select a Timeframe:</h6>
                 <br>
                 <form action="supervisor_longitudinal_analysis.php" method="POST">
                         <p>
 
                         <span id="begin-year" hidden='true'>
                             From:
-                            <select name="begin" id="begin-year" onchange="showEndYearSelector();" onfocus="this.selectedIndex=-1;" required>
+                            <select name="begin" id="begin-year" onchange="" onfocus="this.selectedIndex=-1;" required>
                                 <option value="2001">2001</option>
                                 <option value="2002">2002</option>
                                 <option value="2003">2003</option>
@@ -474,8 +474,8 @@
                         <br>
                         <br>
                         <br>
-                        <button hidden=true id='submit-btn-years' class="btn btn-secondary btn-sm disabled" type='submit'>Submit Timeframe Selection</button>
                     </p>
+                    <button hidden=true id='submit-btn-years' class="btn btn-secondary btn-sm disabled" type='submit'>Submit Timeframe Selection</button>
                 </form>
             </div>  
         </div>
@@ -529,29 +529,29 @@
             /**************************************************************************
             **************************************************************************/
 
-            // global tracker vars for control flow
+            // global tracker lets for control flow
             nextBridgeIndex = 1;
             isValid = false;
             numConfirmed = 0;
             
             
             // submit buttons
-            var submitBridgeSelectionsButton = document.getElementById('submit-btn-bridges');
-            var submitButtonYear = document.getElementById('submit-btn-years');
-            var editBridgesButton = document.getElementById('edit-btn-bridges');
+            let submitBridgeSelectionsButton = document.getElementById('submit-btn-bridges');
+            let submitButtonYear = document.getElementById('submit-btn-years');
+            let editBridgesButton = document.getElementById('edit-btn-bridges');
 
             
             // bridges element. parent to all bridge divs
-            var bridges = document.getElementById('bridges');
+            let bridges = document.getElementById('bridges');
 
             // elements for bridge 1
-            var bridge1 = document.getElementById('bridge1');
-            var confirmSearch1 = document.getElementById('confirm-search-1');
-            var searchButton1 = document.getElementById('search-btn');
-            var addBridge = document.getElementById('add-bridge');
-            var addBridgeLabel = document.getElementById('add-bridge-label');
-            var removeBridge1 = document.getElementById('remove-bridge-1');
-            var awaitingConfirmation1 = true;
+            let bridge1 = document.getElementById('bridge1');
+            let confirmSearch1 = document.getElementById('confirm-search-1');
+            let searchButton1 = document.getElementById('search-btn');
+            let addBridge = document.getElementById('add-bridge');
+            let addBridgeLabel = document.getElementById('add-bridge-label');
+            let removeBridge1 = document.getElementById('remove-bridge-1');
+            let awaitingConfirmation1 = true;
             awaitingAnyConfirmation = true;
 
             
@@ -561,8 +561,8 @@
                     bridges.children[bridges.children.length -1].removeChild(bridges.children[bridges.children.length -1].lastChild);
                     bridges.children[bridges.children.length -1].removeChild(bridges.children[bridges.children.length -1].lastChild);
                     // hide icons from all bridge inputs so no more changes can be made
-                    var icons = document.getElementsByClassName("option-icon");
-                    for(var i = 0 ; i < icons.length ; i++){
+                    let icons = document.getElementsByClassName("option-icon");
+                    for(let i = 0 ; i < icons.length ; i++){
                         icons[i].hidden = true;
                     }
                     // hide the "submit bridge selections" button
@@ -574,19 +574,21 @@
                     addBridge.hidden = true;
                     addBridgeLabel.hidden = true;
            
-                    // show the begin year selector
+                    // show the timeframes selectors
                     document.getElementById('begin-year').hidden = false;
+                    document.getElementById('end-year').hidden = false;
                     document.getElementById('timeframe-instructions').hidden = false;
+                    document.getElementById('timeframe-header').hidden = false;
                     document.getElementById('submit-btn-years').hidden = false;
 
-                    var inputElements = document.getElementsByTagName("input");
-                    var bridgeNames = [];
-                    var bridgeNumbers = [];
-                    var bridgeCounties = [];
-                    for(var i = 0 ; i < inputElements.length ; i++){
-                        var splitData = inputElements[i].value.split(":");
+                    let inputElements = document.getElementsByTagName("input");
+                    let bridgeNames = [];
+                    let bridgeNumbers = [];
+                    let bridgeCounties = [];
+                    for(let i = 0 ; i < inputElements.length ; i++){
+                        let splitData = inputElements[i].value.split(":");
                         bridgeNumbers.push(splitData[0].trim());
-                        var nameAndCounty = splitData[1].split(",");
+                        let nameAndCounty = splitData[1].split(",");
                         bridgeNames.push(nameAndCounty[0].trim());
                         bridgeCounties.push(nameAndCounty[1].trim());
                     }
@@ -594,7 +596,9 @@
                         $.ajax({
                             type: 'POST',
                             url: 'set-bridge-session-vars.php',
-                            data: {selectedBridgeNames : JSON.stringify(bridgeNames), selectedBridgeNumbers : JSON.stringify(bridgeNumbers), selectedBridgeCounties: JSON.stringify(bridgeCounties)},
+                            data: {selectedBridgeNames : JSON.stringify(bridgeNames), 
+                                   selectedBridgeNumbers : JSON.stringify(bridgeNumbers), 
+                                   selectedBridgeCounties: JSON.stringify(bridgeCounties),},
                             dataType: "json",
                             success: function(res){
                                 if(!res){
@@ -614,8 +618,8 @@
                 bridges.children[bridges.children.length -1].appendChild(document.createElement('br'));
                 bridges.children[bridges.children.length -1].appendChild(document.createElement('br'));
                 // show icons from all bridge inputs so changes can be made
-                var icons = document.getElementsByClassName("option-icon");
-                for(var i = 0 ; i < icons.length ; i++){
+                let icons = document.getElementsByClassName("option-icon");
+                for(let i = 0 ; i < icons.length ; i++){
                     icons[i].hidden = false;
                 }
                 // show the "submit bridge selections" button
@@ -625,7 +629,7 @@
 
 
                 // show the add bridge icon and label if less than 3 bridges
-                var numBridges = document.getElementsByClassName("bridge").length
+                let numBridges = document.getElementsByClassName("bridge").length
                 if(numBridges < 3){
                     addBridge.hidden = false;
                     addBridgeLabel.hidden = false;
@@ -633,7 +637,9 @@
         
                 // hide the begin year selector
                 document.getElementById('begin-year').hidden = true;
+                document.getElementById('end-year').hidden = true;
                 document.getElementById('timeframe-instructions').hidden = true;
+                document.getElementById('timeframe-header').hidden = true;
                 document.getElementById('submit-btn-years').hidden = true;
             }
 
@@ -671,7 +677,7 @@
             }
 
             removeBridge1.onclick = function() {
-                var numBridges = document.getElementsByClassName("bridge").length
+                let numBridges = document.getElementsByClassName("bridge").length
                 if(numBridges > 1){
                     
                     bridge1.remove();
@@ -696,9 +702,9 @@
                 isValid = false;
                 disableButton(document.getElementById('submit-btn-bridges'));
                 document.getElementsByClassName('submission-feedback')[0].hidden=false;
-                var numBridges = document.getElementsByClassName("bridge").length;
+                let numBridges = document.getElementsByClassName("bridge").length;
                 if(numBridges  < 3) {
-                    var bridgeDiv = buildBridgeElement();
+                    let bridgeDiv = buildBridgeElement();
                     bridges.append(bridgeDiv);
                     this.hidden = true;
                     addBridgeLabel.hidden = true;
@@ -706,6 +712,17 @@
             }
 
         </script>
-  
+
+        <script>
+            // restore previous state using session vars if there are any
+            if(<?php echo json_encode($_SESSION['hasSavedState']); ?>){
+                let bridgeNumbers = <?php echo json_encode($_SESSION['selectedBridgeNumbers']); ?>;
+                let bridgeNames = <?php echo json_encode($_SESSION['selectedBridgeNames']); ?>;
+                let bridgeCounties = <?php echo json_encode($_SESSION['selectedBridgeCounties']); ?>;
+                restoreSessionState(bridgeNumbers, bridgeNames, bridgeCounties);
+            }
+            
+        </script>
+        
     </body> 
 </html>

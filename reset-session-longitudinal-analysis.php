@@ -6,5 +6,6 @@
     unset($_SESSION['selectedBridgeCounties']);
     unset($_SESSION['yearBegin']);
     unset($_SESSION['yearEnd']);
+    unset($_SESSION['hasSavedState']);
 
     header("Location: user-options-longitudinal-analysis.php");

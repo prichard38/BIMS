@@ -211,3 +211,27 @@ function fillMissingInspections(bridgeName, bridgeInspectionsJsonObject){
     }
     return correctedInspections;
 }
+
+function restoreSessionState(bridgeNumbers, bridgeNames, bridgeCounties){
+    document.getElementById('search-instructions').hidden=true;
+    document.getElementById('bridge1').remove();
+    let bridgeStrings = [];
+    let bridges = document.getElementById('bridges');
+    for(let i = 0 ; i < bridgeNames.length ; i++){
+        setTimeout(() => {
+            let bridgeElement = buildBridgeElement();
+            bridges.appendChild(bridgeElement);
+            document.getElementById('search'+(nextBridgeIndex)).value = bridgeNumbers[i] + " : " + bridgeNames[i] + ", " + bridgeCounties[i];
+            document.getElementById('confirm-search-'+(nextBridgeIndex)).click();
+            if(document.getElementsByClassName("bridge").length > 2){
+                document.getElementById('add-bridge').hidden = true;
+                document.getElementById('add-bridge-label').hidden = true;
+            }
+        }, 50);
+    }
+    setTimeout(() => {
+        document.getElementById('submit-btn-bridges').click();
+        enableButton(document.getElementById('submit-btn-years'));
+        document.getElementById('timeframe-instructions').hidden = true;
+    }, 50);
+}
