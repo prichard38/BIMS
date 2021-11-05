@@ -47,7 +47,7 @@
             echo $jsonBridges;
         } 
         else {
-            echo null;
+            echo false;
         }
     
     }

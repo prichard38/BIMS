@@ -13,7 +13,11 @@ function fetchInspections(bridgeName) {
         
 
         xhr.onload = function() {
-            resolve(JSON.parse(this.responseText));
+            if(!this.responseText || this.responseText.trim().length === 0){
+                resolve({data: null})
+            }else{
+                resolve(JSON.parse(this.responseText));
+            }
         };
         
         xhr.onerror = function() {
@@ -51,10 +55,12 @@ function fetchAllBridgeData() {
 }
 
 function getRatings(inspectionsJson){
-    ratings = [];
-    inspectionsJson.data.forEach((item, index) => {
-        ratings.push(item.rating);
-        
+    var ratings = [];
+    inspectionsJson.data.forEach((inspection, index) => {
+        // if the inspection exists, get its rating and push it to ratings
+        if(inspection != null ){
+            ratings.push(inspection.rating);
+        } 
     });
     return ratings;
 }
@@ -90,6 +96,8 @@ function getPointColors(ratingsArray){
             case 9:
                 colors.push('#036353');
                 break;
+            default:
+                colors.push(null);
         }
     })
     return colors;

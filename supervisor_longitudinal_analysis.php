@@ -49,10 +49,7 @@
             selectedBridgeCounties = <?php echo json_encode($_SESSION['selectedBridgeCounties']); ?>;
             yearBegin = <?php echo json_encode($_SESSION['yearBegin']); ?>;
             yearEnd = <?php echo json_encode($_SESSION['yearEnd']); ?>;
-            bridgeNames = [];
             inspectionData = [];
-            ratings = [];
-            pointColors = [];
             inspectionIndex = -1;
             prevInspectionIndex = -1;
             bridgeIndex = -1;
@@ -615,13 +612,33 @@
                 }
 
                 const fetchAllChartInspections = async () => {
+                    var i = 0;
                     for (name of selectedBridgeNames){
                         const bridgeInspections = await fetchInspections(name);
-                        inspectionData.push(bridgeInspections);
-                        var ratingsArray = getRatings(bridgeInspections);
-                        ratings.push(ratingsArray);
-                        var pointColorsArray = getPointColors(ratingsArray);
-                        pointColors.push(pointColorsArray);
+                        // There is inspection data for the bridge
+                        if(bridgeInspections.data != null){
+                            var correctedInspections = fillMissingInspections(name, bridgeInspections);
+                            inspectionData.push(correctedInspections);
+                            var ratingsArray = getRatings(correctedInspections);
+                            ratings.push(ratingsArray);
+                            var pointColorsArray = getPointColors(ratingsArray);
+                            pointColors.push(pointColorsArray);
+                        } else{
+                            // there is no inspection data for the bridge
+                            var dummyEmptyInspections = {data:[]};
+                            inspectionData.push(dummyEmptyInspections);
+                            var ratingsArray = getRatings(dummyEmptyInspections);
+                            ratings.push(ratingsArray);
+                            var pointColorsArray = getPointColors(ratingsArray);
+                            pointColors.push(pointColorsArray);
+                            
+                            // var bridgeWithNoInspections = document.getElementById('bridge'+(i+1));
+                            renderInspectionlessBridgeHTML(document.getElementById('bridge'+(i+1)))
+                            alert("There are no inspections for " + name + " for the specified timeframe.")
+                          
+
+                        }
+                        i++;
                     }
                     return new Promise(function(resolve, reject) {
                         resolve ({allInspectionsLoaded: true});
@@ -632,8 +649,16 @@
                     const inspectionsLoaded = await fetchAllChartInspections();
                     var i = 0;
                     for(data of inspectionData){
+                        // Get label from the first non-null inspection
+                        var label = null;
+                        for(var inspection of data.data){
+                            if(inspection != null){
+                                label = inspection.bridgeName;
+                                break;
+                            }
+                        }
                         lineData.datasets.push({
-                            label: data.data[0].bridgeName,
+                            label: label,
                             data: ratings[i],
                             backgroundColor: 'rgba(255, 255, 255, 0)',
                             pointBackgroundColor: pointColors[i],
@@ -935,7 +960,7 @@
                 let numberId = 'bridge-number-'+(i+1);
                 let countyId = 'bridge-county-'+(i+1);
                 let rowId = 'bridge'+(i+1);
-                document.getElementById(`${nameId}`).innerHTML = `<i class="fas fa-circle" style="color: ${colors[i]};"></i> ${selectedBridgeNames[i]}`;
+                document.getElementById(`${nameId}`).innerHTML = `<i id="bridge-icon-${i+1}" class="fas fa-circle" style="color: ${colors[i]};"></i> ${selectedBridgeNames[i]}`;
                 document.getElementById(`${rowId}`).hidden=false;
                 document.getElementById(`${numberId}`).innerHTML = `${selectedBridgeNumbers[i]}`;
                 document.getElementById(`${countyId}`).innerHTML = `${selectedBridgeCounties[i]}`;
@@ -943,6 +968,42 @@
         }
         setBridgeHTML();
 
+        function renderInspectionlessBridgeHTML(bridgeElementWithNoInspections){
+            bridgeElementWithNoInspections.classList.add('text');
+            bridgeElementWithNoInspections.classList.add('text-danger');
+            bridgeElementWithNoInspections.setAttribute('style', 'font-style: italic;')
+        }
+
+        function fillMissingInspections(bridgeName, bridgeInspectionsJsonObject){
+            var inspectionYears = [];
+            /* The "corrected" inspections data with null insertion for missing inspections. 
+                * This is required for chart.js line chart to render line correctly with missing inspections.*/
+            var correctedInspections = {data:[]};
+            
+            // Get all inspection years that exist in inspection data for this bridge
+            for(var i = 0 ; i < bridgeInspectionsJsonObject.data.length ; i++){
+                inspectionYears.push(parseInt(bridgeInspectionsJsonObject.data[i]['finishedDate'].slice(0,4)));
+            }
+
+            // get the years for which there are missing inspections by filtering against selected years timeframe array
+            var difference = years.filter(year => !inspectionYears.includes(parseInt(year)));
+            
+            // fill correctedInspections, filling in null values where there are missing inspections
+            for(var j = 0 ; j < years.length ; j++){
+                if(difference.includes(years[j])){
+                    var index = difference.indexOf(years[j]);
+                    if(index != -1){
+                        difference.splice(index, 1)
+                    }
+                    correctedInspections.data[j] = null;
+                } else{
+                    var nextInsp = bridgeInspectionsJsonObject.data.shift();
+                    correctedInspections.data[j] = nextInsp;
+                }
+            }
+            return correctedInspections;
+        }
+        
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
