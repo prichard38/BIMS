@@ -237,3 +237,10 @@ function restoreSessionState(bridgeNumbers, bridgeNames, bridgeCounties){
         document.getElementById('timeframe-instructions').hidden = true;
     }, 50);
 }
+
+
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}

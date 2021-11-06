@@ -450,17 +450,7 @@
 
                         <span id="begin-year" hidden='true'>
                             From:
-                            <select name="begin" id="begin-year" onchange="" onfocus="this.selectedIndex=-1;" required>
-                                <option value="2001">2001</option>
-                                <option value="2002">2002</option>
-                                <option value="2003">2003</option>
-                                <option value="2004">2004</option>
-                                <option value="2005">2005</option>
-                                <option value="2006">2006</option>
-                                <option value="2007">2007</option>
-                                <option value="2008">2008</option>
-                                <option value="2009">2009</option>
-                                <option value="2010">2010</option>
+                            <select name="begin" id="begin-year-select" onchange="generateEndYears()" onfocus="this.selectedIndex=-1;" required>
                                 <option value="2011">2011</option>
                                 <option value="2012">2012</option>
                                 <option value="2013">2013</option>
@@ -477,18 +467,7 @@
                         &nbsp&nbsp
                         <span id='end-year' hidden='true'>
                             To:
-                            <select name="end" id="end-year" onchange="enableButton(document.getElementById('submit-btn-years'));" onfocus="this.selectedIndex=-1;" required>
-                                <option value="2001">2001</option>
-                                <option value="2002">2002</option>
-                                <option value="2003">2003</option>
-                                <option value="2004">2004</option>
-                                <option value="2005">2005</option>
-                                <option value="2006">2006</option>
-                                <option value="2007">2007</option>
-                                <option value="2008">2008</option>
-                                <option value="2009">2009</option>
-                                <option value="2010">2010</option>
-                                <option value="2011">2011</option>
+                            <select name="end" id="end-year-select" onchange="enableButton(document.getElementById('submit-btn-years'));" onfocus="this.selectedIndex=-1;" required>
                                 <option value="2012">2012</option>
                                 <option value="2013">2013</option>
                                 <option value="2014">2014</option>
@@ -770,6 +749,37 @@
                 restoreSessionState(bridgeNumbers, bridgeNames, bridgeCounties);
             }
             
+        </script>
+
+        <script>
+            function generateEndYears(){
+                var beginSelect = document.getElementById('begin-year-select');
+                var beginYear = beginSelect.options[beginSelect.selectedIndex].value;
+                
+                var endSelect = document.getElementById('end-year-select');
+                beginYear = parseInt(beginYear);
+                
+                var endYears = [];
+                var nextYear = beginYear;
+                var currentYear = new Date().getFullYear();
+                
+                while(!(nextYear >= currentYear) && nextYear < beginYear + 10){
+                    nextYear ++;
+                    endYears.push(nextYear);
+                    
+                }
+
+                var yearOption;
+
+                removeAllChildNodes(endSelect);
+                
+                for(var i = 0 ; i < endYears.length ; i++){
+                    yearOption= document.createElement('option');
+                    yearOption.setAttribute('value', endYears[i]);
+                    yearOption.innerHTML = endYears[i];
+                    endSelect.appendChild(yearOption);
+                }
+            }   
         </script>
         
     </body> 
