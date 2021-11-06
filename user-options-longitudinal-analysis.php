@@ -6,10 +6,6 @@
         header("Location:access_denied.php?error=supervisorsonly");
         die();
     }
-
-    // Later we will get thee bridge names by POST after user has selected bridges, then set them as session lets
-   $_SESSION["yearBegin"] = [2016];
-   $_SESSION["yearEnd"] = [2021];
 ?>
 
 
@@ -445,7 +441,7 @@
                 </div>
                 <h6 id="timeframe-header" hidden='true'>Select a Timeframe:</h6>
                 <br>
-                <form action="supervisor_longitudinal_analysis.php" method="POST">
+                <form action="" method="">
                         <p>
 
                         <span id="begin-year" hidden='true'>
@@ -655,7 +651,20 @@
             }
 
             submitButtonYear.onclick = function(){
-                //TODO: use AJAX to POST From and To years selections and call php script to set session vars for beginYear and endYear         
+                var beginSelect = document.getElementById('begin-year-select');
+                var endSelect = document.getElementById('end-year-select');
+                $.ajax({
+                    type: 'POST',
+                    url: 'set-years-session-vars.php',
+                    data: {yearBegin : JSON.stringify(beginSelect.options[beginSelect.selectedIndex].value), 
+                           yearEnd : JSON.stringify(endSelect.options[endSelect.selectedIndex].value)},
+                    success: function(res){
+                        window.location.href = "supervisor_longitudinal_analysis.php";
+                    },
+                    error: function(res){
+                        console.warn("");
+                    }
+                })        
             }
 
 

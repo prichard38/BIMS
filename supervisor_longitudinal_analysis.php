@@ -6,10 +6,6 @@
         header("Location:access_denied.php?error=supervisorsonly");
         die();
     }
-
-    // Later these session vars will have already been set in the user-options page. these declarations will not be here.
-   $_SESSION["yearBegin"] = 2010;
-   $_SESSION["yearEnd"] = 2021;
 ?>
 
 
