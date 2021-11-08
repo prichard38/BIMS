@@ -13,7 +13,11 @@ function fetchInspections(bridgeName) {
         
 
         xhr.onload = function() {
-            resolve(JSON.parse(this.responseText));
+            if(!this.responseText || this.responseText.trim().length === 0){
+                resolve({data: null})
+            }else{
+                resolve(JSON.parse(this.responseText));
+            }
         };
         
         xhr.onerror = function() {
@@ -51,10 +55,14 @@ function fetchAllBridgeData() {
 }
 
 function getRatings(inspectionsJson){
-    ratings = [];
-    inspectionsJson.data.forEach((item, index) => {
-        ratings.push(item.rating);
-        
+    var ratings = [];
+    inspectionsJson.data.forEach((inspection, index) => {
+        // if the inspection exists, get its rating and push it to ratings
+        if(inspection != null ){
+            ratings.push(inspection.rating);
+        } else{
+            ratings.push(null);
+        }
     });
     return ratings;
 }
@@ -90,6 +98,8 @@ function getPointColors(ratingsArray){
             case 9:
                 colors.push('#036353');
                 break;
+            default:
+                colors.push(null);
         }
     })
     return colors;
@@ -152,4 +162,85 @@ function getYears(beginYear, endYear){
         beginYear++;
     }
     return years;
+}
+
+function setBridgeHTML(){
+    let colors = ['darkgrey', 'navy', 'steelblue'];
+    for(let i = 0 ; i < selectedBridgeNames.length ; i++){
+        let nameId = 'bridge-name-'+(i+1);
+        let numberId = 'bridge-number-'+(i+1);
+        let countyId = 'bridge-county-'+(i+1);
+        let rowId = 'bridge'+(i+1);
+        document.getElementById(`${nameId}`).innerHTML = `<i id="bridge-icon-${i+1}" class="fas fa-circle" style="color: ${colors[i]};"></i> ${selectedBridgeNames[i]}`;
+        document.getElementById(`${rowId}`).hidden=false;
+        document.getElementById(`${numberId}`).innerHTML = `${selectedBridgeNumbers[i]}`;
+        document.getElementById(`${countyId}`).innerHTML = `${selectedBridgeCounties[i]}`;
+    }
+}
+
+function renderInspectionlessBridgeHTML(bridgeElementWithNoInspections){
+    bridgeElementWithNoInspections.classList.add('text');
+    bridgeElementWithNoInspections.classList.add('text-danger');
+    bridgeElementWithNoInspections.setAttribute('style', 'font-style: italic;')
+}
+
+function fillMissingInspections(bridgeName, bridgeInspectionsJsonObject){
+    var inspectionYears = [];
+    /* The "corrected" inspections data with null insertion for missing inspections. 
+        * This is required for chart.js line chart to render line correctly with missing inspections.*/
+    var correctedInspections = {data:[]};
+    
+    // Get all inspection years that exist in inspection data for this bridge
+    for(var i = 0 ; i < bridgeInspectionsJsonObject.data.length ; i++){
+        inspectionYears.push(parseInt(bridgeInspectionsJsonObject.data[i]['finishedDate'].slice(0,4)));
+    }
+
+    // get the years for which there are missing inspections by filtering against selected years timeframe array
+    var difference = years.filter(year => !inspectionYears.includes(parseInt(year)));
+    
+    // fill correctedInspections, filling in null values where there are missing inspections
+    for(var j = 0 ; j < years.length ; j++){
+        if(difference.includes(years[j])){
+            var index = difference.indexOf(years[j]);
+            if(index != -1){
+                difference.splice(index, 1)
+            }
+            correctedInspections.data[j] = null;
+        } else{
+            var nextInsp = bridgeInspectionsJsonObject.data.shift();
+            correctedInspections.data[j] = nextInsp;
+        }
+    }
+    return correctedInspections;
+}
+
+function restoreSessionState(bridgeNumbers, bridgeNames, bridgeCounties){
+    document.getElementById('search-instructions').hidden=true;
+    document.getElementById('bridge1').remove();
+    let bridgeStrings = [];
+    let bridges = document.getElementById('bridges');
+    for(let i = 0 ; i < bridgeNames.length ; i++){
+        setTimeout(() => {
+            let bridgeElement = buildBridgeElement();
+            bridges.appendChild(bridgeElement);
+            document.getElementById('search'+(nextBridgeIndex)).value = bridgeNumbers[i] + " : " + bridgeNames[i] + ", " + bridgeCounties[i];
+            document.getElementById('confirm-search-'+(nextBridgeIndex)).click();
+            if(document.getElementsByClassName("bridge").length > 2){
+                document.getElementById('add-bridge').hidden = true;
+                document.getElementById('add-bridge-label').hidden = true;
+            }
+        }, 50);
+    }
+    setTimeout(() => {
+        document.getElementById('submit-btn-bridges').click();
+        enableButton(document.getElementById('submit-btn-years'));
+        document.getElementById('timeframe-instructions').hidden = true;
+    }, 50);
+}
+
+
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
 }

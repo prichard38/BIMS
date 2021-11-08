@@ -6,11 +6,6 @@
         header("Location:access_denied.php?error=supervisorsonly");
         die();
     }
-
-    // Later we will get thee bridge names by POST after user has selected bridges, then set them as session vars
-   $_SESSION["selectedBridgeNames"] = ['East Huntington Bridge over Ohio River'];
-   $_SESSION["yearBegin"] = 2016;
-   $_SESSION["yearEnd"] = 2021;
 ?>
 
 
@@ -19,14 +14,20 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <script src="functions.js"></script>
+        
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
         <link href="plugins/components.css" rel="stylesheet">
         <script src="https://kit.fontawesome.com/7b2b0481fc.js" crossorigin="anonymous"></script>
+        
         <!-- Custom CSS -->
         <link rel="stylesheet" href="assets/css/custom.css">
+        
         <!-- jQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+       
         <!-- Table Design -->
         <script type="text/javascript" src="plugins/DataTables/datatables.min.js"></script>
         <link rel="stylesheet" type="text/css" href="plugins/DataTables/datatables.min.css"/>
@@ -36,7 +37,6 @@
         -->
         <!-- 3D -->
         <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-        <script src="functions.js"></script>
 
         <title>Bridge Management</title>
     </head>
@@ -46,10 +46,11 @@
         <script>
             lastClick = 'inspectionClick';
             selectedBridgeNames = <?php echo json_encode($_SESSION['selectedBridgeNames']); ?>;
-            bridgeNames = [];
+            selectedBridgeNumbers = <?php echo json_encode($_SESSION['selectedBridgeNumbers']); ?>;
+            selectedBridgeCounties = <?php echo json_encode($_SESSION['selectedBridgeCounties']); ?>;
+            yearBegin = <?php echo json_encode($_SESSION['yearBegin']); ?>;
+            yearEnd = <?php echo json_encode($_SESSION['yearEnd']); ?>;
             inspectionData = [];
-            ratings = [];
-            pointColors = [];
             inspectionIndex = -1;
             prevInspectionIndex = -1;
             bridgeIndex = -1;
@@ -80,7 +81,7 @@
                                 <a id="RM" href='supervisor_yearly_inspection_report.php'>Yearly Inspection Report</a>
                             </li>
                             <li style="background-color: #5e5e5e;">
-                                <a id="RM" href='supervisor_longitudinal_analysis.php'>Longitudinal Analysis</a>
+                                <a id="RM" href='user-options-longitudinal-analysis.php'>Longitudinal Analysis</a>
                             </li>
                         </ul>
                     </li>
@@ -91,7 +92,14 @@
         <!-- Search Params -->
         <div class="container">
             <div class="main_title">
-                <h5> Report Management </h5>
+                <div class='la-header'>
+                    <h5> Report Management </h5>
+                    <form action="reset-session-longitudinal-analysis.php" method="POST">
+                        <div class='above-card-button'>
+                            <button name="new-report-btn" id='new-report-btn' class="btn btn-primary btn-sm" type='submit'>New Longitudinal Analysis</button>
+                        </div>
+                    </form>
+                </div>
                 <!-- <p><br>
                     Bridge: 
                     <i class="fa fa-search" aria-hidden="true"></i>
@@ -133,8 +141,10 @@
                             <div class="col-md-12">
                               <div class="card">
                                 <div class="card-header">
-                                  <h5 class="card-title">Longitudinal Analysis (2016 - 2021)</h5>
-                                  
+                                  <h5 id=la-card-title class="card-title"></h5>
+                                  <script>
+                                      document.getElementById('la-card-title').innerHTML = `Longitudinal Analysis (${yearBegin} - ${yearEnd})`;
+                                  </script>
                                   <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                       <i class="fas fa-minus"></i>
@@ -191,18 +201,18 @@
                                                 </tr>
                                                 <tr id="bridge1">
                                                     <td id="bridge-name-1" class="bridge-name txtl"></td>
-                                                    <td class="bridge-no txtl"></td>
-                                                    <td class="txtl"></td>
+                                                    <td id="bridge-number-1" class="bridge-no txtl"></td>
+                                                    <td id="bridge-county-1" class="txtl"></td>
                                                 </tr>
-                                                <tr id="bridge2">
+                                                <tr hidden=true id="bridge2">
                                                     <td id="bridge-name-2" class="bridge-name txtl"></td>
-                                                    <td class="bridge-no txtl"></td>
-                                                    <td class="txtl"></td>
+                                                    <td id="bridge-number-2" class="bridge-no txtl"></td>
+                                                    <td id="bridge-county-2" class="txtl"></td>
                                                 </tr>
-                                                <tr id="bridge3">
+                                                <tr hidden=true id="bridge3">
                                                     <td id="bridge-name-3" class="bridge-name txtl"></td>
-                                                    <td class="bridge-no txtl"></td>
-                                                    <td class="txtl"></td>
+                                                    <td id="bridge-number-3" class="bridge-no txtl"></td>
+                                                    <td id="bridge-county-3" class="txtl"></td>
                                                 </tr>
                                                 <tr class="ttlcolor">
                                                     <td></td>
@@ -529,6 +539,10 @@
         <!-- Cards -->
         <!--<script src="plugins/CardWidget.js"></script>-->
 
+        <script>        
+            setBridgeHTML();
+        </script>
+        
         <!-- Charts -->
         <script>
 
@@ -620,13 +634,34 @@
                 }
 
                 const fetchAllChartInspections = async () => {
+                    var i = 0;
                     for (name of selectedBridgeNames){
                         const bridgeInspections = await fetchInspections(name);
-                        inspectionData.push(bridgeInspections);
-                        var ratingsArray = getRatings(bridgeInspections);
-                        ratings.push(ratingsArray);
-                        var pointColorsArray = getPointColors(ratingsArray);
-                        pointColors.push(pointColorsArray);
+                        // There is inspection data for the bridge
+                        if(bridgeInspections.data != null){
+                            var correctedInspections = fillMissingInspections(name, bridgeInspections);
+                            console.log(correctedInspections)
+                            inspectionData.push(correctedInspections);
+                            var ratingsArray = getRatings(correctedInspections);
+                            console.log(ratingsArray)
+                            ratings.push(ratingsArray);
+                            var pointColorsArray = getPointColors(ratingsArray);
+                            pointColors.push(pointColorsArray);
+                        } else{
+                            // there is no inspection data for the bridge
+                            var dummyEmptyInspections = {data:[]};
+                            inspectionData.push(dummyEmptyInspections);
+                            var ratingsArray = getRatings(dummyEmptyInspections);
+                            ratings.push(ratingsArray);
+                            var pointColorsArray = getPointColors(ratingsArray);
+                            pointColors.push(pointColorsArray);
+                            
+                            renderInspectionlessBridgeHTML(document.getElementById('bridge'+(i+1)))
+                            alert("There are no inspections for " + name + " for the specified timeframe.")
+                          
+
+                        }
+                        i++;
                     }
                     return new Promise(function(resolve, reject) {
                         resolve ({allInspectionsLoaded: true});
@@ -637,8 +672,16 @@
                     const inspectionsLoaded = await fetchAllChartInspections();
                     var i = 0;
                     for(data of inspectionData){
+                        // Get label from the first non-null inspection
+                        var label = null;
+                        for(var inspection of data.data){
+                            if(inspection != null){
+                                label = inspection.bridgeName;
+                                break;
+                            }
+                        }
                         lineData.datasets.push({
-                            label: data.data[0].bridgeName,
+                            label: label,
                             data: ratings[i],
                             backgroundColor: 'rgba(255, 255, 255, 0)',
                             pointBackgroundColor: pointColors[i],
@@ -719,7 +762,8 @@
                         }]
 
                         
-                    }
+                    },
+                    spanGaps: true
                 }
 
                 const buildLineChart = async (lineOptions) => {
@@ -874,7 +918,6 @@
                 fetchInspections(selectedBridgeNames[0]).then(function(response) {            
                     $(".tbox").not("#rm_t1").hide();
                     if(!$('#rm_t1').is(':visible') || ($('#rm_t1').is(':visible') && lastClick == 'inspectionClick')){
-                        console.log(response.data);
                         loadTable('bridge1', response.data);
                         
                         
@@ -896,7 +939,6 @@
                 fetchInspections(selectedBridgeNames[1]).then(function(response) {            
                     $(".tbox").not("#rm_t2").hide();
                     if(!$('#rm_t2').is(':visible') || ($('#rm_t2').is(':visible') && lastClick == 'inspectionClick')){
-                        console.log(response.data);
                         loadTable('bridge2', response.data);
                         
                         
@@ -917,7 +959,6 @@
                 fetchInspections(selectedBridgeNames[2]).then(function(response) {            
                     $(".tbox").not("#rm_t3").hide();
                     if(!$('#rm_t3').is(':visible') || ($('#rm_t3').is(':visible') && lastClick == 'inspectionClick')){
-                        console.log(response.data);
                         loadTable('bridge3', response.data);
                         
                         
@@ -936,18 +977,18 @@
     </script>
 
     <script>
-        function setBridgeHTML(){
-            let colors = ['darkgrey', 'navy', 'steelblue'];
-            for(let i = 0 ; i < selectedBridgeNames.length ; i++){
-                let id = 'bridge-name-'+(i+1);
-                document.getElementById(`${id}`).innerHTML = `<i class="fas fa-circle" style="color: ${colors[i]};"></i> ${selectedBridgeNames[i]}`;
-            }
-        }
-        setBridgeHTML();
+        
+        // document.getElementById('new-report-btn').onclick = function(){
+        //     lastClick = 'inspectionClick';
+        //     inspectionData = [];
+        //     inspectionIndex = -1;
+        //     prevInspectionIndex = -1;
+        //     bridgeIndex = -1;
+        //     prevBridgeIndex = -1;
 
-        //TODO: set bridge numbers and counties
+        //     // window.location = "user-options-longitudinal-analysis.php";
+        // }
     </script>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 
        
