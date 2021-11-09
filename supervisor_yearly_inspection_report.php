@@ -1,13 +1,39 @@
 <?php
+
+/** -----------------------------------------------------------------
+ * PHP Code for YIR Tool
+ * ----------------------------------------------------------------- */
+
+    /* start/continue session */
     session_start();
 
+    /* make sure user is supervisor to continue */
     if($_SESSION["loggedAs"] != "Supervisor"){
         header("Location:access_denied.php?error=supervisorsonly");
         die();
     }
 
+    /* On first page load, current year is selected.
+    If user has visited this page already, load on the last year they had selected */
+    if (!isset($_SESSION["YIR_SelectedYear"])){
+        $_SESSION["YIR_SelectedYear"] = date("Y");
+    }
+    
+    /* connect to database */
+    include 'dbConfig.inc.php';
+
+
+    
+
+    /* Global totals for the chart 
+
+    echo "<script type='text/javascript'>functionName('$var1', '$var2', '$var3');</script>";*/
 ?>
 
+
+<!-- ----------------------------------------------------------------
+    HTML Doc for YIR Tool
+-------------------------------------------------------------------- -->
 <!doctype html>
 <html lang="en">
     <head>
@@ -21,6 +47,8 @@
         <link rel="stylesheet" href="assets/css/custom.css">
         <!-- jQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+        <!--Custom JavaScript-->
+        <script src="yir-functions.js"></script>
         <!-- Table Design -->
         <script type="text/javascript" src="plugins/DataTables/datatables.min.js"></script>
         <link rel="stylesheet" type="text/css" href="plugins/DataTables/datatables.min.css"/>
@@ -42,7 +70,7 @@
                 </a>
                 <span class="float-right" style="color: white; font-size: 0.9em;">
                     <i class="fas fa-user-circle"></i>&nbsp;
-                    Logged in as Supervisor&nbsp;|&nbsp; <a href="login-test.php" style="color: white; text-decoration: none;"> sign out</a>
+                    Logged in as <?php echo $_SESSION['loggedAs']; ?>&nbsp;|&nbsp; <a href="login-test.php" style="color: white; text-decoration: none;"> sign out</a>
                 </span>
             </div>
         </nav>
@@ -74,11 +102,11 @@
                 <p><br>
                     Year:
                     <select name="year" id="year_selector" required>
-                        <option value="2021" selected="selected">2021</option>
-                        <option value="2020">2020</option>
-                        <option value="2019">2019</option>
-                        <option value="2018">2018</option>
-                        <option value="2017">2017</option>
+                        <option value="<?php echo $_SESSION['YIR_SelectedYear']; ?>" selected="selected"> <?php echo $_SESSION['YIR_SelectedYear']; ?></option>
+                        <option value="<?php echo date("Y")-1; ?>"><?php echo date("Y")-1; ?></option>
+                        <option value="<?php echo date("Y")-2; ?>"><?php echo date("Y")-2; ?></option>
+                        <option value="<?php echo date("Y")-3; ?>"><?php echo date("Y")-3; ?></option>
+                        <option value="<?php echo date("Y")-4; ?>"><?php echo date("Y")-4; ?></option>
                     </select>
                 </p>
             </div>
@@ -120,6 +148,7 @@
                                   <div class="row" style="align-items: center;">
                                     <div class="col-sm-4 col-md-4">
                                         <div class="chart-responsive">
+                                            <!--Pie chart declared here-->
                                             <canvas id="pieChart" height="200"></canvas>
                                         </div>
                                         <div style="font-size: 0.8em; text-align: center; margin: 5px 0;">
@@ -1455,7 +1484,7 @@
         <!-- Cards -->
         <!--<script src="plugins/CardWidget.js"></script>-->
 
-        <!-- Charts -->
+        <!-- Chart -->
         <script>
             $(function () {
                 'use strict'
@@ -1466,9 +1495,6 @@
                 var contHeight_after = "";
                 var sideHeight = "";
 
-                /* PIE CHART */
-                // 2021
-                var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
                 var pieData = {
                     labels: [
                         'High Risk (1-3)',
@@ -1479,12 +1505,51 @@
                     ],
                     datasets: [
                     {
-                        // data: [2096, 236, 97, 553, 674],
                         data: [597, 619, 1074, 2087, 2918],
+                        //data:[]
                         backgroundColor: ['#ff0000', '#ffea00', '#32b502', '#999999', '#f7f7f7']
                     }
                     ]
                 }
+
+                /**
+                 * Retreive data for table and create dataset for pie chart
+                 */
+                const fetchData = async () => {
+
+                    //create a data set for a pie chart
+                    var dataset = {
+                        data: [0,0,0,0,0],
+                        backgroundColor: ['#ff0000', '#ffea00', '#32b502', '#999999', '#f7f7f7']
+                    }
+
+                    const bridges = await fetchNewestBridgeData(2021);
+                    for (var i=0; i<bridges.data.length; i++){
+                        console.log(bridges.data[i]);
+
+                        //check if inspection is complete, in progress, or not started
+                        if(bridges.data[i].finishedDate != null)
+                            dataset.data[0]++;
+                        else if(bridges.data[i].dueDate != null)
+                            dataset.data[5]++;
+                        else
+                            dataset.data[6]++;
+                        
+                        //check rating of reports
+                        if 
+                    }
+                    console.log(dataset);
+
+
+
+                }
+
+                fetchData();
+
+
+
+                /* PIE CHART */
+                var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
                 var pieOptions = {
                     legend: {
                         display: false
@@ -1520,13 +1585,26 @@
                         }
                     }
                 }
-                var pieChart = new Chart(pieChartCanvas, {
-                    type: 'pie',
-                    data: pieData,
-                    options: pieOptions
+
+                const buildPieChart = async (pieOptions) => {
+                    //const datasetsBuilt = await buildChartDatasets();
+                    var pieChart = new Chart(pieChartCanvas, {
+                        type: 'pie',
+                        data: pieData,
+                        options: pieOptions
+                    });
+                    return pieChart;
+                }
+
+                var pieChart = buildPieChart(pieOptions); 
+                pieChart.then(function(response){
+                    pieChart = response;
                 })
 
+               
+
                 // 2020
+                /*
                 var pieChartCanvas2 = $('#pieChart2').get(0).getContext('2d')
                 var pieData2 = {
                     labels: [
@@ -1581,8 +1659,9 @@
                     type: 'pie',
                     data: pieData2,
                     options: pieOptions2
-                })
+                })*/
             })
+            
         </script>
         <!-- ChartJS -->
         <script src="plugins/chart.js/Chart.js"></script>
@@ -1621,6 +1700,7 @@
                 $('#tbl_bridge_insp2_t3').DataTable({"order": [[ 6, "asc" ]]});
                 $('#tbl_bridge_insp2_t4').DataTable({"order": [[ 5, "asc" ]]});
                 $('#tbl_bridge_insp2_t5').DataTable({"order": [[ 5, "asc" ]]});
+                
             });
         </script>
 
