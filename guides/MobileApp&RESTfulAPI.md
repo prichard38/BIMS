@@ -103,7 +103,11 @@ Allows users to enter credentials. These credentials are then verified with the 
 *(If you can't see the app, make sure that the port your using is allowed through the firewall. If port 3000, then: `sudo ufw allow 3000/tcp` to open it.)*
 
 #### Routes
+**/get-inspection/{id}**  
+gives details about an inspection given an id#
 
+**/upload-image/{base64}**  
+posts an image to the filesystem 
 
 ----------------------------------------------------------
 ### Helpful Links Referenced During Development
