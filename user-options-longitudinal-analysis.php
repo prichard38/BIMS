@@ -446,35 +446,12 @@
 
                         <span id="begin-year" hidden='true'>
                             From:
-                            <select name="begin" id="begin-year-select" onchange="generateEndYears()" onfocus="this.selectedIndex=-1;" required>
-                                <option value="2011">2011</option>
-                                <option value="2012">2012</option>
-                                <option value="2013">2013</option>
-                                <option value="2014">2014</option>
-                                <option value="2015">2015</option>
-                                <option value="2016">2016</option>
-                                <option value="2017">2017</option>
-                                <option value="2018">2018</option>
-                                <option value="2019">2019</option>
-                                <option value="2020">2020</option>
-                                <option value="2021">2021</option>
-                            </select>
+                            <select name="begin" id="begin-year-select" onchange="generateEndYears()" onfocus="this.selectedIndex=-1;" required></select>
                         </span>
                         &nbsp&nbsp
                         <span id='end-year' hidden='true'>
                             To:
-                            <select name="end" id="end-year-select" onchange="enableButton(document.getElementById('submit-btn-years'));" onfocus="this.selectedIndex=-1;" required>
-                                <option value="2012">2012</option>
-                                <option value="2013">2013</option>
-                                <option value="2014">2014</option>
-                                <option value="2015">2015</option>
-                                <option value="2016">2016</option>
-                                <option value="2017">2017</option>
-                                <option value="2018">2018</option>
-                                <option value="2019">2019</option>
-                                <option value="2020">2020</option>
-                                <option value="2021">2021</option>
-                            </select>
+                            <select name="end" id="end-year-select" onchange="enableButton(document.getElementById('submit-btn-years'));" onfocus="this.selectedIndex=-1;" required></select>
                         </span>
                         <br>
                         <br>
@@ -610,6 +587,8 @@
                             success: function(res){
                                 if(!res){
                                     console.warn("Could not submit selected bridge data");
+                                } else{
+                                    generateBeginYears(JSON.stringify(bridgeNames));
                                 }
                             },
                             error: function(res){
@@ -617,6 +596,7 @@
                             }
                         })
                     })
+
                 }
             }
 
@@ -761,16 +741,16 @@
         </script>
 
         <script>
-            function generateEndYears(){
-                var beginSelect = document.getElementById('begin-year-select');
-                var beginYear = beginSelect.options[beginSelect.selectedIndex].value;
+            const generateEndYears = async () => {
+                let beginSelect = document.getElementById('begin-year-select');
+                let beginYear = beginSelect.options[beginSelect.selectedIndex].value;
                 
-                var endSelect = document.getElementById('end-year-select');
+                let endSelect = document.getElementById('end-year-select');
                 beginYear = parseInt(beginYear);
                 
-                var endYears = [];
-                var nextYear = beginYear;
-                var currentYear = new Date().getFullYear();
+                let endYears = [];
+                let nextYear = beginYear;
+                let currentYear = new Date().getFullYear();
                 
                 while(!(nextYear >= currentYear) && nextYear < beginYear + 10){
                     nextYear ++;
@@ -778,17 +758,45 @@
                     
                 }
 
-                var yearOption;
+                let yearOption;
 
                 removeAllChildNodes(endSelect);
                 
-                for(var i = 0 ; i < endYears.length ; i++){
+                for(let i = 0 ; i < endYears.length ; i++){
                     yearOption= document.createElement('option');
                     yearOption.setAttribute('value', endYears[i]);
                     yearOption.innerHTML = endYears[i];
                     endSelect.appendChild(yearOption);
                 }
-            }   
+            }
+            
+            const generateBeginYears = async (bridgeNames) => {
+                let beginSelect = document.getElementById('begin-year-select');
+                removeAllChildNodes(beginSelect);
+                let beginYears = [];
+                fetchEarliestYear(bridgeNames).then(
+                    (response) => {
+                        let beginYear = parseInt(response);
+                        let nextYear = beginYear;
+                        let currentYear = new Date().getFullYear();
+
+                        while(nextYear < currentYear){
+                            beginYears.push(nextYear);
+                            nextYear ++;
+                        }
+
+                        let yearOption;
+                        for(let i = 0 ; i < beginYears.length ; i++){
+                            yearOption= document.createElement('option');
+                            yearOption.setAttribute('value', beginYears[i]);
+                            yearOption.innerHTML = beginYears[i];
+                            beginSelect.appendChild(yearOption);
+                        }
+
+                        generateEndYears();
+                    }
+                )
+            }
         </script>
         
     </body> 

@@ -630,10 +630,8 @@
                         // There is inspection data for the bridge
                         if(bridgeInspections.data != null){
                             var correctedInspections = fillMissingInspections(name, bridgeInspections);
-                            console.log(correctedInspections)
                             inspectionData.push(correctedInspections);
                             var ratingsArray = getRatings(correctedInspections);
-                            console.log(ratingsArray)
                             ratings.push(ratingsArray);
                             var pointColorsArray = getPointColors(ratingsArray);
                             pointColors.push(pointColorsArray);

@@ -54,6 +54,31 @@ function fetchAllBridgeData() {
     })
 }
 
+function fetchEarliestYear(bridgeNames) {
+    return new Promise(function(resolve, reject) {
+        
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                // console.log(this.responseText);
+            }
+        };
+        xhr.open('POST', 'load-earliest-year.php', true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+        xhr.onload = function() {
+            resolve(this.responseText);
+        };
+
+        xhr.onerror = function() {
+            reject(new Error("Network Error"));
+        };
+        
+        xhr.send('bridgeNames=' + bridgeNames);
+        
+    })
+}
+
 function getRatings(inspectionsJson){
     var ratings = [];
     inspectionsJson.data.forEach((inspection, index) => {
