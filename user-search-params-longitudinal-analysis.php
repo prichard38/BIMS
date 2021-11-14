@@ -457,7 +457,7 @@
                         <br>
                         <br>
                     </p>
-                    <button hidden=true id='submit-btn-years' class="btn btn-secondary btn-sm disabled" type='submit'>Submit Timeframe Selection</button>
+                    <button hidden=true id='submit-btn-years' class="btn btn-secondary btn-sm disabled" type='button'>Submit Timeframe Selection</button>
                 </form>
             </div>  
         </div>
@@ -576,26 +576,7 @@
                         bridgeNames.push(nameAndCounty[0].trim());
                         bridgeCounties.push(nameAndCounty[1].trim());
                     }
-                    $(document).ready(function() {
-                        $.ajax({
-                            type: 'POST',
-                            url: 'php-scripts-longitudinal-analysis/set-bridge-session-vars.php',
-                            data: {selectedBridgeNames : JSON.stringify(bridgeNames), 
-                                   selectedBridgeNumbers : JSON.stringify(bridgeNumbers), 
-                                   selectedBridgeCounties: JSON.stringify(bridgeCounties),},
-                            dataType: "json",
-                            success: function(res){
-                                if(!res){
-                                    console.warn("Could not submit selected bridge data");
-                                } else{
-                                    generateBeginYears(JSON.stringify(bridgeNames));
-                                }
-                            },
-                            error: function(res){
-                                console.warn(res)
-                            }
-                        })
-                    })
+                    setBridgeSessionVars(bridgeNames, bridgeNumbers, bridgeCounties);
 
                 }
             }
@@ -633,18 +614,7 @@
             submitButtonYear.onclick = function(){
                 var beginSelect = document.getElementById('begin-year-select');
                 var endSelect = document.getElementById('end-year-select');
-                $.ajax({
-                    type: 'POST',
-                    url: 'php-scripts-longitudinal-analysis/set-years-session-vars.php',
-                    data: {yearBegin : JSON.stringify(beginSelect.options[beginSelect.selectedIndex].value), 
-                           yearEnd : JSON.stringify(endSelect.options[endSelect.selectedIndex].value)},
-                    success: function(res){
-                        window.location.href = "supervisor-longitudinal-analysis.php";
-                    },
-                    error: function(res){
-                        console.warn("");
-                    }
-                })        
+                setYearsSessionVars(beginSelect.options[beginSelect.selectedIndex].value, endSelect.options[endSelect.selectedIndex].value);      
             }
 
 
@@ -738,65 +708,6 @@
                 restoreSessionStateLongitudinalAnalysis(bridgeNumbers, bridgeNames, bridgeCounties);
             }
             
-        </script>
-
-        <script>
-            const generateEndYears = async () => {
-                let beginSelect = document.getElementById('begin-year-select');
-                let beginYear = beginSelect.options[beginSelect.selectedIndex].value;
-                
-                let endSelect = document.getElementById('end-year-select');
-                beginYear = parseInt(beginYear);
-                
-                let endYears = [];
-                let nextYear = beginYear;
-                let currentYear = new Date().getFullYear();
-                
-                while(!(nextYear >= currentYear) && nextYear < beginYear + 10){
-                    nextYear ++;
-                    endYears.push(nextYear);
-                    
-                }
-
-                let yearOption;
-
-                removeAllChildNodes(endSelect);
-                
-                for(let i = 0 ; i < endYears.length ; i++){
-                    yearOption= document.createElement('option');
-                    yearOption.setAttribute('value', endYears[i]);
-                    yearOption.innerHTML = endYears[i];
-                    endSelect.appendChild(yearOption);
-                }
-            }
-            
-            const generateBeginYears = async (bridgeNames) => {
-                let beginSelect = document.getElementById('begin-year-select');
-                removeAllChildNodes(beginSelect);
-                let beginYears = [];
-                fetchEarliestYear(bridgeNames).then(
-                    (response) => {
-                        let beginYear = parseInt(response);
-                        let nextYear = beginYear;
-                        let currentYear = new Date().getFullYear();
-
-                        while(nextYear < currentYear){
-                            beginYears.push(nextYear);
-                            nextYear ++;
-                        }
-
-                        let yearOption;
-                        for(let i = 0 ; i < beginYears.length ; i++){
-                            yearOption= document.createElement('option');
-                            yearOption.setAttribute('value', beginYears[i]);
-                            yearOption.innerHTML = beginYears[i];
-                            beginSelect.appendChild(yearOption);
-                        }
-
-                        generateEndYears();
-                    }
-                )
-            }
         </script>
         
     </body> 
