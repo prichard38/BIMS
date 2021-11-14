@@ -287,62 +287,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td>001-4/5-2.95(01810)</td>
-                                                                <td>Cane Hill Bridge over Little Red River</td>
-                                                                <td>In-Depth</td>
-                                                                <td>William Jones</td>
-                                                                <td>Irene Song</td>
-                                                                <td>2021-05-20</td>
-                                                                <td><span style="color: #E40800">1</span></td>
-                                                                <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                                <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>006-3/4-8.65(03148)</td>
-                                                                <td>Robert C. Byrd Bridge over Ohio River</td>
-                                                                <td>Periodic</td>
-                                                                <td>Liam Davis</td>
-                                                                <td>Irene Song</td>
-                                                                <td>2021-04-21</td>
-                                                                <td><span style="color: #E40800">1</span></td>
-                                                                <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                                <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>004-4/5-2.95(01210)</td>
-                                                                <td>East Huntington Bridge over Ohio River</td>
-                                                                <td>Periodic</td>
-                                                                <td>Rebecca Johnson</td>
-                                                                <td>Irene Song</td>
-                                                                <td>2021-05-01</td>
-                                                                <td><span style="color: #E32925">2</span></td>
-                                                                <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                                <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>001-4/5-2.95(01210)</td>
-                                                                <td>Alderson Bridge over Greenbrier River</td>
-                                                                <td>Interim-Condition</td>
-                                                                <td>Randy Jane</td>
-                                                                <td>John Marshall</td>
-                                                                <td>2021-04-01</td>
-                                                                <td><span style="color: #E32925">2</span></td>
-                                                                <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                                <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>002-4/5-2.95(01211)</td>
-                                                                <td>New River Gorge Bridge over New River</td>
-                                                                <td>In-Depth</td>
-                                                                <td>Randy Jane</td>
-                                                                <td>John Marshall</td>
-                                                                <td>2021-04-09</td>
-                                                                <td><span style="color: #F26721">3</span></td>
-                                                                <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                                <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                            </tr>
-                                                            
+                                                            <!-- Generated in Javascript -->
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -386,61 +331,7 @@
                                                           </tr>
                                                       </thead>
                                                       <tbody>
-                                                          <tr>
-                                                              <td>001-4/5-2.95(01810)</td>
-                                                              <td>Cane Hill Bridge over Little Red River</td>
-                                                              <td>In-Depth</td>
-                                                              <td>William Jones</td>
-                                                              <td>Irene Song</td>
-                                                              <td>2021-05-20</td>
-                                                              <td><span style="color:#F89E33">4</span></td>
-                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                          </tr>
-                                                          <tr>
-                                                              <td>006-3/4-8.65(03148)</td>
-                                                              <td>Robert C. Byrd Bridge over Ohio River</td>
-                                                              <td>Periodic</td>
-                                                              <td>Liam Davis</td>
-                                                              <td>Irene Song</td>
-                                                              <td>2021-04-21</td>
-                                                              <td><span style="color: #EEC200">5</span></td>
-                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                          </tr>
-                                                          <tr>
-                                                              <td>004-4/5-2.95(01210)</td>
-                                                              <td>East Huntington Bridge over Ohio River</td>
-                                                              <td>Periodic</td>
-                                                              <td>Rebecca Johnson</td>
-                                                              <td>Irene Song</td>
-                                                              <td>2021-05-01</td>
-                                                              <td><span style="color: #EEC200">5</span></td>
-                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                          </tr>
-                                                          <tr>
-                                                              <td>001-4/5-2.95(01210)</td>
-                                                              <td>Alderson Bridge over Greenbrier River</td>
-                                                              <td>Interim-Condition</td>
-                                                              <td>Randy Jane</td>
-                                                              <td>John Marshall</td>
-                                                              <td>2021-04-01</td>
-                                                              <td><span style="color:#ECD715">6</span></td>
-                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                          </tr>
-                                                          <tr>
-                                                              <td>002-4/5-2.95(01211)</td>
-                                                              <td>New River Gorge Bridge over New River</td>
-                                                              <td>In-Depth</td>
-                                                              <td>Randy Jane</td>
-                                                              <td>John Marshall</td>
-                                                              <td>2021-04-09</td>
-                                                              <td><span style="color:#ECD715">6</span></td>
-                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                          </tr>
+                                                          <!-- Generated in Javascript -->
                                                       </tbody>
                                                   </table>
                                               </div>
@@ -484,226 +375,7 @@
                                                           </tr>
                                                       </thead>
                                                       <tbody>
-                                                          <tr>
-                                                              <td>001-4/5-2.95(01810)</td>
-                                                              <td>Cane Hill Bridge over Little Red River</td>
-                                                              <td>In-Depth</td>
-                                                              <td>William Jones</td>
-                                                              <td>Irene Song</td>
-                                                              <td>2021-05-20</td>
-                                                              <td><span style="color: #609B41">7</span></td>
-                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                          </tr>
-                                                          <tr>
-                                                              <td>006-3/4-8.65(03148)</td>
-                                                              <td>Robert C. Byrd Bridge over Ohio River</td>
-                                                              <td>Periodic</td>
-                                                              <td>Liam Davis</td>
-                                                              <td>Irene Song</td>
-                                                              <td>2021-04-21</td>
-                                                              <td><span style="color: #2E7A3C">8</span></td>
-                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                          </tr>
-                                                          <tr>
-                                                              <td>004-4/5-2.95(01210)</td>
-                                                              <td>East Huntington Bridge over Ohio River</td>
-                                                              <td>Periodic</td>
-                                                              <td>Rebecca Johnson</td>
-                                                              <td>Irene Song</td>
-                                                              <td>2021-05-01</td>
-                                                              <td><span style="color: #2E7A3C">8</span></td>
-                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                          </tr>
-                                                          <tr>
-                                                              <td>001-4/5-2.95(01210)</td>
-                                                              <td>Alderson Bridge over Greenbrier River</td>
-                                                              <td>Interim-Condition</td>
-                                                              <td>Randy Jane</td>
-                                                              <td>John Marshall</td>
-                                                              <td>2021-04-01</td>
-                                                              <td><span style="color: #036353">9</span></td>
-                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                          </tr>
-                                                          <tr>
-                                                              <td>002-4/5-2.95(01211)</td>
-                                                              <td>New River Gorge Bridge over New River</td>
-                                                              <td>In-Depth</td>
-                                                              <td>Randy Jane</td>
-                                                              <td>John Marshall</td>
-                                                              <td>2021-04-09</td>
-                                                              <td><span style="color: #036353">9</span></td>
-                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                          </tr>
-                                                          <tr>
-                                                              <td>001-4/5-2.95(01810)</td>
-                                                              <td>Cane Hill Bridge over Little Red River</td>
-                                                              <td>In-Depth</td>
-                                                              <td>William Jones</td>
-                                                              <td>Irene Song</td>
-                                                              <td>2021-05-20</td>
-                                                              <td><span style="color: #609B41">7</span></td>
-                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                          </tr>
-                                                          <tr>
-                                                              <td>006-3/4-8.65(03148)</td>
-                                                              <td>Robert C. Byrd Bridge over Ohio River</td>
-                                                              <td>Periodic</td>
-                                                              <td>Liam Davis</td>
-                                                              <td>Irene Song</td>
-                                                              <td>2021-04-21</td>
-                                                              <td><span style="color: #2E7A3C">8</span></td>
-                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                          </tr>
-                                                          <tr>
-                                                              <td>004-4/5-2.95(01210)</td>
-                                                              <td>East Huntington Bridge over Ohio River</td>
-                                                              <td>Periodic</td>
-                                                              <td>Rebecca Johnson</td>
-                                                              <td>Irene Song</td>
-                                                              <td>2021-05-01</td>
-                                                              <td><span style="color: #2E7A3C">8</span></td>
-                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                          </tr>
-                                                          <tr>
-                                                              <td>001-4/5-2.95(01210)</td>
-                                                              <td>Alderson Bridge over Greenbrier River</td>
-                                                              <td>Interim-Condition</td>
-                                                              <td>Randy Jane</td>
-                                                              <td>John Marshall</td>
-                                                              <td>2021-04-01</td>
-                                                              <td><span style="color: #036353">9</span></td>
-                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                          </tr>
-                                                          <tr>
-                                                              <td>002-4/5-2.95(01211)</td>
-                                                              <td>New River Gorge Bridge over New River</td>
-                                                              <td>In-Depth</td>
-                                                              <td>Randy Jane</td>
-                                                              <td>John Marshall</td>
-                                                              <td>2021-04-09</td>
-                                                              <td><span style="color: #036353">9</span></td>
-                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                          </tr>
-                                                          <tr>
-                                                              <td>001-4/5-2.95(01810)</td>
-                                                              <td>Cane Hill Bridge over Little Red River</td>
-                                                              <td>In-Depth</td>
-                                                              <td>William Jones</td>
-                                                              <td>Irene Song</td>
-                                                              <td>2021-05-20</td>
-                                                              <td><span style="color: #609B41">7</span></td>
-                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                          </tr>
-                                                          <tr>
-                                                              <td>006-3/4-8.65(03148)</td>
-                                                              <td>Robert C. Byrd Bridge over Ohio River</td>
-                                                              <td>Periodic</td>
-                                                              <td>Liam Davis</td>
-                                                              <td>Irene Song</td>
-                                                              <td>2021-04-21</td>
-                                                              <td><span style="color: #2E7A3C">8</span></td>
-                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                          </tr>
-                                                          <tr>
-                                                              <td>004-4/5-2.95(01210)</td>
-                                                              <td>East Huntington Bridge over Ohio River</td>
-                                                              <td>Periodic</td>
-                                                              <td>Rebecca Johnson</td>
-                                                              <td>Irene Song</td>
-                                                              <td>2021-05-01</td>
-                                                              <td><span style="color: #2E7A3C">8</span></td>
-                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                          </tr>
-                                                          <tr>
-                                                              <td>001-4/5-2.95(01210)</td>
-                                                              <td>Alderson Bridge over Greenbrier River</td>
-                                                              <td>Interim-Condition</td>
-                                                              <td>Randy Jane</td>
-                                                              <td>John Marshall</td>
-                                                              <td>2021-04-01</td>
-                                                              <td><span style="color: #036353">9</span></td>
-                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                          </tr>
-                                                          <tr>
-                                                              <td>002-4/5-2.95(01211)</td>
-                                                              <td>New River Gorge Bridge over New River</td>
-                                                              <td>In-Depth</td>
-                                                              <td>Randy Jane</td>
-                                                              <td>John Marshall</td>
-                                                              <td>2021-04-09</td>
-                                                              <td><span style="color: #036353">9</span></td>
-                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                          </tr>
-                                                          <tr>
-                                                              <td>001-4/5-2.95(01810)</td>
-                                                              <td>Cane Hill Bridge over Little Red River</td>
-                                                              <td>In-Depth</td>
-                                                              <td>William Jones</td>
-                                                              <td>Irene Song</td>
-                                                              <td>2021-05-20</td>
-                                                              <td><span style="color: #609B41">7</span></td>
-                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                          </tr>
-                                                          <tr>
-                                                              <td>006-3/4-8.65(03148)</td>
-                                                              <td>Robert C. Byrd Bridge over Ohio River</td>
-                                                              <td>Periodic</td>
-                                                              <td>Liam Davis</td>
-                                                              <td>Irene Song</td>
-                                                              <td>2021-04-21</td>
-                                                              <td><span style="color: #2E7A3C">8</span></td>
-                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                          </tr>
-                                                          <tr>
-                                                              <td>004-4/5-2.95(01210)</td>
-                                                              <td>East Huntington Bridge over Ohio River</td>
-                                                              <td>Periodic</td>
-                                                              <td>Rebecca Johnson</td>
-                                                              <td>Irene Song</td>
-                                                              <td>2021-05-01</td>
-                                                              <td><span style="color: #2E7A3C">8</span></td>
-                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                          </tr>
-                                                          <tr>
-                                                              <td>001-4/5-2.95(01210)</td>
-                                                              <td>Alderson Bridge over Greenbrier River</td>
-                                                              <td>Interim-Condition</td>
-                                                              <td>Randy Jane</td>
-                                                              <td>John Marshall</td>
-                                                              <td>2021-04-01</td>
-                                                              <td><span style="color: #036353">9</span></td>
-                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                          </tr>
-                                                          <tr>
-                                                              <td>002-4/5-2.95(01211)</td>
-                                                              <td>New River Gorge Bridge over New River</td>
-                                                              <td>In-Depth</td>
-                                                              <td>Randy Jane</td>
-                                                              <td>John Marshall</td>
-                                                              <td>2021-04-09</td>
-                                                              <td><span style="color: #036353">9</span></td>
-                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                          </tr>
+                                                          <!-- Generated in Javascript -->
                                                       </tbody>
                                                   </table>
                                               </div>
@@ -745,51 +417,7 @@
                                                           </tr>
                                                       </thead>
                                                       <tbody>
-                                                          <tr data-bs-id="1">
-                                                              <td>001-4/5-2.95(01810)</td>
-                                                              <td>Cane Hill Bridge over Little Red River</td>
-                                                              <td>In-Depth</td>
-                                                              <td>William Jones</td>
-                                                              <td>Irene Song</td>
-                                                              <td>2021-09-20</td>
-                                                              <td><button class="btnset btn_contact" onclick="" data-bs-toggle="modal" data-bs-target="#inspector_contact_modal">Contact Inspector</button></td>
-                                                            </tr>
-                                                          <tr data-bs-id="2">
-                                                              <td>006-3/4-8.65(03148)</td>
-                                                              <td>Robert C. Byrd Bridge over Ohio River</td>
-                                                              <td>Periodic</td>
-                                                              <td>Liam Davis</td>
-                                                              <td>Irene Song</td>
-                                                              <td>2021-11-21</td>
-                                                              <td><button class="btnset btn_contact" onclick="" data-bs-toggle="modal" data-bs-target="#inspector_contact_modal">Contact Inspector</button></td>
-                                                          </tr>
-                                                          <tr data-bs-id="3">
-                                                              <td>004-4/5-2.95(01210)</td>
-                                                              <td>East Huntington Bridge over Ohio River</td>
-                                                              <td>Periodic</td>
-                                                              <td>Rebecca Johnson</td>
-                                                              <td>Irene Song</td>
-                                                              <td>2021-11-01</td>
-                                                              <td><button class="btnset btn_contact" onclick="" data-bs-toggle="modal" data-bs-target="#inspector_contact_modal">Contact Inspector</button></td>
-                                                          </tr>
-                                                          <tr data-bs-id="4">
-                                                              <td>001-4/5-2.95(01210)</td>
-                                                              <td>Alderson Bridge over Greenbrier River</td>
-                                                              <td>Interim-Condition</td>
-                                                              <td>Randy Jane</td>
-                                                              <td>John Marshall</td>
-                                                              <td>2021-10-05</td>
-                                                              <td><button class="btnset btn_contact" onclick="" data-bs-toggle="modal" data-bs-target="#inspector_contact_modal">Contact Inspector</button></td>
-                                                          </tr>
-                                                          <tr data-bs-id="5">
-                                                              <td>002-4/5-2.95(01211)</td>
-                                                              <td>New River Gorge Bridge over New River</td>
-                                                              <td>In-Depth</td>
-                                                              <td>Randy Jane</td>
-                                                              <td>John Marshall</td>
-                                                              <td>2021-10-09</td>
-                                                              <td><button class="btnset btn_contact" onclick="" data-bs-toggle="modal" data-bs-target="#inspector_contact_modal">Contact Inspector</button></td>
-                                                          </tr>
+                                                          <!-- Generated in Javascript -->
                                                       </tbody>
                                                   </table>
                                               </div>
@@ -831,51 +459,7 @@
                                                           </tr>
                                                       </thead>
                                                       <tbody>
-                                                          <tr data-bs-id="1">
-                                                              <td>001-4/5-2.95(01810)</td>
-                                                              <td>Cane Hill Bridge over Little Red River</td>
-                                                              <td>In-Depth</td>
-                                                              <td>William Jones</td>
-                                                              <td>Irene Song</td>
-                                                              <td>2021-09-20</td>
-                                                              <td><button class="btnset btn_contact" onclick="" data-bs-toggle="modal" data-bs-target="#inspector_contact_modal">Contact Inspector</button></td>
-                                                            </tr>
-                                                          <tr data-bs-id="2">
-                                                              <td>006-3/4-8.65(03148)</td>
-                                                              <td>Robert C. Byrd Bridge over Ohio River</td>
-                                                              <td>Periodic</td>
-                                                              <td>Liam Davis</td>
-                                                              <td>Irene Song</td>
-                                                              <td>2021-11-21</td>
-                                                              <td><button class="btnset btn_contact" onclick="" data-bs-toggle="modal" data-bs-target="#inspector_contact_modal">Contact Inspector</button></td>
-                                                          </tr>
-                                                          <tr data-bs-id="3">
-                                                              <td>004-4/5-2.95(01210)</td>
-                                                              <td>East Huntington Bridge over Ohio River</td>
-                                                              <td>Periodic</td>
-                                                              <td>Rebecca Johnson</td>
-                                                              <td>Irene Song</td>
-                                                              <td>2021-11-01</td>
-                                                              <td><button class="btnset btn_contact" onclick="" data-bs-toggle="modal" data-bs-target="#inspector_contact_modal">Contact Inspector</button></td>
-                                                          </tr>
-                                                          <tr data-bs-id="4">
-                                                              <td>001-4/5-2.95(01210)</td>
-                                                              <td>Alderson Bridge over Greenbrier River</td>
-                                                              <td>Interim-Condition</td>
-                                                              <td>Randy Jane</td>
-                                                              <td>John Marshall</td>
-                                                              <td>2021-10-05</td>
-                                                              <td><button class="btnset btn_contact" onclick="" data-bs-toggle="modal" data-bs-target="#inspector_contact_modal">Contact Inspector</button></td>
-                                                          </tr>
-                                                          <tr data-bs-id="5">
-                                                              <td>002-4/5-2.95(01211)</td>
-                                                              <td>New River Gorge Bridge over New River</td>
-                                                              <td>In-Depth</td>
-                                                              <td>Randy Jane</td>
-                                                              <td>John Marshall</td>
-                                                              <td>2021-10-09</td>
-                                                              <td><button class="btnset btn_contact" onclick="" data-bs-toggle="modal" data-bs-target="#inspector_contact_modal">Contact Inspector</button></td>
-                                                          </tr>
+                                                          <!-- Generated in Javascript -->
                                                       </tbody>
                                                   </table>
                                               </div>
@@ -892,624 +476,6 @@
                         </div>
                         <!-- /.row -->
                     </div>
-                </div><!--/. container-fluid -->
-            </section>
-            <!-- /.content -->
-
-            
-            <section class="content cbox" id="c2020">
-                <div class="container-fluid">
-                  <div class="contents">
-                    <div class="row">
-                        <div class="col-md-12">
-                          <div class="card">
-                            <div class="card-header">
-                              <h5 class="card-title">Yearly Inspection Report (2020)</h5>
-                              <!--
-                              <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                  <i class="fas fa-minus"></i>
-                                </button>
-                                <div class="btn-group">
-                                  <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fas fa-wrench"></i>
-                                  </button>
-                                  <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <a href="#" class="dropdown-item">Action</a>
-                                    <a href="#" class="dropdown-item">Another action</a>
-                                    <a href="#" class="dropdown-item">Something else here</a>
-                                    <a class="dropdown-divider"></a>
-                                    <a href="#" class="dropdown-item">Separated link</a>
-                                  </div>
-                                </div>
-                                <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                  <i class="fas fa-times"></i>
-                                </button>
-                              </div>
-                              -->
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                              <div class="row" style="align-items: center;">
-                                <div class="col-sm-4 col-md-4">
-                                    <div class="chart-responsive">
-                                        <canvas id="pieChart2" height="200"></canvas>
-                                    </div>
-                                    <div style="font-size: 0.8em; text-align: center; margin: 5px 0;">
-                                        Click a piece of pie above to see details.
-                                    </div>
-                                    <!-- ./chart-responsive -->
-                                    <!--
-                                    <div>
-                                        <ul class="chart-legend clearfix">
-                                            <li><i class="far fa-circle text-danger"></i> Bridge replacement</li>
-                                            <li><i class="far fa-circle text-success"></i> Widening & rehabilitation</li>
-                                            <li><i class="far fa-circle text-warning"></i> Rehabilitation</li>
-                                            <li><i class="far fa-circle text-info"></i> Deck rehabilitation/replacement</li>
-                                            <li><i class="far fa-circle text-secondary"></i> Other work</li>
-
-                                        </ul>
-                                    </div>
-                                    -->
-                                </div>
-                                <!-- /.col -->
-                                <div class="col-sm-8 col-md-8">
-                                    <div class="table-responsive">
-                                        <table id="InspectionStatus" class="table table-sm">
-                                            <tr>
-                                                <th>Inspection Status</th>
-                                                <th>Number</th>
-                                            </tr>
-                                            <tr>
-                                                <td class="txtl"><i class="fas fa-circle text-dark"></i> Inspection Completed </td>
-                                                <td class="txtr">7,093</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="txtl">&emsp;&nbsp;<i class="fas fa-circle text-danger"></i> High Risk </td>
-                                                <td class="txtr">2,096</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="txtl">&emsp;&nbsp;<i class="fas fa-circle text-warning"></i> Middle Risk </td>
-                                                <td class="txtr">1,996</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="txtl">&emsp;&nbsp;<i class="fas fa-circle text-success"></i> Low Risk </td>
-                                                <td class="txtr">3,001</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="txtl"><i class="fas fa-circle text-secondary"></i> Inspection in Progress </td>
-                                                <td class="txtr">71</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="txtl"><i class="fas fa-circle" style="color: #f7f7f7;"></i> Inspection Not Started </td>
-                                                <td class="txtr">131</td>
-                                            </tr>
-                                            <tr class="ttlcolor">
-                                                <td class="txtc"><strong> Inspection Total </strong></td>
-                                                <td class="txtr">7,295</td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                                <!-- /.col -->
-                              </div>
-                              <!-- /.row -->
-                            </div>
-                            <!-- ./card-body -->
-                            <div class="card-footer">
-                              <div class="row">
-                                <div class="col-sm-3 col-6">
-                                  <div class="description-block border-right">
-                                    <!--<span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 17%</span>-->
-                                    <h5 class="description-header">7,093</h5>
-                                    <span class="description-text">COMPLETED INSPECTIONS</span>
-                                  </div>
-                                  <!-- /.description-block -->
-                                </div>
-                                <!-- /.col -->
-                                <div class="col-sm-3 col-6">
-                                  <div class="description-block border-right">
-                                    <!--<span class="description-percentage text-warning"><i class="fas fa-caret-left"></i> 0%</span>-->
-                                    <h5 class="description-header">2,096</h5>
-                                    <span class="description-text text-danger">HIGH RISK</span>
-                                  </div>
-                                  <!-- /.description-block -->
-                                </div>
-                                <!-- /.col -->
-                                <div class="col-sm-3 col-6">
-                                  <div class="description-block border-right">
-                                    <!--<span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 20%</span>-->
-                                    <h5 class="description-header">1,996</h5>
-                                    <span class="description-text text-warning">MIDDLE RISK</span>
-                                  </div>
-                                  <!-- /.description-block -->
-                                </div>
-                                <!-- /.col -->
-                                <div class="col-sm-3 col-6">
-                                  <div class="description-block">
-                                    <!--<span class="description-percentage text-danger"><i class="fas fa-caret-down"></i> 18%</span>-->
-                                    <h5 class="description-header">3,001</h5>
-                                    <span class="description-text text-success">LOW RISK</span>
-                                  </div>
-                                  <!-- /.description-block -->
-                                </div>
-                              </div>
-                              <!-- /.row -->
-                            </div>
-                            <!-- /.card-footer -->
-                          </div>
-                          <!-- /.card -->
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-
-                    <!-- High Risk (1-3) -->
-                    <div class="row tbox" id="rm_tt1">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5 class="card-title">Inspection List (High Lisk)</h5>
-                                </div>
-                                <!-- /.card-header -->
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div style="padding: 10px; overflow: auto; min-width: 400px;">
-                                                <table class="table table-sm" id="tbl_bridge_insp2_t1">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Bridge no.</th>
-                                                            <th>Bridge name</th>
-                                                            <th>Type</th>
-                                                            <th>Assigned to</th>
-                                                            <th>Assigned by</th>
-                                                            <th>Completed on</th>
-                                                            <th>Rate</th>
-                                                            <th data-orderable="false">Bridge<br>Elements</th>
-                                                            <th data-orderable="false">Report</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>001-4/5-2.95(01810)</td>
-                                                            <td>Cane Hill Bridge over Little Red River</td>
-                                                            <td>In-Depth</td>
-                                                            <td>William Jones</td>
-                                                            <td>Irene Song</td>
-                                                            <td>2021-05-20</td>
-                                                            <td><span style="color: #E40800">1</span></td>
-                                                            <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                            <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>006-3/4-8.65(03148)</td>
-                                                            <td>Robert C. Byrd Bridge over Ohio River</td>
-                                                            <td>Periodic</td>
-                                                            <td>Liam Davis</td>
-                                                            <td>Irene Song</td>
-                                                            <td>2021-04-21</td>
-                                                            <td><span style="color: #E40800">1</span></td>
-                                                            <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                            <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>004-4/5-2.95(01210)</td>
-                                                            <td>East Huntington Bridge over Ohio River</td>
-                                                            <td>Periodic</td>
-                                                            <td>Rebecca Johnson</td>
-                                                            <td>Irene Song</td>
-                                                            <td>2021-05-01</td>
-                                                            <td><span style="color: #E32925">2</span></td>
-                                                            <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                            <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>001-4/5-2.95(01210)</td>
-                                                            <td>Alderson Bridge over Greenbrier River</td>
-                                                            <td>Interim-Condition</td>
-                                                            <td>Randy Jane</td>
-                                                            <td>John Marshall</td>
-                                                            <td>2021-04-01</td>
-                                                            <td><span style="color: #E32925">2</span></td>
-                                                            <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                            <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>002-4/5-2.95(01211)</td>
-                                                            <td>New River Gorge Bridge over New River</td>
-                                                            <td>In-Depth</td>
-                                                            <td>Randy Jane</td>
-                                                            <td>John Marshall</td>
-                                                            <td>2021-04-09</td>
-                                                            <td><span style="color: #F26721">3</span></td>
-                                                            <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                            <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <!-- /.col -->
-                                    </div>
-                                    <!-- /.row -->
-                                </div>
-                                <!-- ./card-body -->
-                            </div>
-                            <!-- /.card -->
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-
-                    <!-- Middle Risk (4-6) -->
-                    <div class="row tbox" id="rm_tt2">
-                      <div class="col-md-12">
-                          <div class="card">
-                              <div class="card-header">
-                                  <h5 class="card-title">Inspection List (Middle Risk) </h5>
-                              </div>
-                              <!-- /.card-header -->
-                              <div class="card-body">
-                                  <div class="row">
-                                      <div class="col-md-12">
-                                          <div style="padding: 10px; overflow: auto; min-width: 400px;">
-                                              <table class="table table-sm" id="tbl_bridge_insp2_t2">
-                                                  <thead>
-                                                      <tr>
-                                                          <th>Bridge no.</th>
-                                                          <th>Bridge name</th>
-                                                          <th>Type</th>
-                                                          <th>Assigned to</th>
-                                                          <th>Assigned by</th>
-                                                          <th>Completed on</th>
-                                                          <th>Rate</th>
-                                                          <th data-orderable="false">Bridge<br>Elements</th>
-                                                          <th data-orderable="false">Report</th>
-                                                      </tr>
-                                                  </thead>
-                                                  <tbody>
-                                                      <tr>
-                                                          <td>001-4/5-2.95(01810)</td>
-                                                          <td>Cane Hill Bridge over Little Red River</td>
-                                                          <td>In-Depth</td>
-                                                          <td>William Jones</td>
-                                                          <td>Irene Song</td>
-                                                          <td>2021-05-20</td>
-                                                          <td><span style="color:#F89E33">4</span></td>
-                                                          <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                          <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                      </tr>
-                                                      <tr>
-                                                          <td>006-3/4-8.65(03148)</td>
-                                                          <td>Robert C. Byrd Bridge over Ohio River</td>
-                                                          <td>Periodic</td>
-                                                          <td>Liam Davis</td>
-                                                          <td>Irene Song</td>
-                                                          <td>2021-04-21</td>
-                                                          <td><span style="color: #EEC200">5</span></td>
-                                                          <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                          <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                      </tr>
-                                                      <tr>
-                                                          <td>004-4/5-2.95(01210)</td>
-                                                          <td>East Huntington Bridge over Ohio River</td>
-                                                          <td>Periodic</td>
-                                                          <td>Rebecca Johnson</td>
-                                                          <td>Irene Song</td>
-                                                          <td>2021-05-01</td>
-                                                          <td><span style="color: #EEC200">5</span></td>
-                                                          <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                          <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                      </tr>
-                                                      <tr>
-                                                          <td>001-4/5-2.95(01210)</td>
-                                                          <td>Alderson Bridge over Greenbrier River</td>
-                                                          <td>Interim-Condition</td>
-                                                          <td>Randy Jane</td>
-                                                          <td>John Marshall</td>
-                                                          <td>2021-04-01</td>
-                                                          <td><span style="color:#ECD715">6</span></td>
-                                                          <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                          <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                      </tr>
-                                                      <tr>
-                                                          <td>002-4/5-2.95(01211)</td>
-                                                          <td>New River Gorge Bridge over New River</td>
-                                                          <td>In-Depth</td>
-                                                          <td>Randy Jane</td>
-                                                          <td>John Marshall</td>
-                                                          <td>2021-04-09</td>
-                                                          <td><span style="color:#ECD715">6</span></td>
-                                                          <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                          <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                      </tr>
-                                                  </tbody>
-                                              </table>
-                                          </div>
-                                      </div>
-                                      <!-- /.col -->
-                                  </div>
-                                  <!-- /.row -->
-                              </div>
-                              <!-- ./card-body -->
-                          </div>
-                          <!-- /.card -->
-                      </div>
-                      <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-
-                    <!-- Low Risk (6-9) -->
-                    <div class="row tbox" id="rm_tt3">
-                      <div class="col-md-12">
-                          <div class="card">
-                              <div class="card-header">
-                                  <h5 class="card-title">Inspection List (Low Risk) </h5>
-                              </div>
-                              <!-- /.card-header -->
-                              <div class="card-body">
-                                  <div class="row">
-                                      <div class="col-md-12">
-                                          <div style="padding: 10px; overflow: auto; min-width: 400px;">
-                                              <table class="table table-sm" id="tbl_bridge_insp2_t3">
-                                                  <thead>
-                                                      <tr>
-                                                          <th>Bridge no.</th>
-                                                          <th>Bridge name</th>
-                                                          <th>Type</th>
-                                                          <th>Assigned to</th>
-                                                          <th>Assigned by</th>
-                                                          <th>Completed on</th>
-                                                          <th>Rate</th>
-                                                          <th data-orderable="false">Bridge<br>Elements</th>
-                                                          <th data-orderable="false">Report</th>
-                                                      </tr>
-                                                  </thead>
-                                                  <tbody>
-                                                      <tr>
-                                                          <td>001-4/5-2.95(01810)</td>
-                                                          <td>Cane Hill Bridge over Little Red River</td>
-                                                          <td>In-Depth</td>
-                                                          <td>William Jones</td>
-                                                          <td>Irene Song</td>
-                                                          <td>2021-05-20</td>
-                                                          <td><span style="color: #609B41">7</span></td>
-                                                          <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                          <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                      </tr>
-                                                      <tr>
-                                                          <td>006-3/4-8.65(03148)</td>
-                                                          <td>Robert C. Byrd Bridge over Ohio River</td>
-                                                          <td>Periodic</td>
-                                                          <td>Liam Davis</td>
-                                                          <td>Irene Song</td>
-                                                          <td>2021-04-21</td>
-                                                          <td><span style="color: #2E7A3C">8</span></td>
-                                                          <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                          <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                      </tr>
-                                                      <tr>
-                                                          <td>004-4/5-2.95(01210)</td>
-                                                          <td>East Huntington Bridge over Ohio River</td>
-                                                          <td>Periodic</td>
-                                                          <td>Rebecca Johnson</td>
-                                                          <td>Irene Song</td>
-                                                          <td>2021-05-01</td>
-                                                          <td><span style="color: #2E7A3C">8</span></td>
-                                                          <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                          <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                      </tr>
-                                                      <tr>
-                                                          <td>001-4/5-2.95(01210)</td>
-                                                          <td>Alderson Bridge over Greenbrier River</td>
-                                                          <td>Interim-Condition</td>
-                                                          <td>Randy Jane</td>
-                                                          <td>John Marshall</td>
-                                                          <td>2021-04-01</td>
-                                                          <td><span style="color: #036353">9</span></td>
-                                                          <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                          <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                      </tr>
-                                                      <tr>
-                                                          <td>002-4/5-2.95(01211)</td>
-                                                          <td>New River Gorge Bridge over New River</td>
-                                                          <td>In-Depth</td>
-                                                          <td>Randy Jane</td>
-                                                          <td>John Marshall</td>
-                                                          <td>2021-04-09</td>
-                                                          <td><span style="color: #036353">9</span></td>
-                                                          <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
-                                                          <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
-                                                      </tr>
-                                                  </tbody>
-                                              </table>
-                                          </div>
-                                      </div>
-                                      <!-- /.col -->
-                                  </div>
-                                  <!-- /.row -->
-                              </div>
-                              <!-- ./card-body -->
-                          </div>
-                          <!-- /.card -->
-                      </div>
-                      <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-
-                    <!-- In-Progress -->
-                    <div class="row tbox" id="rm_tt4">
-                      <div class="col-md-12">
-                          <div class="card">
-                              <div class="card-header">
-                                  <h5 class="card-title">Inspection List (In-Progress)</h5>
-                              </div>
-                              <!-- /.card-header -->
-                              <div class="card-body">
-                                  <div class="row">
-                                      <div class="col-md-12">
-                                          <div style="padding: 10px; overflow: auto; min-width: 400px;">
-                                              <table class="table table-sm" id="tbl_bridge_insp2_t4">
-                                                  <thead>
-                                                      <tr>
-                                                          <th>Bridge no.</th>
-                                                          <th>Bridge name</th>
-                                                          <th>Type</th>
-                                                          <th>Assigned to</th>
-                                                          <th>Assigned by</th>
-                                                          <th>Due</th>
-                                                          <th data-orderable="false">Action</th>
-                                                      </tr>
-                                                  </thead>
-                                                  <tbody>
-                                                      <tr data-bs-id="1">
-                                                          <td>001-4/5-2.95(01810)</td>
-                                                          <td>Cane Hill Bridge over Little Red River</td>
-                                                          <td>In-Depth</td>
-                                                          <td>William Jones</td>
-                                                          <td>Irene Song</td>
-                                                          <td>2021-09-20</td>
-                                                          <td><button class="btnset btn_contact" onclick="" data-bs-toggle="modal" data-bs-target="#inspector_contact_modal">Contact Inspector</button></td>
-                                                        </tr>
-                                                      <tr data-bs-id="2">
-                                                          <td>006-3/4-8.65(03148)</td>
-                                                          <td>Robert C. Byrd Bridge over Ohio River</td>
-                                                          <td>Periodic</td>
-                                                          <td>Liam Davis</td>
-                                                          <td>Irene Song</td>
-                                                          <td>2021-11-21</td>
-                                                          <td><button class="btnset btn_contact" onclick="" data-bs-toggle="modal" data-bs-target="#inspector_contact_modal">Contact Inspector</button></td>
-                                                      </tr>
-                                                      <tr data-bs-id="3">
-                                                          <td>004-4/5-2.95(01210)</td>
-                                                          <td>East Huntington Bridge over Ohio River</td>
-                                                          <td>Periodic</td>
-                                                          <td>Rebecca Johnson</td>
-                                                          <td>Irene Song</td>
-                                                          <td>2021-11-01</td>
-                                                          <td><button class="btnset btn_contact" onclick="" data-bs-toggle="modal" data-bs-target="#inspector_contact_modal">Contact Inspector</button></td>
-                                                      </tr>
-                                                      <tr data-bs-id="4">
-                                                          <td>001-4/5-2.95(01210)</td>
-                                                          <td>Alderson Bridge over Greenbrier River</td>
-                                                          <td>Interim-Condition</td>
-                                                          <td>Randy Jane</td>
-                                                          <td>John Marshall</td>
-                                                          <td>2021-10-05</td>
-                                                          <td><button class="btnset btn_contact" onclick="" data-bs-toggle="modal" data-bs-target="#inspector_contact_modal">Contact Inspector</button></td>
-                                                      </tr>
-                                                      <tr data-bs-id="5">
-                                                          <td>002-4/5-2.95(01211)</td>
-                                                          <td>New River Gorge Bridge over New River</td>
-                                                          <td>In-Depth</td>
-                                                          <td>Randy Jane</td>
-                                                          <td>John Marshall</td>
-                                                          <td>2021-10-09</td>
-                                                          <td><button class="btnset btn_contact" onclick="" data-bs-toggle="modal" data-bs-target="#inspector_contact_modal">Contact Inspector</button></td>
-                                                      </tr>
-                                                  </tbody>
-                                              </table>
-                                          </div>
-                                      </div>
-                                      <!-- /.col -->
-                                  </div>
-                                  <!-- /.row -->
-                              </div>
-                              <!-- ./card-body -->
-                          </div>
-                          <!-- /.card -->
-                      </div>
-                      <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-
-                    <!-- Not Started -->
-                    <div class="row tbox" id="rm_tt5">
-                      <div class="col-md-12">
-                          <div class="card">
-                              <div class="card-header">
-                                  <h5 class="card-title">Inspection List (Not Started)</h5>
-                              </div>
-                              <!-- /.card-header -->
-                              <div class="card-body">
-                                  <div class="row">
-                                      <div class="col-md-12">
-                                          <div style="padding: 10px; overflow: auto; min-width: 400px;">
-                                              <table class="table table-sm" id="tbl_bridge_insp2_t5">
-                                                  <thead>
-                                                      <tr>
-                                                          <th>Bridge no.</th>
-                                                          <th>Bridge name</th>
-                                                          <th>Type</th>
-                                                          <th>Assigned to</th>
-                                                          <th>Assigned by</th>
-                                                          <th>Due</th>
-                                                          <th data-orderable="false">Action</th>
-                                                      </tr>
-                                                  </thead>
-                                                  <tbody>
-                                                      <tr data-bs-id="1">
-                                                          <td>001-4/5-2.95(01810)</td>
-                                                          <td>Cane Hill Bridge over Little Red River</td>
-                                                          <td>In-Depth</td>
-                                                          <td>William Jones</td>
-                                                          <td>Irene Song</td>
-                                                          <td>2021-09-20</td>
-                                                          <td><button class="btnset btn_contact" onclick="" data-bs-toggle="modal" data-bs-target="#inspector_contact_modal">Contact Inspector</button></td>
-                                                        </tr>
-                                                      <tr data-bs-id="2">
-                                                          <td>006-3/4-8.65(03148)</td>
-                                                          <td>Robert C. Byrd Bridge over Ohio River</td>
-                                                          <td>Periodic</td>
-                                                          <td>Liam Davis</td>
-                                                          <td>Irene Song</td>
-                                                          <td>2021-11-21</td>
-                                                          <td><button class="btnset btn_contact" onclick="" data-bs-toggle="modal" data-bs-target="#inspector_contact_modal">Contact Inspector</button></td>
-                                                      </tr>
-                                                      <tr data-bs-id="3">
-                                                          <td>004-4/5-2.95(01210)</td>
-                                                          <td>East Huntington Bridge over Ohio River</td>
-                                                          <td>Periodic</td>
-                                                          <td>Rebecca Johnson</td>
-                                                          <td>Irene Song</td>
-                                                          <td>2021-11-01</td>
-                                                          <td><button class="btnset btn_contact" onclick="" data-bs-toggle="modal" data-bs-target="#inspector_contact_modal">Contact Inspector</button></td>
-                                                      </tr>
-                                                      <tr data-bs-id="4">
-                                                          <td>001-4/5-2.95(01210)</td>
-                                                          <td>Alderson Bridge over Greenbrier River</td>
-                                                          <td>Interim-Condition</td>
-                                                          <td>Randy Jane</td>
-                                                          <td>John Marshall</td>
-                                                          <td>2021-10-05</td>
-                                                          <td><button class="btnset btn_contact" onclick="" data-bs-toggle="modal" data-bs-target="#inspector_contact_modal">Contact Inspector</button></td>
-                                                      </tr>
-                                                      <tr data-bs-id="5">
-                                                          <td>002-4/5-2.95(01211)</td>
-                                                          <td>New River Gorge Bridge over New River</td>
-                                                          <td>In-Depth</td>
-                                                          <td>Randy Jane</td>
-                                                          <td>John Marshall</td>
-                                                          <td>2021-10-09</td>
-                                                          <td><button class="btnset btn_contact" onclick="" data-bs-toggle="modal" data-bs-target="#inspector_contact_modal">Contact Inspector</button></td>
-                                                      </tr>
-                                                  </tbody>
-                                              </table>
-                                          </div>
-                                      </div>
-                                      <!-- /.col -->
-                                  </div>
-                                  <!-- /.row -->
-                              </div>
-                              <!-- ./card-body -->
-                          </div>
-                          <!-- /.card -->
-                      </div>
-                      <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-                </div>
                 </div><!--/. container-fluid -->
             </section>
             <!-- /.content -->
@@ -1673,43 +639,12 @@
                     return bridgeData;
                 }
 
-                /**
-                 *  Given list of inspections, create and return a dataset of tallied data for the pie chart and totals 
-                 *  Output data represents [high risk, middle risk, low risk, in progress, not started]
-                 */
-                function tallyData(bridges){
-
-                    //create a blank data set for the pie chart
-
-                    var dataset = [0,0,0,0,0];
-
-                    //tally all the reports for each section of the pie chart
-                    for (var i=0; i<bridges.data.length; i++){
-                        //check if inspection is complete
-                        if(bridges.data[i].finishedDate != null){
-                            //if complete, increment chart values based on OverallRating
-                            if(bridges.data[i].rating >= 1 && bridges.data[i].rating <= 3){ 
-                                dataset[0]++; 
-                            }
-                            else if(bridges.data[i].rating >= 4 && bridges.data[i].rating <= 6){ 
-                                dataset[1]++; 
-                            }
-                            else{
-                                dataset[2]++;
-                            }
-                        }
-                        //if inspection is in progress, increment chart value 
-                        else if(bridges.data[i].dueDate != null){
-                            dataset[3]++;
-                        }
-                        //if inspection is not started (no finished date or due date), increment chart value
-                        else{
-                            dataset[4]++;
-                        }
-                    }
-                    //return dataset for pie chart
-                    return dataset;
-                }
+                // Instances of data tables
+               var lowRiskTable;
+               var highRiskTable;
+               var middleRiskTable;
+               var inProgressTable;
+               var notStartedTable;
 
 
                 /* PIE CHART */
@@ -1767,7 +702,8 @@
 
                 const buildChart = async (pieOptions,year) => {
                     const bridgeData = await fetchData(year);
-                    const tallies = tallyData(bridgeData);
+                    bindTables();
+                    const tallies = populateTables(bridgeData);
                     updateTotals(tallies);
                     pieData.datasets[0].data = tallies;
                     var pieChart = new Chart(pieChartCanvas, {
@@ -1829,12 +765,6 @@
                 function cleanTables(){
                     //TODO
                 }
-                /**
-                 * This function adds data from the input data list to the DataTables
-                 */
-                function populateTables(bridges){
-                    //TODO
-                }
 
             });
             
@@ -1860,24 +790,100 @@
             });
         </script>
 
-        <!-- Tables -->
         <script>
             $(document).ready(function(){
-                $('#tbl_bridge_insp').DataTable({"order": [[ 6, "asc" ]]});
-                $('#tbl_bridge_insp_t1').DataTable({"order": [[ 6, "asc" ]]});
-                $('#tbl_bridge_insp_t2').DataTable({"order": [[ 6, "asc" ]]});
-                $('#tbl_bridge_insp_t3').DataTable({"order": [[ 6, "asc" ]]});
-                $('#tbl_bridge_insp_t4').DataTable({"order": [[ 5, "asc" ]]});
-                $('#tbl_bridge_insp_t5').DataTable({"order": [[ 5, "asc" ]]});
-                
-                $('#tbl_bridge_insp2').DataTable({"order": [[ 6, "asc" ]]});
-                $('#tbl_bridge_insp2_t1').DataTable({"order": [[ 6, "asc" ]]});
-                $('#tbl_bridge_insp2_t2').DataTable({"order": [[ 6, "asc" ]]});
-                $('#tbl_bridge_insp2_t3').DataTable({"order": [[ 6, "asc" ]]});
-                $('#tbl_bridge_insp2_t4').DataTable({"order": [[ 5, "asc" ]]});
-                $('#tbl_bridge_insp2_t5').DataTable({"order": [[ 5, "asc" ]]});
-                
             });
+        </script>
+
+        <script>
+
+            /**
+             * This function initializes the data tables to variables.
+             * This way, the variables can bee accessed to add and delete rows easily without manually creating DOM elements
+             */
+            function bindTables(){
+                $('#tbl_bridge_insp').DataTable({"order": [[ 6, "asc" ]]});
+                highRiskTable = $('#tbl_bridge_insp_t1').DataTable({"order": [[ 6, "asc" ]]});
+                middleRiskTable = $('#tbl_bridge_insp_t2').DataTable({"order": [[ 6, "asc" ]]});
+                lowRiskTable= $('#tbl_bridge_insp_t3').DataTable({"order": [[ 6, "asc" ]]});
+                inProgressTable = $('#tbl_bridge_insp_t4').DataTable({"order": [[ 5, "asc" ]]});
+                notStartedTable = $('#tbl_bridge_insp_t5').DataTable({"order": [[ 5, "asc" ]]});
+            }
+
+             /**
+             *  Given list of inspections, populate the 5 data tables.
+             *  Also, tally the amount of entries for each table as they are added
+             *  Return the finished tallies [high risk, middle risk, low risk, in progress, not started] for the pie chart
+             */
+            function populateTables(bridges){
+
+                var dataset = [0,0,0,0,0]; // generate dataset for pie chart
+                var newRow;
+                                 
+                //iterate through each row of data (bridge) returned from database
+                bridges.data.forEach(bridge => {
+
+                    //create a new row for the current entry (only first 5 columns, others are added conditionally below)
+                    newRow = [
+                        bridge.bridgeNo,
+                        bridge.bridgeName,
+                        bridge.inspectionTypeName,
+                        bridge.assignedTo,
+                        bridge.assignedBy
+                    ];
+
+                    //check if inspection is complete
+                    if(bridge.finishedDate != null){
+
+                        //if complete, add the appropriate columns 
+                        newRow.push(bridge.finishedDate);
+                        newRow.push("<span>"+bridge.rating+"</span>");
+                        newRow.push("<a class='btnset btn_overview' data-bs-toggle='modal' data-bs-target='#myModal'>3D</a>");
+                        newRow.push("<a href='assets/Report.pdf' class='btnset btn_review2' target='_blank'>PDF</a>");
+
+                        // high risk...
+                        if(bridge.rating >= 1 && bridge.rating <= 3){ 
+                            highRiskTable.row.add(newRow);
+                            dataset[0]++; 
+                        }
+                        //middle risk...
+                        else if(bridge.rating >= 4 && bridge.rating <= 6){ 
+                            middleRiskTable.row.add(newRow);
+                            dataset[1]++; 
+                        }
+                        //low risk...
+                        else{
+                            lowRiskTable.row.add(newRow);
+                            dataset[2]++;
+                        }
+                    }
+                    
+                    // if not complete, then is is progress or not started
+                    else{
+
+                        //add the appropriate columns 
+                        newRow.push(bridge.dueDate);
+                        newRow.push("<button class='btnset btn_contact' onclick='' data-bs-toggle='modal' data-bs-target='#inspector_contact_modal'>Contact Inspector</button>");
+
+                        //if in progress...
+                        if(bridges.dueDate != null){
+                            inProgressTable.row.add(newRow);
+                            dataset[3]++;
+                        }
+                        //if not started...
+                        else{
+                            notStartedTable.row.add(newRow);
+                            dataset[4]++;
+                        }
+                    }
+                });
+
+                //recompile the DataTable with new data
+                lowRiskTable.draw();
+
+                //return dataset for pie chart
+                return dataset;
+            }
         </script>
 
         <!-- Open Modal Event Listener -->
