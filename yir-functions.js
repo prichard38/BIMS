@@ -28,3 +28,6 @@ function fetchNewestBridgeData(year) {
         xhr.send('selectedYear=' + year);
     })
 }
+
+
+

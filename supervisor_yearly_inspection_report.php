@@ -178,31 +178,31 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="txtl"><i class="fas fa-circle text-dark"></i> Inspection Completed </td>
-                                                    <td class="txtr">2,290</td>
+                                                    <td class="txtr">0</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="txtl">&emsp;&nbsp;<i class="fas fa-circle text-danger"></i> High Risk </td>
-                                                    <td class="txtr">597</td>
+                                                    <td class="txtr">0</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="txtl">&emsp;&nbsp;<i class="fas fa-circle text-warning"></i> Middle Risk </td>
-                                                    <td class="txtr">619</td>
+                                                    <td class="txtr">0</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="txtl">&emsp;&nbsp;<i class="fas fa-circle text-success"></i> Low Risk </td>
-                                                    <td class="txtr">1,074</td>
+                                                    <td class="txtr">0</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="txtl"><i class="fas fa-circle text-secondary"></i> Inspection in Progress </td>
-                                                    <td class="txtr">2,087</td>
+                                                    <td class="txtr">0</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="txtl"><i class="fas fa-circle" style="color: #f7f7f7;"></i> Inspection Not Started </td>
-                                                    <td class="txtr">2,918</td>
+                                                    <td class="txtr">0</td>
                                                 </tr>
                                                 <tr class="ttlcolor">
                                                     <td class="txtc"><strong> Inspection Total </strong></td>
-                                                    <td class="txtr">7,295</td>
+                                                    <td class="txtr">0</td>
                                                 </tr>
                                             </table>
                                         </div>
@@ -217,7 +217,7 @@
                                     <div class="col-sm-3 col-6">
                                       <div class="description-block border-right">
                                         <!--<span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 17%</span>-->
-                                        <h5 class="description-header">2,290</h5>
+                                        <h5 class="description-header">0</h5>
                                         <span class="description-text">COMPLETED INSPECTIONS</span>
                                       </div>
                                       <!-- /.description-block -->
@@ -226,7 +226,7 @@
                                     <div class="col-sm-3 col-6">
                                       <div class="description-block border-right">
                                         <!--<span class="description-percentage text-warning"><i class="fas fa-caret-left"></i> 0%</span>-->
-                                        <h5 class="description-header">597</h5>
+                                        <h5 class="description-header">0</h5>
                                         <span class="description-text text-danger">HIGH RISK</span>
                                       </div>
                                       <!-- /.description-block -->
@@ -235,7 +235,7 @@
                                     <div class="col-sm-3 col-6">
                                       <div class="description-block border-right">
                                         <!--<span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 20%</span>-->
-                                        <h5 class="description-header">619</h5>
+                                        <h5 class="description-header">0</h5>
                                         <span class="description-text text-warning">MIDDLE RISK</span>
                                       </div>
                                       <!-- /.description-block -->
@@ -244,7 +244,7 @@
                                     <div class="col-sm-3 col-6">
                                       <div class="description-block">
                                         <!--<span class="description-percentage text-danger"><i class="fas fa-caret-down"></i> 18%</span>-->
-                                        <h5 class="description-header">1,074</h5>
+                                        <h5 class="description-header">0</h5>
                                         <span class="description-text text-success">LOW RISK</span>
                                       </div>
                                       <!-- /.description-block -->
@@ -342,6 +342,7 @@
                                                                 <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
                                                                 <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
                                                             </tr>
+                                                            
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -483,6 +484,171 @@
                                                           </tr>
                                                       </thead>
                                                       <tbody>
+                                                          <tr>
+                                                              <td>001-4/5-2.95(01810)</td>
+                                                              <td>Cane Hill Bridge over Little Red River</td>
+                                                              <td>In-Depth</td>
+                                                              <td>William Jones</td>
+                                                              <td>Irene Song</td>
+                                                              <td>2021-05-20</td>
+                                                              <td><span style="color: #609B41">7</span></td>
+                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
+                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>006-3/4-8.65(03148)</td>
+                                                              <td>Robert C. Byrd Bridge over Ohio River</td>
+                                                              <td>Periodic</td>
+                                                              <td>Liam Davis</td>
+                                                              <td>Irene Song</td>
+                                                              <td>2021-04-21</td>
+                                                              <td><span style="color: #2E7A3C">8</span></td>
+                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
+                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>004-4/5-2.95(01210)</td>
+                                                              <td>East Huntington Bridge over Ohio River</td>
+                                                              <td>Periodic</td>
+                                                              <td>Rebecca Johnson</td>
+                                                              <td>Irene Song</td>
+                                                              <td>2021-05-01</td>
+                                                              <td><span style="color: #2E7A3C">8</span></td>
+                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
+                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>001-4/5-2.95(01210)</td>
+                                                              <td>Alderson Bridge over Greenbrier River</td>
+                                                              <td>Interim-Condition</td>
+                                                              <td>Randy Jane</td>
+                                                              <td>John Marshall</td>
+                                                              <td>2021-04-01</td>
+                                                              <td><span style="color: #036353">9</span></td>
+                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
+                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>002-4/5-2.95(01211)</td>
+                                                              <td>New River Gorge Bridge over New River</td>
+                                                              <td>In-Depth</td>
+                                                              <td>Randy Jane</td>
+                                                              <td>John Marshall</td>
+                                                              <td>2021-04-09</td>
+                                                              <td><span style="color: #036353">9</span></td>
+                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
+                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>001-4/5-2.95(01810)</td>
+                                                              <td>Cane Hill Bridge over Little Red River</td>
+                                                              <td>In-Depth</td>
+                                                              <td>William Jones</td>
+                                                              <td>Irene Song</td>
+                                                              <td>2021-05-20</td>
+                                                              <td><span style="color: #609B41">7</span></td>
+                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
+                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>006-3/4-8.65(03148)</td>
+                                                              <td>Robert C. Byrd Bridge over Ohio River</td>
+                                                              <td>Periodic</td>
+                                                              <td>Liam Davis</td>
+                                                              <td>Irene Song</td>
+                                                              <td>2021-04-21</td>
+                                                              <td><span style="color: #2E7A3C">8</span></td>
+                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
+                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>004-4/5-2.95(01210)</td>
+                                                              <td>East Huntington Bridge over Ohio River</td>
+                                                              <td>Periodic</td>
+                                                              <td>Rebecca Johnson</td>
+                                                              <td>Irene Song</td>
+                                                              <td>2021-05-01</td>
+                                                              <td><span style="color: #2E7A3C">8</span></td>
+                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
+                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>001-4/5-2.95(01210)</td>
+                                                              <td>Alderson Bridge over Greenbrier River</td>
+                                                              <td>Interim-Condition</td>
+                                                              <td>Randy Jane</td>
+                                                              <td>John Marshall</td>
+                                                              <td>2021-04-01</td>
+                                                              <td><span style="color: #036353">9</span></td>
+                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
+                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>002-4/5-2.95(01211)</td>
+                                                              <td>New River Gorge Bridge over New River</td>
+                                                              <td>In-Depth</td>
+                                                              <td>Randy Jane</td>
+                                                              <td>John Marshall</td>
+                                                              <td>2021-04-09</td>
+                                                              <td><span style="color: #036353">9</span></td>
+                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
+                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>001-4/5-2.95(01810)</td>
+                                                              <td>Cane Hill Bridge over Little Red River</td>
+                                                              <td>In-Depth</td>
+                                                              <td>William Jones</td>
+                                                              <td>Irene Song</td>
+                                                              <td>2021-05-20</td>
+                                                              <td><span style="color: #609B41">7</span></td>
+                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
+                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>006-3/4-8.65(03148)</td>
+                                                              <td>Robert C. Byrd Bridge over Ohio River</td>
+                                                              <td>Periodic</td>
+                                                              <td>Liam Davis</td>
+                                                              <td>Irene Song</td>
+                                                              <td>2021-04-21</td>
+                                                              <td><span style="color: #2E7A3C">8</span></td>
+                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
+                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>004-4/5-2.95(01210)</td>
+                                                              <td>East Huntington Bridge over Ohio River</td>
+                                                              <td>Periodic</td>
+                                                              <td>Rebecca Johnson</td>
+                                                              <td>Irene Song</td>
+                                                              <td>2021-05-01</td>
+                                                              <td><span style="color: #2E7A3C">8</span></td>
+                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
+                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>001-4/5-2.95(01210)</td>
+                                                              <td>Alderson Bridge over Greenbrier River</td>
+                                                              <td>Interim-Condition</td>
+                                                              <td>Randy Jane</td>
+                                                              <td>John Marshall</td>
+                                                              <td>2021-04-01</td>
+                                                              <td><span style="color: #036353">9</span></td>
+                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
+                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>002-4/5-2.95(01211)</td>
+                                                              <td>New River Gorge Bridge over New River</td>
+                                                              <td>In-Depth</td>
+                                                              <td>Randy Jane</td>
+                                                              <td>John Marshall</td>
+                                                              <td>2021-04-09</td>
+                                                              <td><span style="color: #036353">9</span></td>
+                                                              <td><a class="btnset btn_overview" data-bs-toggle="modal" data-bs-target="#myModal">3D</a></td>
+                                                              <td><a href="assets/Report.pdf" class="btnset btn_review2" target="_blank">PDF</a></td>
+                                                          </tr>
                                                           <tr>
                                                               <td>001-4/5-2.95(01810)</td>
                                                               <td>Cane Hill Bridge over Little Red River</td>
@@ -730,6 +896,7 @@
             </section>
             <!-- /.content -->
 
+            
             <section class="content cbox" id="c2020">
                 <div class="container-fluid">
                   <div class="contents">
@@ -1484,8 +1651,10 @@
         <!-- Cards -->
         <!--<script src="plugins/CardWidget.js"></script>-->
 
+        
         <!-- Chart -->
         <script>
+                
             $(function () {
                 'use strict'
 
@@ -1494,7 +1663,56 @@
                 var contHeight_before = "";
                 var contHeight_after = "";
                 var sideHeight = "";
+                
+                 /**
+                 * This method retreives a list of each newest bridge inspection for each bridge over one year
+                 */
+                let fetchData = async (year) => {
+                    const bridgeData = await fetchNewestBridgeData(year);
+                    console.log("fetchData:",bridgeData);
+                    return bridgeData;
+                }
 
+                /**
+                 *  Given list of inspections, create and return a dataset of tallied data for the pie chart and totals 
+                 *  Output data represents [high risk, middle risk, low risk, in progress, not started]
+                 */
+                function tallyData(bridges){
+
+                    //create a blank data set for the pie chart
+
+                    var dataset = [0,0,0,0,0];
+
+                    //tally all the reports for each section of the pie chart
+                    for (var i=0; i<bridges.data.length; i++){
+                        //check if inspection is complete
+                        if(bridges.data[i].finishedDate != null){
+                            //if complete, increment chart values based on OverallRating
+                            if(bridges.data[i].rating >= 1 && bridges.data[i].rating <= 3){ 
+                                dataset[0]++; 
+                            }
+                            else if(bridges.data[i].rating >= 4 && bridges.data[i].rating <= 6){ 
+                                dataset[1]++; 
+                            }
+                            else{
+                                dataset[2]++;
+                            }
+                        }
+                        //if inspection is in progress, increment chart value 
+                        else if(bridges.data[i].dueDate != null){
+                            dataset[3]++;
+                        }
+                        //if inspection is not started (no finished date or due date), increment chart value
+                        else{
+                            dataset[4]++;
+                        }
+                    }
+                    //return dataset for pie chart
+                    return dataset;
+                }
+
+
+                /* PIE CHART */
                 var pieData = {
                     labels: [
                         'High Risk (1-3)',
@@ -1505,50 +1723,11 @@
                     ],
                     datasets: [
                     {
-                        data: [597, 619, 1074, 2087, 2918],
-                        //data:[]
+                        data: [0,0,0,0,0],
                         backgroundColor: ['#ff0000', '#ffea00', '#32b502', '#999999', '#f7f7f7']
                     }
                     ]
                 }
-
-                /**
-                 * Retreive data for table and create dataset for pie chart
-                 */
-                const fetchData = async () => {
-
-                    //create a data set for a pie chart
-                    var dataset = {
-                        data: [0,0,0,0,0],
-                        backgroundColor: ['#ff0000', '#ffea00', '#32b502', '#999999', '#f7f7f7']
-                    }
-
-                    const bridges = await fetchNewestBridgeData(2021);
-                    for (var i=0; i<bridges.data.length; i++){
-                        console.log(bridges.data[i]);
-
-                        //check if inspection is complete, in progress, or not started
-                        if(bridges.data[i].finishedDate != null)
-                            dataset.data[0]++;
-                        else if(bridges.data[i].dueDate != null)
-                            dataset.data[5]++;
-                        else
-                            dataset.data[6]++;
-                        
-                        //check rating of reports
-                        if 
-                    }
-                    console.log(dataset);
-
-
-
-                }
-
-                fetchData();
-
-
-
-                /* PIE CHART */
                 var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
                 var pieOptions = {
                     legend: {
@@ -1586,8 +1765,11 @@
                     }
                 }
 
-                const buildPieChart = async (pieOptions) => {
-                    //const datasetsBuilt = await buildChartDatasets();
+                const buildChart = async (pieOptions,year) => {
+                    const bridgeData = await fetchData(year);
+                    const tallies = tallyData(bridgeData);
+                    updateTotals(tallies);
+                    pieData.datasets[0].data = tallies;
                     var pieChart = new Chart(pieChartCanvas, {
                         type: 'pie',
                         data: pieData,
@@ -1596,71 +1778,65 @@
                     return pieChart;
                 }
 
-                var pieChart = buildPieChart(pieOptions); 
+                var pieChart = buildChart(pieOptions,$('#year_selector option:selected').val()); 
                 pieChart.then(function(response){
                     pieChart = response;
                 })
 
-               
 
-                // 2020
-                /*
-                var pieChartCanvas2 = $('#pieChart2').get(0).getContext('2d')
-                var pieData2 = {
-                    labels: [
-                        'High Risk (1-3)',
-                        'Middle Risk (4-6)',
-                        'Low Risk (7-9)',
-                        'In-Progress',
-                        'Not Started'
-                    ],
-                    datasets: [
-                    {
-                        data: [2096, 1996, 3001, 71, 131],
-                        backgroundColor: ['#ff0000', '#ffea00', '#32b502', '#999999', '#f7f7f7']
-                    }
-                    ]
-                }
-                var pieOptions2 = {
-                    legend: {
-                        display: false
-                    },
-                    'onClick' : function (evt, item) {
-                        //console.log('legend onClick', evt);
-                        //console.log('legd item', item);
-                        var e = item[0];
-                        var e_idx = e._index + 1;
-                        if(e_idx > 0){
-                          $(".tbox").not("#rm_tt" + e_idx).hide();
-                          $("#rm_tt" + e_idx).toggle();
-                        } else{
-                          $(".tbox").hide();
-                        }
 
-                        contHeight_after = $('.container').height();
-                        sideHeight = $('.sidebar').height();
-                        if (contHeight_after >= sideHeight) {
-                            $('.sidebar').height(contHeight_after);
-                            contHeight_before = $('.sidebar').height();
-                        } else if (contHeight_after < sideHeight && contHeight_before == sideHeight) {
-                            if (contHeight_after < origHeight) {
-                                $('.sidebar').height(origHeight);
-                            } else {
-                                $('.sidebar').height(contHeight_after);
-                            }
-                            contHeight_before = $('.sidebar').height();
-                        } else {
-                            $('.sidebar').height(origHeight);
-                            contHeight_before = $('.sidebar').height();
+
+                /* This function updates the values around the pie chart.
+                 * Input data should be formatted as a list of numbers:
+                 * [high risk, middle risk, low risk, in progress, not started]
+                 */
+                function updateTotals(totals){
+                    // Update table to the right of the pie chart
+                    var i=0; 
+                    $('.txtr').each(function(){
+                        // first is completed inspections, which is the total of high,mid,low risk
+                        if (i==0){
+                            $(this).html(totals[0]+totals[1]+totals[2]);
+                            i++;
                         }
-                    }
+                        else {
+                            $(this).html(totals[i-1]);
+                            i++;
+                        }
+                        // inspection total 
+                        if (i==7){
+                            $(this).html(totals[0]+totals[1]+totals[2]+totals[3]+totals[4]);
+                        }
+                    });
+                    // update table under pie chart
+                    i=0; 
+                    $('.description-header').each(function(){
+                        // first is completed inspections, which is the total of high,mid,low risk
+                        if (i==0){
+                            $(this).html(totals[0]+totals[1]+totals[2]);
+                            i++;
+                        }
+                        else {
+                            $(this).html(totals[i-1]);
+                            i++;
+                        }
+                    });
                 }
-                var pieChart2 = new Chart(pieChartCanvas2, {
-                    type: 'pie',
-                    data: pieData2,
-                    options: pieOptions2
-                })*/
-            })
+
+                /**
+                 * This function deletes all entries in all of the DataTables
+                 */
+                function cleanTable(){
+                    //TODO
+                }
+                /**
+                 * This function adds data from the input data list to the DataTables
+                 */
+                function cleanTable(bridges){
+                    //TODO
+                }
+
+            });
             
         </script>
         <!-- ChartJS -->
@@ -1742,7 +1918,9 @@
         <script>  
             $(document).ready(function(){
                 $("#year_selector").change(function(){
+
                     $(this).find("option:selected").each(function(){
+                       
                         var optionValue = $(this).attr("value");
                         if(optionValue){
                             $(".cbox").not("#c" + optionValue).hide();
