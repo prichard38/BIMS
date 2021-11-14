@@ -15,12 +15,12 @@
         if(mysqli_num_rows($result) > 0){
             while($row = mysqli_fetch_assoc($result)){
                 $bridgeNo = $row["Bridges_BridgeNo"];
-                $bridgeName = "Sample Name";
-                $inspectionTypeName = "test";
-                $assignedTo = "test";
-                $assignedBy = "test";
+                $bridgeName = $row["BridgeName"];
+                $inspectionTypeName = $row["InspectionTypeName"];
+                $assignedTo = $row["inspector_first"]." ".$row["inspector_last"];
+                $assignedBy = $row["evaluator_first"]." ".$row["evaluator_last"];
                 $finishedDate = $row["FinishedDate"];
-                $dueDate = "test";
+                $dueDate = $row["DueDate"];
                 $rating = $row["OverallRating"];
                 $bridgeElements = null;
                 $report = null;
