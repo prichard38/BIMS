@@ -1,4 +1,4 @@
-DELIMITER$$
+DELIMITER $$
 
 CREATE PROCEDURE selectNewestInspectionData_ByYear(IN inspec_year int)
 BEGIN
