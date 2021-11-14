@@ -3,7 +3,7 @@
     session_start();
 
     if($_SESSION["loggedAs"] != "Supervisor"){
-        header("Location:access_denied.php?error=supervisorsonly");
+        header("Location:access-denied.php?error=supervisorsonly");
         die();
     }
 ?>
@@ -15,7 +15,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <script src="functions.js"></script>
+        <script src="la-functions.js"></script>
         
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
@@ -66,7 +66,7 @@
                 </a>
                 <span class="float-right" style="color: white; font-size: 0.9em;">
                     <i class="fas fa-user-circle"></i>&nbsp;
-                    Logged in as <?=$_SESSION["loggedAs"]?>&nbsp;|&nbsp; <a href="login-test.php" style="color: white; text-decoration: none;"> sign out</a>
+                    Logged in as <?=$_SESSION["loggedAs"]?>&nbsp;|&nbsp; <a href="login.php" style="color: white; text-decoration: none;"> sign out</a>
                 </span>
             </div>
         </nav>
@@ -75,13 +75,13 @@
         <div class="sidebar">
             <div class="menubar">
                 <ul class="menu">
-                    <li style="background-color: #5e5e5e;"><a id="RM" href='supervisor_longitudinal_analysis.php'>Report Management</a>
+                    <li style="background-color: #5e5e5e;"><a id="RM" href='supervisor-longitudinal-analysis.php'>Report Management</a>
                         <ul class="submenu">
                             <li style="background-color: #5e5e5e;">
-                                <a id="RM" href='supervisor_yearly_inspection_report.php'>Yearly Inspection Report</a>
+                                <a id="RM" href='supervisor-yearly-inspection-report.php'>Yearly Inspection Report</a>
                             </li>
                             <li style="background-color: #5e5e5e;">
-                                <a id="RM" href='user-options-longitudinal-analysis.php'>Longitudinal Analysis</a>
+                                <a id="RM" href='user-search-params-longitudinal-analysis.php'>Longitudinal Analysis</a>
                             </li>
                         </ul>
                     </li>
@@ -94,33 +94,12 @@
             <div class="main_title">
                 <div class='la-header'>
                     <h5> Report Management </h5>
-                    <form action="reset-session-longitudinal-analysis.php" method="POST">
+                    <form action="php-scripts-longitudinal-analysis/reset-session-longitudinal-analysis.php" method="POST">
                         <div class='above-card-button'>
                             <button name="new-report-btn" id='new-report-btn' class="btn btn-primary btn-sm" type='submit'>New Longitudinal Analysis</button>
                         </div>
                     </form>
                 </div>
-                <!-- <p><br>
-                    Bridge: 
-                    <i class="fa fa-search" aria-hidden="true"></i>
-                    <input type="text" class="search-box" placeholder="Search for a bridge...">
-                    Year:
-                    <select name="year" id="year_selector" required>
-                        <option value="2021" selected="selected">2021</option>
-                        <option value="2020">2020</option>
-                        <option value="2019">2019</option>
-                        <option value="2018">2018</option>
-                        <option value="2017">2017</option>
-                    </select>
-                    Year:
-                    <select name="year" id="year_selector" required>
-                        <option value="2021" selected="selected">2021</option>
-                        <option value="2020">2020</option>
-                        <option value="2019">2019</option>
-                        <option value="2018">2018</option>
-                        <option value="2017">2017</option>
-                    </select>
-                </p> -->
             </div>  
 
             <!-- Main contents -->
@@ -181,7 +160,7 @@
                                     <!-- /.col -->
                                     <div class="col-sm-8 col-md-8">
                                         <div class="table-responsive">
-                                            <table id="InspectionStatus" class="table table-sm">
+                                            <table id="SelectedBridges" class="table table-sm">
                                                 <h6>Selected Bridges</h6>
                                                 <tr>
                                                     <th class="txtl">Bridge Name</th>
@@ -235,9 +214,9 @@
                         <!-- /.row -->
 
 
-                        <!-- **** Bridge 1 **** -->
+                        <!-- **** Bridge 1 DataTable **** -->
                        
-                        <div class="row tbox" id="rm_t1">
+                        <div hidden='true', class="row tbox" id="rm_t1">
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-header">
@@ -287,9 +266,9 @@
                         
 
 
-                        <!-- **** Bridge 2 **** -->
+                        <!-- **** Bridge 2 DataTable **** -->
 
-                        <div class="row tbox" id="rm_t2">
+                        <div hidden='true', class="row tbox" id="rm_t2">
                           <div class="col-md-12">
                               <div class="card">
                                   <div class="card-header">
@@ -339,9 +318,9 @@
 
 
 
-                        <!-- **** Bridge 3 **** -->
+                        <!-- **** Bridge 3 DataTable **** -->
 
-                        <div class="row tbox" id="rm_t3">
+                        <div hidden='true', class="row tbox" id="rm_t3">
                           <div class="col-md-12">
                               <div class="card">
                                   <div class="card-header">
@@ -489,11 +468,11 @@
                                 </div>
                                 <br>
                             </div>
-                            <!--
-                            <div class="modal-footer">
+                            
+                            <!-- <div class="modal-footer">
                                 <button type="button" class="btnset_insp btn_back" data-bs-dismiss="modal">Close</button>
-                            </div>
-                            -->
+                            </div> -->
+                           
                       </div>
                         
                     </div>
@@ -529,9 +508,14 @@
         <!-- Cards -->
         <!--<script src="plugins/CardWidget.js"></script>-->
 
-        <script>        
+        <script> 
+            // create DOM Elements for the Selected Bridges DataTable      
             setBridgeHTML();
         </script>
+        
+        <!-- ChartJS Dependencies -->
+        <script src="plugins/chart.js/Chart.js"></script>
+        <script src="plugins/adminlte.js"></script>
         
         <!-- Charts -->
         <script>
@@ -616,7 +600,7 @@
                 var prevInspectionIndex;
                 var bridgeIndex;
                 var prevBridgeIndex;
-                var years = getYears(<?php echo json_encode($_SESSION['yearBegin']); ?>, 
+                var years = getChartYears(<?php echo json_encode($_SESSION['yearBegin']); ?>, 
                                      <?php echo json_encode($_SESSION['yearEnd']); ?>);
                 var lineData = {
                     labels: years,
@@ -771,11 +755,9 @@
                 })
 
             })
-
         </script>
-        <!-- ChartJS -->
-        <script src="plugins/chart.js/Chart.js"></script>
-        <script src="plugins/adminlte.js"></script>
+
+
         
         <!-- sidebar size -->   
         <script language="JavaScript" type="text/javascript">
@@ -838,33 +820,6 @@
           })
         </script>
 
-        <!-- Change Year Contents -->
-        <script>  
-            $(document).ready(function(){
-                $("#year_selector").change(function(){
-                    $(this).find("option:selected").each(function(){
-                        var optionValue = $(this).attr("value");
-                        if(optionValue){
-                            $(".cbox").not("#c" + optionValue).hide();
-                            $("#c" + optionValue).show();
-                        } else{
-                            $(".cbox").hide();
-                        }
-                    });
-
-                    $(".tbox").hide();
-                    var origHeight = "calc(100vh - 58px)";
-                    var contHeight = $('section').height();
-                    var sideHeight = $('.sidebar').height();
-
-                    if (contHeight > sideHeight) {
-                        $('.sidebar').height(contHeight);
-                    } else {
-                        $('.sidebar').height(origHeight);
-                    }
-                }).change();
-            });
-        </script>
 
         <!-- Highlight/Unhighlight Element -->
         <script language="javascript">
@@ -897,8 +852,9 @@
         </script>
 
 
-<!-- On Click Bridges - TOGGLING BRIDGE INSPECTION LIST DATA TABLES -->
-
+    <!-- ----------------------------------------------------------------
+        Bridge Row OnClick functions
+    -------------------------------------------------------------------- -->
     <script>        
         $(document).ready(function(){
             
@@ -911,6 +867,7 @@
                         
                         $('#rm_t1' + ' .card-title').text('Inspection List');
                         setTimeout(function(){
+                            $('#rm_t1').removeAttr('hidden');
                             $('#rm_t1').show();
                         }, 70)
                         
@@ -932,6 +889,7 @@
                         
                         $('#rm_t2' + ' .card-title').text('Inspection List');
                         setTimeout(function(){
+                            $('#rm_t2').removeAttr('hidden');
                             $('#rm_t2').show();
                         }, 70)
                         
@@ -952,6 +910,7 @@
                         
                         $('#rm_t3' + ' .card-title').text('Inspection List');
                         setTimeout(function(){
+                            $('#rm_t3').removeAttr('hidden');
                             $('#rm_t3').show();
                         }, 70)
                         
@@ -964,19 +923,7 @@
         });
     </script>
 
-    <script>
-        
-        // document.getElementById('new-report-btn').onclick = function(){
-        //     lastClick = 'inspectionClick';
-        //     inspectionData = [];
-        //     inspectionIndex = -1;
-        //     prevInspectionIndex = -1;
-        //     bridgeIndex = -1;
-        //     prevBridgeIndex = -1;
-
-        //     // window.location = "user-options-longitudinal-analysis.php";
-        // }
-    </script>
+    <!-- Load bootstrap 5 dependency last for performance reasons -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 
        

@@ -31,7 +31,7 @@
                 session_start();
                 session_unset();
                 $_SESSION["loggedAs"] = "Supervisor";
-                header("Location:supervisor_yearly_inspection_report.php");
+                header("Location:supervisor-yearly-inspection-report.php");
             }
             else if ($row['_LogIn_out'] == "inspector"){
                 session_destroy();
@@ -42,7 +42,7 @@
             } 
             // if user is NULL, display error
             else {
-                header("Location:login-test.php?error=invalidcredentials");
+                header("Location:login.php?error=invalidcredentials");
                 exit();
             }
         }

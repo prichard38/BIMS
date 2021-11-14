@@ -9,7 +9,7 @@
 
     /* make sure user is supervisor to continue */
     if($_SESSION["loggedAs"] != "Supervisor"){
-        header("Location:access_denied.php?error=supervisorsonly");
+        header("Location:access-denied.php?error=supervisorsonly");
         die();
     }
 
@@ -70,7 +70,7 @@
                 </a>
                 <span class="float-right" style="color: white; font-size: 0.9em;">
                     <i class="fas fa-user-circle"></i>&nbsp;
-                    Logged in as <?php echo $_SESSION['loggedAs']; ?>&nbsp;|&nbsp; <a href="login-test.php" style="color: white; text-decoration: none;"> sign out</a>
+                    Logged in as <?php echo $_SESSION['loggedAs']; ?>&nbsp;|&nbsp; <a href="login.php" style="color: white; text-decoration: none;"> sign out</a>
                 </span>
             </div>
         </nav>
@@ -81,13 +81,13 @@
                     <!-- <li><a id="Home" href='#'>Admin Home</a></li>
                     <li><a id="IM" href='admin_inspection_management.html'>Inspection Management</a></li>
                     <li><a id="BM" href='admin_bridge_management.html'>Bridge Management</a></li> -->
-                    <li style="background-color: #5e5e5e;"><a id="RM" href='supervisor_yearly_inspection_report.php'>Report Management</a>
+                    <li style="background-color: #5e5e5e;"><a id="RM" href='supervisor-yearly-inspection-report.php'>Report Management</a>
                         <ul class="submenu">
                             <li style="background-color: #5e5e5e;">
-                                <a id="RM" href='supervisor_yearly_inspection_report.php'>Yearly Inspection Report</a>
+                                <a id="RM" href='supervisor-yearly-inspection-report.php'>Yearly Inspection Report</a>
                             </li>
                             <li style="background-color: #5e5e5e;">
-                                <a id="RM" href='user-options-longitudinal-analysis.php'>Longitudinal Analysis</a>
+                                <a id="RM" href='user-search-params-longitudinal-analysis.php'>Longitudinal Analysis</a>
                             </li>
                         </ul>
                     </li>

@@ -530,7 +530,8 @@ a.btn_ccl:hover, a.btn_del:hover {
     font-size: 0.8em;
 }
 #proposedWork,
-#InspectionStatus {
+#InspectionStatus,
+#SelectedBridges {
     font-size: 0.8em;
 }
 #BridgeDetails {
@@ -545,17 +546,19 @@ a.btn_ccl:hover, a.btn_del:hover {
 }
 
 #proposedWork th,
-#InspectionStatus th {
+#InspectionStatus th,
+#SelectedBridges th {
     text-align: center;
     vertical-align: middle;
 }
 #proposedWork .ttlcolor,
-#InspectionStatus .ttlcolor {
+#InspectionStatus .ttlcolor,
+#SelectedBridges .ttlcolor {
     background-color: rgb(226, 234, 244);
 }
-#proposedWork .txtl, #InspectionStatus .txtl, #BridgeDetails .txtl { text-align: left; }
-#proposedWork .txtr, #InspectionStatus .txtr, #BridgeDetails .txtr  { text-align: right; }
-#proposedWork .txtc, #InspectionStatus .txtc, #BridgeDetails .txtc  { text-align: center; }
+#proposedWork .txtl, #InspectionStatus .txtl, #SelectedBridges .txtl, #BridgeDetails .txtl { text-align: left; }
+#proposedWork .txtr, #InspectionStatus .txtr, #SelectedBridges .txtr, #BridgeDetails .txtr  { text-align: right; }
+#proposedWork .txtc, #InspectionStatus .txtc, #SelectedBridges .txtc, #BridgeDetails .txtc  { text-align: center; }
 
 /* Inspection List Table */
 #tbl_bridge_insp_wrapper,

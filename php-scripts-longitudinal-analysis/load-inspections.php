@@ -1,6 +1,6 @@
 <?php 
     
-    include 'dbConfig.inc.php';
+    include '../dbConfig.inc.php';
 
     // old SELECT; replaced with stored procedure
     /*$sql = "SELECT FinishedDate, Bridges.BridgeName, Bridges.BridgeNo, InspectionTypeName, OverallRating

@@ -8,7 +8,7 @@ function fetchInspections(bridgeName) {
                 // console.log(this.responseText);
             }
         };
-        xhr.open('POST', 'load-inspections.php', true);
+        xhr.open('POST', 'php-scripts-longitudinal-analysis/load-inspections.php', true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         
 
@@ -38,7 +38,7 @@ function fetchAllBridgeData() {
                 // console.log(this.responseText);
             }
         };
-        xhr.open('POST', 'load-bridge-data.php', true);
+        xhr.open('POST', 'php-scripts-longitudinal-analysis/load-bridge-data.php', true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
         xhr.onload = function() {
@@ -63,7 +63,7 @@ function fetchEarliestYear(bridgeNames) {
                 // console.log(this.responseText);
             }
         };
-        xhr.open('POST', 'load-earliest-year.php', true);
+        xhr.open('POST', 'php-scripts-longitudinal-analysis/load-earliest-year.php', true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
         xhr.onload = function() {
@@ -180,7 +180,7 @@ function loadTable(bridgeId, jsonObject){
     })
 }
 
-function getYears(beginYear, endYear){
+function getChartYears(beginYear, endYear){
     years = [];
     while(beginYear <= endYear){
         years.push(''+beginYear);
@@ -239,10 +239,9 @@ function fillMissingInspections(bridgeName, bridgeInspectionsJsonObject){
     return correctedInspections;
 }
 
-function restoreSessionState(bridgeNumbers, bridgeNames, bridgeCounties){
+function restoreSessionStateLongitudinalAnalysis(bridgeNumbers, bridgeNames, bridgeCounties){
     document.getElementById('search-instructions').hidden=true;
     document.getElementById('bridge1').remove();
-    let bridgeStrings = [];
     let bridges = document.getElementById('bridges');
     for(let i = 0 ; i < bridgeNames.length ; i++){
         setTimeout(() => {

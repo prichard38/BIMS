@@ -1,6 +1,6 @@
 <?php 
     
-    include 'dbConfig.inc.php';
+    include '../dbConfig.inc.php';
 
     session_start();
         

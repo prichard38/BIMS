@@ -1,5 +1,5 @@
 <?php 
-    include 'dbConfig.inc.php';
+    include '../dbConfig.inc.php';
 
       
     $sql = "SELECT BridgeName, BridgeNo, CountyName FROM Bridges JOIN County ON County.CountyNo = Bridges.County_CountyNo";

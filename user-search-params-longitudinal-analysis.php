@@ -3,7 +3,7 @@
     session_start();
 
     if($_SESSION["loggedAs"] != "Supervisor"){
-        header("Location:access_denied.php?error=supervisorsonly");
+        header("Location:access-denied.php?error=supervisorsonly");
         die();
     }
 ?>
@@ -15,7 +15,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <script src="functions.js"></script>
+        <script src="la-functions.js"></script>
         
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
@@ -348,7 +348,7 @@
                 </a>
                 <span class="float-right" style="color: white; font-size: 0.9em;">
                     <i class="fas fa-user-circle"></i>&nbsp;
-                    Logged in as <?=$_SESSION["loggedAs"]?>&nbsp;|&nbsp; <a href="login-test.php" style="color: white; text-decoration: none;"> sign out</a>
+                    Logged in as <?=$_SESSION["loggedAs"]?>&nbsp;|&nbsp; <a href="login.php" style="color: white; text-decoration: none;"> sign out</a>
                 </span>
             </div>
         </nav>
@@ -357,13 +357,13 @@
         <div class="sidebar">
             <div class="menubar">
                 <ul class="menu">
-                    <li style="background-color: #5e5e5e;"><a id="RM" href='supervisor_yearly_inspection_report.php'>Report Management</a>
+                    <li style="background-color: #5e5e5e;"><a id="RM" href='supervisor-yearly-inspection-report.php'>Report Management</a>
                         <ul class="submenu">
                             <li style="background-color: #5e5e5e;">
-                                <a id="RM" href='supervisor_yearly_inspection_report.php'>Yearly Inspection Report</a>
+                                <a id="RM" href='supervisor-yearly-inspection-report.php'>Yearly Inspection Report</a>
                             </li>
                             <li style="background-color: #5e5e5e;">
-                                <a id="RM" href='user-options-longitudinal-analysis.php'>Longitudinal Analysis</a>
+                                <a id="RM" href='user-search-params-longitudinal-analysis.php'>Longitudinal Analysis</a>
                             </li>
                         </ul>
                     </li>
@@ -579,7 +579,7 @@
                     $(document).ready(function() {
                         $.ajax({
                             type: 'POST',
-                            url: 'set-bridge-session-vars.php',
+                            url: 'php-scripts-longitudinal-analysis/set-bridge-session-vars.php',
                             data: {selectedBridgeNames : JSON.stringify(bridgeNames), 
                                    selectedBridgeNumbers : JSON.stringify(bridgeNumbers), 
                                    selectedBridgeCounties: JSON.stringify(bridgeCounties),},
@@ -635,11 +635,11 @@
                 var endSelect = document.getElementById('end-year-select');
                 $.ajax({
                     type: 'POST',
-                    url: 'set-years-session-vars.php',
+                    url: 'php-scripts-longitudinal-analysis/set-years-session-vars.php',
                     data: {yearBegin : JSON.stringify(beginSelect.options[beginSelect.selectedIndex].value), 
                            yearEnd : JSON.stringify(endSelect.options[endSelect.selectedIndex].value)},
                     success: function(res){
-                        window.location.href = "supervisor_longitudinal_analysis.php";
+                        window.location.href = "supervisor-longitudinal-analysis.php";
                     },
                     error: function(res){
                         console.warn("");
@@ -735,7 +735,7 @@
                 let bridgeNumbers = <?php echo json_encode($_SESSION['selectedBridgeNumbers']); ?>;
                 let bridgeNames = <?php echo json_encode($_SESSION['selectedBridgeNames']); ?>;
                 let bridgeCounties = <?php echo json_encode($_SESSION['selectedBridgeCounties']); ?>;
-                restoreSessionState(bridgeNumbers, bridgeNames, bridgeCounties);
+                restoreSessionStateLongitudinalAnalysis(bridgeNumbers, bridgeNames, bridgeCounties);
             }
             
         </script>
