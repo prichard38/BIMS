@@ -9,7 +9,7 @@
 
     /* make sure user is supervisor to continue */
     if($_SESSION["loggedAs"] != "Supervisor"){
-        header("Location:access-denied.php?error=supervisorsonly");
+        header("Location:access_denied.php?error=supervisorsonly");
         die();
     }
 
@@ -45,10 +45,11 @@
         <script src="https://kit.fontawesome.com/7b2b0481fc.js" crossorigin="anonymous"></script>
         <!-- Custom CSS -->
         <link rel="stylesheet" href="assets/css/custom.css">
+        <link rel="stylesheet" href="yearpicker.css">
         <!-- jQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
         <!--Custom JavaScript-->
-        <script src="yir-functions.js"></script>
+        <script src="yearpicker.js"></script>
         <!-- Table Design -->
         <script type="text/javascript" src="plugins/DataTables/datatables.min.js"></script>
         <link rel="stylesheet" type="text/css" href="plugins/DataTables/datatables.min.css"/>
@@ -70,7 +71,7 @@
                 </a>
                 <span class="float-right" style="color: white; font-size: 0.9em;">
                     <i class="fas fa-user-circle"></i>&nbsp;
-                    Logged in as <?php echo $_SESSION['loggedAs']; ?>&nbsp;|&nbsp; <a href="login.php" style="color: white; text-decoration: none;"> sign out</a>
+                    Logged in as <?php echo $_SESSION['loggedAs']; ?>&nbsp;|&nbsp; <a href="login-test.php" style="color: white; text-decoration: none;"> sign out</a>
                 </span>
             </div>
         </nav>
@@ -81,13 +82,13 @@
                     <!-- <li><a id="Home" href='#'>Admin Home</a></li>
                     <li><a id="IM" href='admin_inspection_management.html'>Inspection Management</a></li>
                     <li><a id="BM" href='admin_bridge_management.html'>Bridge Management</a></li> -->
-                    <li style="background-color: #5e5e5e;"><a id="RM" href='supervisor-yearly-inspection-report.php'>Report Management</a>
+                    <li style="background-color: #5e5e5e;"><a id="RM" href='supervisor_yearly_inspection_report.php'>Report Management</a>
                         <ul class="submenu">
                             <li style="background-color: #5e5e5e;">
-                                <a id="RM" href='supervisor-yearly-inspection-report.php'>Yearly Inspection Report</a>
+                                <a id="RM" href='supervisor_yearly_inspection_report.php'>Yearly Inspection Report</a>
                             </li>
                             <li style="background-color: #5e5e5e;">
-                                <a id="RM" href='user-search-params-longitudinal-analysis.php'>Longitudinal Analysis</a>
+                                <a id="RM" href='user-options-longitudinal-analysis.php'>Longitudinal Analysis</a>
                             </li>
                         </ul>
                     </li>
@@ -101,13 +102,7 @@
                 <h5> Report Management </h5>
                 <p><br>
                     Year:
-                    <select name="year" id="year_selector" required>
-                        <option value="<?php echo $_SESSION['YIR_SelectedYear']; ?>" selected="selected"> <?php echo $_SESSION['YIR_SelectedYear']; ?></option>
-                        <option value="<?php echo date("Y")-1; ?>"><?php echo date("Y")-1; ?></option>
-                        <option value="<?php echo date("Y")-2; ?>"><?php echo date("Y")-2; ?></option>
-                        <option value="<?php echo date("Y")-3; ?>"><?php echo date("Y")-3; ?></option>
-                        <option value="<?php echo date("Y")-4; ?>"><?php echo date("Y")-4; ?></option>
-                    </select>
+                    <input type="text" class="yearpicker" id="yearpicker" value="">
                 </p>
             </div>
 
@@ -617,164 +612,178 @@
         <!-- Cards -->
         <!--<script src="plugins/CardWidget.js"></script>-->
 
-        
-        <!-- Chart -->
-        <script>
-                
-            $(function () {
-                'use strict'
-
-                //var origHeight = "calc(100vh - 58px)";
-                var origHeight = $('.sidebar').height();
-                var contHeight_before = "";
-                var contHeight_after = "";
-                var sideHeight = "";
-                
-                 /**
-                 * This method retreives a list of each newest bridge inspection for each bridge over one year
-                 */
-                let fetchData = async (year) => {
-                    const bridgeData = await fetchNewestBridgeData(year);
-                    console.log("fetchData:",bridgeData);
-                    return bridgeData;
-                }
-
-                // Instances of data tables
-               var lowRiskTable;
-               var highRiskTable;
-               var middleRiskTable;
-               var inProgressTable;
-               var notStartedTable;
-
-
-                /* PIE CHART */
-                var pieData = {
-                    labels: [
-                        'High Risk (1-3)',
-                        'Middle Risk (4-6)',
-                        'Low Risk (7-9)',
-                        'In-Progress',
-                        'Not Started'
-                    ],
-                    datasets: [
-                    {
-                        data: [0,0,0,0,0],
-                        backgroundColor: ['#ff0000', '#ffea00', '#32b502', '#999999', '#f7f7f7']
-                    }
-                    ]
-                }
-                var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-                var pieOptions = {
-                    legend: {
-                        display: false
-                    },
-                    'onClick' : function (evt, item) {
-                        //console.log('legend onClick', evt);
-                        //console.log('legd item', item);
-                        var e = item[0];
-                        var e_idx = e._index + 1;
-
-                        if(e_idx > 0){
-                          $(".tbox").not("#rm_t" + e_idx).hide();
-                          $("#rm_t" + e_idx).toggle();
-                        } else{
-                          $(".tbox").hide();
-                        }
-
-                        contHeight_after = $('.container').height();
-                        sideHeight = $('.sidebar').height();
-                        if (contHeight_after >= sideHeight) {
-                            $('.sidebar').height(contHeight_after);
-                            contHeight_before = $('.sidebar').height();
-                        } else if (contHeight_after < sideHeight && contHeight_before == sideHeight) {
-                            if (contHeight_after < origHeight) {
-                                $('.sidebar').height(origHeight);
-                            } else {
-                                $('.sidebar').height(contHeight_after);
-                            }
-                            contHeight_before = $('.sidebar').height();
-                        } else {
-                            $('.sidebar').height(origHeight);
-                            contHeight_before = $('.sidebar').height();
-                        }
-                    }
-                }
-
-                const buildChart = async (pieOptions,year) => {
-                    const bridgeData = await fetchData(year);
-                    bindTables();
-                    const tallies = populateTables(bridgeData);
-                    updateTotals(tallies);
-                    pieData.datasets[0].data = tallies;
-                    var pieChart = new Chart(pieChartCanvas, {
-                        type: 'pie',
-                        data: pieData,
-                        options: pieOptions
-                    });
-                    return pieChart;
-                }
-
-                var pieChart = buildChart(pieOptions,$('#year_selector option:selected').val()); 
-                pieChart.then(function(response){
-                    pieChart = response;
-                })
-
-
-
-
-                /* This function updates the values around the pie chart.
-                 * Input data should be formatted as a list of numbers:
-                 * [high risk, middle risk, low risk, in progress, not started]
-                 */
-                function updateTotals(totals){
-                    // Update table to the right of the pie chart
-                    var i=0; 
-                    $('.txtr').each(function(){
-                        // first is completed inspections, which is the total of high,mid,low risk
-                        if (i==0){
-                            $(this).html(totals[0]+totals[1]+totals[2]);
-                            i++;
-                        }
-                        else {
-                            $(this).html(totals[i-1]);
-                            i++;
-                        }
-                        // inspection total 
-                        if (i==7){
-                            $(this).html(totals[0]+totals[1]+totals[2]+totals[3]+totals[4]);
-                        }
-                    });
-                    // update table under pie chart
-                    i=0; 
-                    $('.description-header').each(function(){
-                        // first is completed inspections, which is the total of high,mid,low risk
-                        if (i==0){
-                            $(this).html(totals[0]+totals[1]+totals[2]);
-                            i++;
-                        }
-                        else {
-                            $(this).html(totals[i-1]);
-                            i++;
-                        }
-                    });
-                }
-
-                /**
-                 * This function deletes all entries in all of the DataTables
-                 */
-                function cleanTables(){
-                    //TODO
-                }
-
-            });
-            
-        </script>
-        <!-- ChartJS -->
         <script src="plugins/chart.js/Chart.js"></script>
         <script src="plugins/adminlte.js"></script>
+        <!-- Chart -->
+        <script>
+           
+
+            function fetchNewestBridgeData(year) {
+                return new Promise(function(resolve, reject) {
+                    data = [];
+                    
+                    const xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            // console.log(this.responseText);
+                        }
+                    };
+                    xhr.open('POST', 'yir-load-bridge-data.php', true);
+                    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    
+
+                    xhr.onload = function() {
+                        console.log(this.responseText);
+                        if(!this.responseText || this.responseText.trim().length === 0){
+                            resolve({data: null})
+                        }else{
+                            
+                            resolve(JSON.parse(this.responseText));
+                        }
+                    };
+                    
+                    xhr.onerror = function() {
+                        reject(new Error("Network Error"));
+                    };
+                    xhr.send('selectedYear=' + year);
+                })
+            }
+
+            /* this function passes the given year to the session variable 'YIR_SelectedYear' by posting to php */
+            function updateSession(year){
+                return new Promise(function(resolve, reject) {
+                    data = [];
+                    
+                    const xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            // console.log(this.responseText);
+                        }
+                    };
+                    xhr.open('POST', 'yir-update-session.php', true);
+                    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    
+
+                    xhr.onload = function() {
+                        console.log(this.responseText);
+                        if(!this.responseText || this.responseText.trim().length === 0){
+                            resolve({data: null})
+                        }else{
+                            
+                            resolve(JSON.parse(this.responseText));
+                        }
+                    };
+                    
+                    xhr.onerror = function() {
+                        reject(new Error("Network Error"));
+                    };
+                    xhr.send('selectedYear=' + year);
+                })
+            }
+
+            //var origHeight = "calc(100vh - 58px)";
+            var origHeight = $('.sidebar').height();
+            var contHeight_before = "";
+            var contHeight_after = "";
+            var sideHeight = "";
+            
+
+            /* PIE CHART */
+            var pieChart;
+            var pieData = {
+                labels: [
+                    'High Risk (1-3)',
+                    'Middle Risk (4-6)',
+                    'Low Risk (7-9)',
+                    'In-Progress',
+                    'Not Started'
+                ],
+                datasets: [
+                {
+                    data: [0,0,0,0,0],
+                    backgroundColor: ['#ff0000', '#ffea00', '#32b502', '#999999', '#f7f7f7']
+                }
+                ]
+            }
+            var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+            var pieOptions = {
+                legend: {
+                    display: false
+                },
+                'onClick' : function (evt, item) {
+                    //console.log('legend onClick', evt);
+                    //console.log('legd item', item);
+                    var e = item[0];
+                    var e_idx = e._index + 1;
+
+                    if(e_idx > 0){
+                        $(".tbox").not("#rm_t" + e_idx).hide();
+                        $("#rm_t" + e_idx).toggle();
+                    } else{
+                        $(".tbox").hide();
+                    }
+
+                    contHeight_after = $('.container').height();
+                    sideHeight = $('.sidebar').height();
+                    if (contHeight_after >= sideHeight) {
+                        $('.sidebar').height(contHeight_after);
+                        contHeight_before = $('.sidebar').height();
+                    } else if (contHeight_after < sideHeight && contHeight_before == sideHeight) {
+                        if (contHeight_after < origHeight) {
+                            $('.sidebar').height(origHeight);
+                        } else {
+                            $('.sidebar').height(contHeight_after);
+                        }
+                        contHeight_before = $('.sidebar').height();
+                    } else {
+                        $('.sidebar').height(origHeight);
+                        contHeight_before = $('.sidebar').height();
+                    }
+                }
+            }
+            
+
+
+
+
+            /* This function updates the values around the pie chart.
+                * Input data should be formatted as a list of numbers:
+                * [high risk, middle risk, low risk, in progress, not started]
+                */
+            function updateTotals(totals){
+                // Update table to the right of the pie chart
+                var i=0; 
+                $('.txtr').each(function(){
+                    // first is completed inspections, which is the total of high,mid,low risk
+                    if (i==0){
+                        $(this).html(totals[0]+totals[1]+totals[2]);
+                        i++;
+                    }
+                    else {
+                        $(this).html(totals[i-1]);
+                        i++;
+                    }
+                    // inspection total 
+                    if (i==7){
+                        $(this).html(totals[0]+totals[1]+totals[2]+totals[3]+totals[4]);
+                    }
+                });
+                // update table under pie chart
+                i=0; 
+                $('.description-header').each(function(){
+                    // first is completed inspections, which is the total of high,mid,low risk
+                    if (i==0){
+                        $(this).html(totals[0]+totals[1]+totals[2]);
+                        i++;
+                    }
+                    else {
+                        $(this).html(totals[i-1]);
+                        i++;
+                    }
+                });
+            }
+
         
-        <!-- sidebar size -->   
-        <script language="JavaScript" type="text/javascript">
             $(document).ready(function(){ 
                 $(".tbox").hide();
 
@@ -788,26 +797,45 @@
                     $('.sidebar').height(origHeight);
                 }
             });
-        </script>
-
-        <script>
-            $(document).ready(function(){
-            });
-        </script>
-
-        <script>
-
+            
+            // Instances of data tables
+            var initialized = false;
+            var lowRiskTable;
+            var highRiskTable;
+            var middleRiskTable;
+            var inProgressTable;
+            var notStartedTable;
             /**
              * This function initializes the data tables to variables.
-             * This way, the variables can bee accessed to add and delete rows easily without manually creating DOM elements
+             * This way, the variables can bee accessed to add and delete rows easily without having to manually create DOM elements in populateTables()
              */
             function bindTables(){
-                $('#tbl_bridge_insp').DataTable({"order": [[ 6, "asc" ]]});
+               // $('#tbl_bridge_insp').DataTable({"order": [[ 6, "asc" ]]});
                 highRiskTable = $('#tbl_bridge_insp_t1').DataTable({"order": [[ 6, "asc" ]]});
                 middleRiskTable = $('#tbl_bridge_insp_t2').DataTable({"order": [[ 6, "asc" ]]});
                 lowRiskTable= $('#tbl_bridge_insp_t3').DataTable({"order": [[ 6, "asc" ]]});
                 inProgressTable = $('#tbl_bridge_insp_t4').DataTable({"order": [[ 5, "asc" ]]});
                 notStartedTable = $('#tbl_bridge_insp_t5').DataTable({"order": [[ 5, "asc" ]]});
+            }
+
+            /**
+             * This function deletes all entries in all 5 DataTables
+             */
+            function cleanTables(){
+
+                //reload the DataTables with new data
+                highRiskTable.clear();
+                middleRiskTable.clear();
+                lowRiskTable.clear();
+                inProgressTable.clear();
+                notStartedTable.clear();
+
+                //reload the DataTables with new data
+                highRiskTable.draw();
+                middleRiskTable.draw();
+                lowRiskTable.draw();
+                inProgressTable.draw();
+                notStartedTable.draw();
             }
 
              /**
@@ -819,75 +847,82 @@
 
                 var dataset = [0,0,0,0,0]; // generate dataset for pie chart
                 var newRow;
-                                 
-                //iterate through each row of data (bridge) returned from database
-                bridges.data.forEach(bridge => {
+                if (bridges.data != null){           
+                    //iterate through each row of data (bridge) returned from database
+                    bridges.data.forEach(bridge => {
 
-                    //create a new row for the current entry (only first 5 columns, others are added conditionally below)
-                    newRow = [
-                        bridge.bridgeNo,
-                        bridge.bridgeName,
-                        bridge.inspectionTypeName,
-                        bridge.assignedTo,
-                        bridge.assignedBy
-                    ];
+                        //create a new row for the current entry (only first 5 columns, others are added conditionally below)
+                        newRow = [
+                            bridge.bridgeNo,
+                            bridge.bridgeName,
+                            bridge.inspectionTypeName,
+                            bridge.assignedTo,
+                            bridge.assignedBy
+                        ];
 
-                    //check if inspection is complete
-                    if(bridge.finishedDate != null){
+                        //check if inspection is complete
+                        if(bridge.finishedDate != null){
 
-                        //if complete, add the appropriate columns 
-                        newRow.push(bridge.finishedDate);
-                        newRow.push("<span>"+bridge.rating+"</span>");
-                        newRow.push("<a class='btnset btn_overview' data-bs-toggle='modal' data-bs-target='#myModal'>3D</a>");
-                        newRow.push("<a href='assets/Report.pdf' class='btnset btn_review2' target='_blank'>PDF</a>");
+                            //add the appropriate columns for completed reports
+                            newRow.push(bridge.finishedDate);
+                            newRow.push("<span>"+bridge.rating+"</span>");
+                            newRow.push("<a class='btnset btn_overview' data-bs-toggle='modal' data-bs-target='#myModal'>3D</a>");
+                            newRow.push("<a href='assets/Report.pdf' class='btnset btn_review2' target='_blank'>PDF</a>");
 
-                        // high risk...
-                        if(bridge.rating >= 1 && bridge.rating <= 3){ 
-                            highRiskTable.row.add(newRow);
-                            dataset[0]++; 
+                            // high risk...
+                            if(bridge.rating >= 1 && bridge.rating <= 3){ 
+                                highRiskTable.row.add(newRow);
+                                dataset[0]++; 
+                            }
+                            //middle risk...
+                            else if(bridge.rating >= 4 && bridge.rating <= 6){ 
+                                middleRiskTable.row.add(newRow);
+                                dataset[1]++; 
+                            }
+                            //low risk...
+                            else{
+                                lowRiskTable.row.add(newRow);
+                                dataset[2]++;
+                            }
                         }
-                        //middle risk...
-                        else if(bridge.rating >= 4 && bridge.rating <= 6){ 
-                            middleRiskTable.row.add(newRow);
-                            dataset[1]++; 
-                        }
-                        //low risk...
+                        
+                        // if not complete, then is is progress or not started
                         else{
-                            lowRiskTable.row.add(newRow);
-                            dataset[2]++;
+
+                            //add the appropriate columns for non-completed reports
+                            newRow.push(bridge.dueDate);
+                            newRow.push("<button class='btnset btn_contact' onclick='' data-bs-toggle='modal' data-bs-target='#inspector_contact_modal'>Contact Inspector</button>");
+
+                            //if in progress...
+                            if(bridges.dueDate != null){
+                                inProgressTable.row.add(newRow);
+                                dataset[3]++;
+                            }
+                            //if not started...
+                            else{
+                                notStartedTable.row.add(newRow);
+                                dataset[4]++;
+                            }
                         }
-                    }
-                    
-                    // if not complete, then is is progress or not started
-                    else{
+                    });
 
-                        //add the appropriate columns 
-                        newRow.push(bridge.dueDate);
-                        newRow.push("<button class='btnset btn_contact' onclick='' data-bs-toggle='modal' data-bs-target='#inspector_contact_modal'>Contact Inspector</button>");
+                    //update the data tables
+                    highRiskTable.draw();
+                    middleRiskTable.draw();
+                    lowRiskTable.draw();
+                    inProgressTable.draw();
+                    notStartedTable.draw();
 
-                        //if in progress...
-                        if(bridges.dueDate != null){
-                            inProgressTable.row.add(newRow);
-                            dataset[3]++;
-                        }
-                        //if not started...
-                        else{
-                            notStartedTable.row.add(newRow);
-                            dataset[4]++;
-                        }
-                    }
-                });
+                    return dataset;
+                }
 
-                //recompile the DataTable with new data
-                lowRiskTable.draw();
-
+                //if bridge data was null, then clean the tables and return the empty dataset
+                cleanTables();
                 //return dataset for pie chart
                 return dataset;
             }
-        </script>
 
-        <!-- Open Modal Event Listener -->
-        <script>
+        //Open Modal Event Listener 
           var insContactElementModal = document.getElementById('inspector_contact_modal')
           insContactElementModal.addEventListener('show.bs.modal', function (event) {
               var button = event.relatedTarget.closest('tr')
@@ -918,40 +953,79 @@
               document.getElementById("inspector_name").value = td_inspector;
               document.getElementById("inspector_email").value = e_address;
           })
-        </script>
 
-        <!-- Change Year Contents -->
-        <script>  
-            $(document).ready(function(){
-                $("#year_selector").change(function(){
+         /**
+             * This method retreives a list of each newest bridge inspection for each bridge over one year
+             */
+            let fetchData = async (year) => {
+                const bridgeData = await fetchNewestBridgeData(year);
+                console.log("fetchData:",bridgeData);
+                return bridgeData;
+            }
+            const buildChart = async (pieOptions,year) => {
+                const bridgeData = await fetchData(year);
+                bindTables();
+                const tallies = populateTables(bridgeData);
+                updateTotals(tallies);
+                pieData.datasets[0].data = tallies;
+                var pieChart = new Chart(pieChartCanvas, {
+                    type: 'pie',
+                    data: pieData,
+                    options: pieOptions
+                });
+                return pieChart;
+            }
+            
+            // build pie chart using session variable on first page load
+            pieChart = buildChart(pieOptions, <?php echo $_SESSION['YIR_SelectedYear']; ?>);
+            pieChart.then(function(response){
+                pieChart = response;
+            })
 
-                    $(this).find("option:selected").each(function(){
-                       
-                        var optionValue = $(this).attr("value");
-                        if(optionValue){
-                            $(".cbox").not("#c" + optionValue).hide();
-                            $("#c" + optionValue).show();
-                        } else{
-                            $(".cbox").hide();
-                        }
-                    });
+            //Change Year Contents 
+            $('.yearpicker').yearpicker({
 
-                    $(".tbox").hide();
-                    var origHeight = "calc(100vh - 58px)";
-                    var contHeight = $('section').height();
-                    var sideHeight = $('.sidebar').height();
+                year: <?php echo $_SESSION['YIR_SelectedYear']; ?>,
+                startYear: null,
+                endYear: new Date().getFullYear(),
 
-                    if (contHeight > sideHeight) {
-                        $('.sidebar').height(contHeight);
-                    } else {
-                        $('.sidebar').height(origHeight);
-                    }
-                }).change();
+                // Element tag
+                itemTag: 'li',
+
+                // Default CSS classes
+                selectedClass: 'selected',
+                disabledClass: 'disabled',
+                hideClass: 'hide',
+
+                onShow: null,
+                onHide: null 
             });
-        </script>
+            $('.yearpicker').on('change', async function() {
+                selectedYear = $(this).val();
+                //$(".tbox").hide();
 
-        <!-- Highlight/Unhighlight Element -->
-        <script language="javascript">
+                cleanTables();
+                const newBridgeData = await fetchNewestBridgeData(selectedYear);
+                var tallies = populateTables(newBridgeData);
+                updateTotals(tallies);
+                pieData.datasets[0].data = tallies;
+                pieChart.update();
+
+                updateSession(selectedYear);
+
+                var origHeight = "calc(100vh - 58px)";
+                var contHeight = $('section').height();
+                var sideHeight = $('.sidebar').height();
+
+                if (contHeight > sideHeight) {
+                    $('.sidebar').height(contHeight);
+                } else {
+                    $('.sidebar').height(origHeight);
+                }
+            });
+
+
+        //Highlight/Unhighlight Element
           function highlightElement(id) {
               var tblrow = $('#insp_bridge_ele2 tr[data-bs-id="' + id + '"]');
               tblrow.css({backgroundColor: 'rgba(0, 0, 0, 0.075)'});
