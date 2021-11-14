@@ -1826,13 +1826,13 @@
                 /**
                  * This function deletes all entries in all of the DataTables
                  */
-                function cleanTable(){
+                function cleanTables(){
                     //TODO
                 }
                 /**
                  * This function adds data from the input data list to the DataTables
                  */
-                function cleanTable(bridges){
+                function populateTables(bridges){
                     //TODO
                 }
 
