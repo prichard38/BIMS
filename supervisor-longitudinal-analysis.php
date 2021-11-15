@@ -683,6 +683,7 @@
                         loadTable(bridgeId, inspection);
                         
                         $('#rm_t' + (bridgeIndex+1) + ' .card-title').text('Inspection');
+                        $('#rm_t' + (bridgeIndex+1)).removeAttr('hidden');
                         $(".tbox").not("#rm_t" + (bridgeIndex+1)).hide();
                         
                         if ( lastClick == 'bridgeClick'){
