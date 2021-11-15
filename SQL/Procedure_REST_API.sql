@@ -17,3 +17,12 @@ BEGIN
 END$$
 
 DELIMITER;
+
+DELIMITER $$
+
+CREATE PROCEDURE selectLargestImageSetId()
+BEGIN
+    SELECT MAX(ImageSetID) as set_id FROM DroneImageSet;
+END$$
+
+DELIMITER;
