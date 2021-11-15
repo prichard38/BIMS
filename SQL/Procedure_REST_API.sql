@@ -1,7 +1,21 @@
+/*
+  This procedure creates a new ImageSet and returns its id so that photos can be uploaded using the set id
+*/
+DELIMITER $$
+CREATE PROCEDURE createImageSet(IN inspection_id int)
+BEGIN
+	INSERT INTO DroneImageSet (Inspections_InspectionID,DateTime) VALUES (inspection_id,now()); 
+	SELECT LAST_INSERT_ID();
+END$$
+
+DELIMITER;
+
+
+
+
 DELIMITER $$
 
 /** This procedure grabs information about an inspection for the mobile application to use. 
- *  The app uses an inspection id and needs this info.
 */
 CREATE PROCEDURE selectInspectionData_ById(IN inspection_id int)
 BEGIN
