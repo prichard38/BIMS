@@ -8,7 +8,7 @@ function fetchInspections(bridgeName) {
                 // console.log(this.responseText);
             }
         };
-        xhr.open('POST', 'load-inspections.php', true);
+        xhr.open('POST', 'php-scripts-longitudinal-analysis/load-inspections.php', true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         
 
@@ -38,7 +38,7 @@ function fetchAllBridgeData() {
                 // console.log(this.responseText);
             }
         };
-        xhr.open('POST', 'load-bridge-data.php', true);
+        xhr.open('POST', 'php-scripts-longitudinal-analysis/load-bridge-data.php', true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
         xhr.onload = function() {
@@ -50,6 +50,31 @@ function fetchAllBridgeData() {
         };
         
         xhr.send();
+        
+    })
+}
+
+function fetchEarliestYear(bridgeNames) {
+    return new Promise(function(resolve, reject) {
+        
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                // console.log(this.responseText);
+            }
+        };
+        xhr.open('POST', 'php-scripts-longitudinal-analysis/load-earliest-year.php', true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+        xhr.onload = function() {
+            resolve(this.responseText);
+        };
+
+        xhr.onerror = function() {
+            reject(new Error("Network Error"));
+        };
+        
+        xhr.send('bridgeNames=' + bridgeNames);
         
     })
 }
@@ -155,7 +180,7 @@ function loadTable(bridgeId, jsonObject){
     })
 }
 
-function getYears(beginYear, endYear){
+function getChartYears(beginYear, endYear){
     years = [];
     while(beginYear <= endYear){
         years.push(''+beginYear);
@@ -214,10 +239,9 @@ function fillMissingInspections(bridgeName, bridgeInspectionsJsonObject){
     return correctedInspections;
 }
 
-function restoreSessionState(bridgeNumbers, bridgeNames, bridgeCounties){
+function restoreSessionStateLongitudinalAnalysis(bridgeNumbers, bridgeNames, bridgeCounties){
     document.getElementById('search-instructions').hidden=true;
     document.getElementById('bridge1').remove();
-    let bridgeStrings = [];
     let bridges = document.getElementById('bridges');
     for(let i = 0 ; i < bridgeNames.length ; i++){
         setTimeout(() => {
@@ -243,4 +267,101 @@ function removeAllChildNodes(parent) {
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
     }
+}
+
+function setBridgeSessionVars(bridgeNames, bridgeNumbers, bridgeCounties){
+    $(document).ready(function() {
+        $.ajax({
+            type: 'POST',
+            url: 'php-scripts-longitudinal-analysis/set-bridge-session-vars.php',
+            data: {selectedBridgeNames : JSON.stringify(bridgeNames), 
+                   selectedBridgeNumbers : JSON.stringify(bridgeNumbers), 
+                   selectedBridgeCounties: JSON.stringify(bridgeCounties),},
+            dataType: "json",
+            success: function(res){
+                if(!res){
+                    console.warn("Could not submit selected bridge data");
+                } else{
+                    generateBeginYears(JSON.stringify(bridgeNames));
+                }
+            },
+            error: function(res){
+                console.warn(res)
+            }
+        })
+    })
+}
+
+function setYearsSessionVars(beginYear, endYear){
+    $(document).ready(function() {
+        $.ajax({
+            type: 'POST',
+            url: 'php-scripts-longitudinal-analysis/set-years-session-vars.php',
+            data: {yearBegin : JSON.stringify(beginYear), 
+                   yearEnd : JSON.stringify(endYear)},
+            success: function(res){
+                window.location.href = "supervisor-longitudinal-analysis.php";
+            },
+            error: function(res){
+                console.warn("");
+            }
+        }) 
+    })
+}
+
+const generateEndYears = async () => {
+    let beginSelect = document.getElementById('begin-year-select');
+    let beginYear = beginSelect.options[beginSelect.selectedIndex].value;
+    
+    let endSelect = document.getElementById('end-year-select');
+    beginYear = parseInt(beginYear);
+    
+    let endYears = [];
+    let nextYear = beginYear;
+    let currentYear = new Date().getFullYear();
+    
+    while(!(nextYear >= currentYear) && nextYear < beginYear + 10){
+        nextYear ++;
+        endYears.push(nextYear);
+        
+    }
+
+    let yearOption;
+
+    removeAllChildNodes(endSelect);
+    
+    for(let i = 0 ; i < endYears.length ; i++){
+        yearOption= document.createElement('option');
+        yearOption.setAttribute('value', endYears[i]);
+        yearOption.innerHTML = endYears[i];
+        endSelect.appendChild(yearOption);
+    }
+}
+
+const generateBeginYears = async (bridgeNames) => {
+    let beginSelect = document.getElementById('begin-year-select');
+    removeAllChildNodes(beginSelect);
+    let beginYears = [];
+    fetchEarliestYear(bridgeNames).then(
+        (response) => {
+            let beginYear = parseInt(response);
+            let nextYear = beginYear;
+            let currentYear = new Date().getFullYear();
+
+            while(nextYear < currentYear){
+                beginYears.push(nextYear);
+                nextYear ++;
+            }
+
+            let yearOption;
+            for(let i = 0 ; i < beginYears.length ; i++){
+                yearOption= document.createElement('option');
+                yearOption.setAttribute('value', beginYears[i]);
+                yearOption.innerHTML = beginYears[i];
+                beginSelect.appendChild(yearOption);
+            }
+
+            generateEndYears();
+        }
+    )
 }

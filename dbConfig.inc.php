@@ -4,7 +4,7 @@
 $host = "localhost";
 $dbUsername = "root";
 $dbPassword = "";
-$dbName = "mydb";
+$dbName = "bimsdb";
 
 
 // Create connection

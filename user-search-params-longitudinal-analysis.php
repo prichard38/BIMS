@@ -3,7 +3,7 @@
     session_start();
 
     if($_SESSION["loggedAs"] != "Supervisor"){
-        header("Location:access_denied.php?error=supervisorsonly");
+        header("Location:access-denied.php?error=supervisorsonly");
         die();
     }
 ?>
@@ -15,7 +15,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <script src="functions.js"></script>
+        <script src="la-functions.js"></script>
         
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
@@ -348,7 +348,7 @@
                 </a>
                 <span class="float-right" style="color: white; font-size: 0.9em;">
                     <i class="fas fa-user-circle"></i>&nbsp;
-                    Logged in as <?=$_SESSION["loggedAs"]?>&nbsp;|&nbsp; <a href="login-test.php" style="color: white; text-decoration: none;"> sign out</a>
+                    Logged in as <?=$_SESSION["loggedAs"]?>&nbsp;|&nbsp; <a href="login.php" style="color: white; text-decoration: none;"> sign out</a>
                 </span>
             </div>
         </nav>
@@ -357,13 +357,13 @@
         <div class="sidebar">
             <div class="menubar">
                 <ul class="menu">
-                    <li style="background-color: #5e5e5e;"><a id="RM" href='supervisor_yearly_inspection_report.php'>Report Management</a>
+                    <li style="background-color: #5e5e5e;"><a id="RM" href='supervisor-yearly-inspection-report.php'>Report Management</a>
                         <ul class="submenu">
                             <li style="background-color: #5e5e5e;">
-                                <a id="RM" href='supervisor_yearly_inspection_report.php'>Yearly Inspection Report</a>
+                                <a id="RM" href='supervisor-yearly-inspection-report.php'>Yearly Inspection Report</a>
                             </li>
                             <li style="background-color: #5e5e5e;">
-                                <a id="RM" href='user-options-longitudinal-analysis.php'>Longitudinal Analysis</a>
+                                <a id="RM" href='user-search-params-longitudinal-analysis.php'>Longitudinal Analysis</a>
                             </li>
                         </ul>
                     </li>
@@ -446,41 +446,18 @@
 
                         <span id="begin-year" hidden='true'>
                             From:
-                            <select name="begin" id="begin-year-select" onchange="generateEndYears()" onfocus="this.selectedIndex=-1;" required>
-                                <option value="2011">2011</option>
-                                <option value="2012">2012</option>
-                                <option value="2013">2013</option>
-                                <option value="2014">2014</option>
-                                <option value="2015">2015</option>
-                                <option value="2016">2016</option>
-                                <option value="2017">2017</option>
-                                <option value="2018">2018</option>
-                                <option value="2019">2019</option>
-                                <option value="2020">2020</option>
-                                <option value="2021">2021</option>
-                            </select>
+                            <select name="begin" id="begin-year-select" onchange="generateEndYears()" onfocus="this.selectedIndex=-1;" required></select>
                         </span>
                         &nbsp&nbsp
                         <span id='end-year' hidden='true'>
                             To:
-                            <select name="end" id="end-year-select" onchange="enableButton(document.getElementById('submit-btn-years'));" onfocus="this.selectedIndex=-1;" required>
-                                <option value="2012">2012</option>
-                                <option value="2013">2013</option>
-                                <option value="2014">2014</option>
-                                <option value="2015">2015</option>
-                                <option value="2016">2016</option>
-                                <option value="2017">2017</option>
-                                <option value="2018">2018</option>
-                                <option value="2019">2019</option>
-                                <option value="2020">2020</option>
-                                <option value="2021">2021</option>
-                            </select>
+                            <select name="end" id="end-year-select" onchange="enableButton(document.getElementById('submit-btn-years'));" onfocus="this.selectedIndex=-1;" required></select>
                         </span>
                         <br>
                         <br>
                         <br>
                     </p>
-                    <button hidden=true id='submit-btn-years' class="btn btn-secondary btn-sm disabled" type='submit'>Submit Timeframe Selection</button>
+                    <button hidden=true id='submit-btn-years' class="btn btn-secondary btn-sm disabled" type='button'>Submit Timeframe Selection</button>
                 </form>
             </div>  
         </div>
@@ -599,24 +576,8 @@
                         bridgeNames.push(nameAndCounty[0].trim());
                         bridgeCounties.push(nameAndCounty[1].trim());
                     }
-                    $(document).ready(function() {
-                        $.ajax({
-                            type: 'POST',
-                            url: 'set-bridge-session-vars.php',
-                            data: {selectedBridgeNames : JSON.stringify(bridgeNames), 
-                                   selectedBridgeNumbers : JSON.stringify(bridgeNumbers), 
-                                   selectedBridgeCounties: JSON.stringify(bridgeCounties),},
-                            dataType: "json",
-                            success: function(res){
-                                if(!res){
-                                    console.warn("Could not submit selected bridge data");
-                                }
-                            },
-                            error: function(res){
-                                console.warn(res)
-                            }
-                        })
-                    })
+                    setBridgeSessionVars(bridgeNames, bridgeNumbers, bridgeCounties);
+
                 }
             }
 
@@ -653,18 +614,7 @@
             submitButtonYear.onclick = function(){
                 var beginSelect = document.getElementById('begin-year-select');
                 var endSelect = document.getElementById('end-year-select');
-                $.ajax({
-                    type: 'POST',
-                    url: 'set-years-session-vars.php',
-                    data: {yearBegin : JSON.stringify(beginSelect.options[beginSelect.selectedIndex].value), 
-                           yearEnd : JSON.stringify(endSelect.options[endSelect.selectedIndex].value)},
-                    success: function(res){
-                        window.location.href = "supervisor_longitudinal_analysis.php";
-                    },
-                    error: function(res){
-                        console.warn("");
-                    }
-                })        
+                setYearsSessionVars(beginSelect.options[beginSelect.selectedIndex].value, endSelect.options[endSelect.selectedIndex].value);      
             }
 
 
@@ -755,40 +705,9 @@
                 let bridgeNumbers = <?php echo json_encode($_SESSION['selectedBridgeNumbers']); ?>;
                 let bridgeNames = <?php echo json_encode($_SESSION['selectedBridgeNames']); ?>;
                 let bridgeCounties = <?php echo json_encode($_SESSION['selectedBridgeCounties']); ?>;
-                restoreSessionState(bridgeNumbers, bridgeNames, bridgeCounties);
+                restoreSessionStateLongitudinalAnalysis(bridgeNumbers, bridgeNames, bridgeCounties);
             }
             
-        </script>
-
-        <script>
-            function generateEndYears(){
-                var beginSelect = document.getElementById('begin-year-select');
-                var beginYear = beginSelect.options[beginSelect.selectedIndex].value;
-                
-                var endSelect = document.getElementById('end-year-select');
-                beginYear = parseInt(beginYear);
-                
-                var endYears = [];
-                var nextYear = beginYear;
-                var currentYear = new Date().getFullYear();
-                
-                while(!(nextYear >= currentYear) && nextYear < beginYear + 10){
-                    nextYear ++;
-                    endYears.push(nextYear);
-                    
-                }
-
-                var yearOption;
-
-                removeAllChildNodes(endSelect);
-                
-                for(var i = 0 ; i < endYears.length ; i++){
-                    yearOption= document.createElement('option');
-                    yearOption.setAttribute('value', endYears[i]);
-                    yearOption.innerHTML = endYears[i];
-                    endSelect.appendChild(yearOption);
-                }
-            }   
         </script>
         
     </body> 
