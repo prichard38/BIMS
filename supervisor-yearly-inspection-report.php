@@ -9,7 +9,7 @@
 
     /* make sure user is supervisor to continue */
     if($_SESSION["loggedAs"] != "Supervisor"){
-        header("Location:access_denied.php?error=supervisorsonly");
+        header("Location:access-denied.php?error=supervisorsonly");
         die();
     }
 
