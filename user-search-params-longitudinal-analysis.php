@@ -7,6 +7,7 @@
         die();
     }
 
+    // If hasSavedState is not set, there is no saved state. Set session vars to prevent php error later.
     if(!isset($_SESSION['hasSavedState'])){
         $_SESSION['hasSavedState'] = false;
         $_SESSION['selectedBridgeNames'] = [];
@@ -51,8 +52,10 @@
     
     <body>
         <script>
-            
+            // bridgeData will contain ALL bridge data: number, name and county for each bridge existing in the database
+            // bridgeData will be used when searching for bridges.
             bridgeData = [];
+
             fetchAllBridgeData().then(
                 (res) => {
                     res.data.forEach(obj => {
@@ -60,6 +63,7 @@
                 });
             })
 
+            // array containing the currently selected bridges. As the user adds/removes bridge selections, this array is updated.
             selectedBridgesSoFar = [];
         </script>
 
@@ -137,6 +141,9 @@
                 }
             }
 
+            /**
+             * Builds bridge search HTML element and assigns associated on click functions for the buttons included in that bridge element
+             */
             function buildBridgeElement(){
                 let awaitingConfirmation = true;
 
@@ -180,8 +187,6 @@
                 wrapperDiv.appendChild(resultsDiv);
                 
                 containerSearchDiv.appendChild(wrapperDiv);
-
-                //<button  type='button' class='confirm-btn btn btn-primary btn-sm' id="confirm-search-1">Confirm Selection</button>
 
                 let confirmButton = document.createElement('button');
                 confirmButton.setAttribute('type', 'button');
@@ -227,7 +232,7 @@
 
 
                 /******************************************************************************
-                ********************** Bridge x search functionality  *************************
+                *         Search Functionality for this bridge search element                 *
                 ******************************************************************************/
                 searchInput.addEventListener('keyup', () => {
                     let results = [];
@@ -268,7 +273,7 @@
                 }
 
                 /******************************************************************************
-                ********************** Bridge x onclick functions  ****************************
+                *            onclick functions for this bridge search element                 *
                 ******************************************************************************/
                 removeButton.onclick = function() {
                     let numBridges = document.getElementsByClassName("bridge").length;
@@ -478,7 +483,7 @@
 
             
             /******************************************************************************
-            ********************** Bridge 1 search functionality  *************************
+            *                    Bridge 1 search functionality                            *
             ******************************************************************************/
             const searchInput = document.getElementById('search1');
             const searchWrapper = document.querySelector('.wrapper');
@@ -524,11 +529,12 @@
             /**************************************************************************
             **************************************************************************/
 
-            // global tracker lets for control flow
-            nextBridgeIndex = 1;
-            isValid = false;
-            hasDuplicate = false;
-            numConfirmed = 0;
+            // global tracker vars for control flow
+            nextBridgeIndex = 1; // index/id number for the next bridge element that is created
+            isValid = false; // form validity
+            hasDuplicate = false; // user serach input is duplicate of bridge that is already selected
+            numConfirmed = 0; // number of bridge selections confirmed so far
+            awaitingAnyConfirmation = true; // tracks if any bridge selections are awaiting confirmation
             
             
             // submit buttons
@@ -540,19 +546,20 @@
             // bridges element. parent to all bridge divs
             let bridges = document.getElementById('bridges');
 
-            // elements for bridge 1
+            // bridge 1 element 
             let bridge1 = document.getElementById('bridge1');
+            // all child elements of bridge1
             let confirmSearch1 = document.getElementById('confirm-search-1');
             let searchButton1 = document.getElementById('search-btn');
             let addBridge = document.getElementById('add-bridge');
             let addBridgeLabel = document.getElementById('add-bridge-label');
             let removeBridge1 = document.getElementById('remove-bridge-1');
             let awaitingConfirmation1 = true;
-            awaitingAnyConfirmation = true;
 
             
             submitBridgeSelectionsButton.onclick = function() {
                 if(isValid){
+                    // remove <br> children 
                     bridges.children[bridges.children.length -1].removeChild(bridges.children[bridges.children.length -1].lastChild);
                     bridges.children[bridges.children.length -1].removeChild(bridges.children[bridges.children.length -1].lastChild);
                     // hide icons from all bridge inputs so no more changes can be made
@@ -570,7 +577,7 @@
                     addBridge.hidden = true;
                     addBridgeLabel.hidden = true;
            
-                    // show the timeframes selectors
+                    // show the timeframe section and instructions
                     document.getElementById('timeframe-section').hidden = false;
                     document.getElementById('timeframe-instructions').hidden = false;
 
@@ -579,6 +586,8 @@
                     let bridgeNames = [];
                     let bridgeNumbers = [];
                     let bridgeCounties = [];
+
+                    // parse out the search input fields into bridge name, number, and county
                     for(let i = 0 ; i < inputElements.length ; i++){
                         let splitData = inputElements[i].value.split(":");
                         bridgeNumbers.push(splitData[0].trim());
@@ -587,10 +596,14 @@
                         bridgeCounties.push(nameAndCounty[1].trim());
                     }
 
+                    // use parsed bridge names, numbers, and counties to set bridge selection SESSION vars
                     setBridgeSessionVars(bridgeNames, bridgeNumbers, bridgeCounties).then(
                         (response) => {
+                            // After bridge selection session vars have been set, generate begin year options for timeframe selector
+                            // Must pass it the bridgeNames so it can get earliest inspection year as a starting point 
                             generateBeginYears(JSON.stringify(bridgeNames)).then(
                                 (response) => {
+                                    // After bridge selection session vars have been set, generate end year options for timeframe selector 
                                     generateEndYears();
                                 }
                             )
@@ -636,7 +649,7 @@
 
 
             /******************************************************************************
-            ********************** Bridge 1 onclick functions  ****************************
+            *                        Bridge 1 onclick functions                           *
             ******************************************************************************/
             confirmSearch1.onclick = function(){
                 //validate user input

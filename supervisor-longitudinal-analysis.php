@@ -510,7 +510,7 @@
 
         <script> 
             // create DOM Elements for the Selected Bridges DataTable      
-            setBridgeHTML();
+            setBridgeHTML(selectedBridgeNames);
         </script>
         
         <!-- ChartJS Dependencies -->

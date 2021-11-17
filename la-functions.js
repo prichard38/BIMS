@@ -1,3 +1,11 @@
+/**
+ * Fetches all inspections for the given bridge between selected years.
+ * Selected years are SESSION vars beginYear and endYear, which are used as params in php script load-inspections.
+ * 
+ * @param {string} bridgeName the bridge to get inspections for. Sent in POST request to server side for use in load-inspections.php
+ * @returns Promise that is resolved with the JSON bridge inspection data, 
+ *          or a JSON object with null data if no inspections exist for the given bridge
+ */
 function fetchInspections(bridgeName) {
     return new Promise(function(resolve, reject) {
         data = [];
@@ -29,6 +37,10 @@ function fetchInspections(bridgeName) {
     })
 }
 
+/**
+ * Fetches the bridge name, number, and county for all existing bridges.
+ * @returns Promise that is resolved with JSON response containing bridge names, numbers, and counties for all existing bridges
+ */
 function fetchAllBridgeData() {
     return new Promise(function(resolve, reject) {
         
@@ -54,6 +66,12 @@ function fetchAllBridgeData() {
     })
 }
 
+/**
+ * Fetches the earliest inspection year from among the given bridges.
+ * @param {string[]} bridgeNames The array of bridge names to get the earliest inspection from among. 
+ *                               Sent in POST request for use in load-earliest-year.php
+ * @returns Promise that resolves with the year (number) associated with the earliest inspection
+ */
 function fetchEarliestYear(bridgeNames) {
     return new Promise(function(resolve, reject) {
         
@@ -79,6 +97,12 @@ function fetchEarliestYear(bridgeNames) {
     })
 }
 
+/**
+ * Extracts the ratings from inpections JSON data
+ * @param {object} inspectionsJson javascript object with name/value pair wher the name is "data" and the value is an array of objects, each representing one inspection
+ *                                 ( example: {"data":[{assignedBy:x, assignedTo:x, bridgeName:x, bridgeNo:x, finishedDate:x, inspectionTypeName:x, rating:x}, ...]} )
+ * @returns an array of ratings (number[]), where each rating maps by index to the inspections given
+ */
 function getRatings(inspectionsJson){
     var ratings = [];
     inspectionsJson.data.forEach((inspection, index) => {
@@ -92,6 +116,11 @@ function getRatings(inspectionsJson){
     return ratings;
 }
 
+/**
+ * Generates an array of hex values, each of which correspond to a rating in the ratingsArray given. Colors are determined by numeric value of each rating.
+ * @param {number[]} ratingsArray the array of ratings (1 - 9) to get colors for.
+ * @returns an array of colors (strings of hex color values), where each color maps by index to the ratings given.
+ */
 function getPointColors(ratingsArray){
     colors = [];
     ratingsArray.forEach(function(rating, index){
@@ -130,12 +159,18 @@ function getPointColors(ratingsArray){
     return colors;
 }
 
-function loadTable(bridgeId, jsonObject){
+/**
+ * Renders the Data Table asscoicated with the given bridgeId with the given inspection data.
+ * @param {string} bridgeId the html id attribute for a given bridge data table (example: bridge1)
+ * @param {object[]} inspectionDataJson the array of inspection data javascript objects to be inserted into the data table 
+ *                                      (example: [{assignedBy:x, assignedTo:x, bridgeName:x, bridgeNo:x, finishedDate:x, inspectionTypeName:x, rating:x}, ...])
+ */
+function loadTable(bridgeId, inspectionDataJson){
     $(document).ready(function(){
         var index = bridgeId.charAt(bridgeId.length-1);
         $('#tbl_bridge_insp_t' + index).DataTable({
             "destroy": true,
-            "aaData": jsonObject,
+            "aaData": inspectionDataJson,
             "dataSrc": '',
             "columnDefs": [ 
                 {
@@ -180,6 +215,12 @@ function loadTable(bridgeId, jsonObject){
     })
 }
 
+/**
+ * Generates an array of all the necessary year values for the x axis of line Chart based on begin and end years given.
+ * @param {number} beginYear "From" year => first value on x axis
+ * @param {number} endYear "To" year => last value on x axis
+ * @returns array of years (number[])
+ */
 function getChartYears(beginYear, endYear){
     years = [];
     while(beginYear <= endYear){
@@ -189,7 +230,11 @@ function getChartYears(beginYear, endYear){
     return years;
 }
 
-function setBridgeHTML(){
+/**
+ * Dynamically creates the Bridge Table Rows (in supervisor-longitudinal-analysis.php) for each bridge. 
+ * This allows for the creation of only as many rows as there are bridges selected.
+ */
+function setBridgeHTML(selectedBridgeNames){
     let colors = ['darkgrey', 'navy', 'steelblue'];
     for(let i = 0 ; i < selectedBridgeNames.length ; i++){
         let nameId = 'bridge-name-'+(i+1);
@@ -203,18 +248,30 @@ function setBridgeHTML(){
     }
 }
 
+/**
+ * Modifies the styling and class list of the bridge Table Row Element given to flag that bridge as having no associated inspection data
+ * @param {html element} bridgeElementWithNoInspections the bridge Table Row element that should be rendered as "inspectionless"
+ */
 function renderInspectionlessBridgeHTML(bridgeElementWithNoInspections){
     bridgeElementWithNoInspections.classList.add('text');
     bridgeElementWithNoInspections.classList.add('text-danger');
     bridgeElementWithNoInspections.setAttribute('style', 'font-style: italic;')
 }
 
+/**
+ * Finds years for which there are missing inspections and inserts null values to be mapped to those years. 
+ * This enables the line chart to map inspections to correct years when there are missing inspections (i.e. years with no associated inspection)
+ * @param {string} bridgeName the bridge to fill in missing inspection data points for.
+ * @param {object} bridgeInspectionsJson javascript object with name/value pair wher the name is "data" and the value is an array of objects, each representing one inspection
+ *                                       ( example: {"data":[{assignedBy:x, assignedTo:x, bridgeName:x, bridgeNo:x, finishedDate:x, inspectionTypeName:x, rating:x}, ...]} ) 
+ * @returns 
+ */
 function fillMissingInspections(bridgeName, bridgeInspectionsJsonObject){
     var inspectionYears = [];
     /* The "corrected" inspections data with null insertion for missing inspections. 
-        * This is required for chart.js line chart to render line correctly with missing inspections.*/
-    var correctedInspections = {data:[]};
-    
+    * This is required for chart.js line chart to render line correctly with missing inspections.*/
+   var correctedInspections = {data:[]};
+   
     // Get all inspection years that exist in inspection data for this bridge
     for(var i = 0 ; i < bridgeInspectionsJsonObject.data.length ; i++){
         inspectionYears.push(parseInt(bridgeInspectionsJsonObject.data[i]['finishedDate'].slice(0,4)));
@@ -223,7 +280,7 @@ function fillMissingInspections(bridgeName, bridgeInspectionsJsonObject){
     // get the years for which there are missing inspections by filtering against selected years timeframe array
     var difference = years.filter(year => !inspectionYears.includes(parseInt(year)));
     
-    // fill correctedInspections, filling in null values where there are missing inspections
+    // fill correctedInspections, inserting null values where there are missing inspections
     for(var j = 0 ; j < years.length ; j++){
         if(difference.includes(years[j])){
             var index = difference.indexOf(years[j]);
@@ -239,6 +296,13 @@ function fillMissingInspections(bridgeName, bridgeInspectionsJsonObject){
     return correctedInspections;
 }
 
+/**
+ * Restores the user-search-params-longitudinal-analysis page to a "saved" state using the bridge numbers, names, and counties given.
+ * @param {string[]} bridgeNumbers array of bridge numbers (strings). Number at index i should map to name at bridgeNames[i] and county at bridgeCounties[i]
+ * @param {string[]} bridgeNames array of bridge names. Number at index i should map to number at bridgeNumbers[i] and county at bridgeCounties[i]
+ * @param {string[]} bridgeCounties array of bridge counties. Number at index i should map to number at bridgeNumbers[i] and name at bridgeNames[i]
+ * @returns Promise that resolves with true after session state has been restored.
+ */
 function restoreSessionStateLongitudinalAnalysis(bridgeNumbers, bridgeNames, bridgeCounties){
     return new Promise(function(resolve, reject){
         // remove the 1st "default" bridge element
@@ -269,13 +333,23 @@ function restoreSessionStateLongitudinalAnalysis(bridgeNumbers, bridgeNames, bri
     })
 }
 
-
+/**
+ * Removes all children from html element given
+ * @param {html element} parent parent html element to remove children from
+ */
 function removeAllChildNodes(parent) {
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
     }
 }
 
+/**
+ * Runs a php script via AJAX that sets $_SESSION['selectedBridgeNames'], $_SESSION['selectedBridgeNumbers'], and $_SESSION['selectedBridgeCounties']
+ * @param {string[]} bridgeNumbers array of bridge numbers (strings). Number at index i should map to name at bridgeNames[i] and county at bridgeCounties[i]
+ * @param {string[]} bridgeNames array of bridge names. Number at index i should map to number at bridgeNumbers[i] and county at bridgeCounties[i]
+ * @param {string[]} bridgeCounties array of bridge counties. Number at index i should map to number at bridgeNumbers[i] and name at bridgeNames[i]
+ * @returns Promise that resolves with true if session vars could be set successfully, resolves false if session vars could not be set for some reason that did not throw an error.
+ */
 function setBridgeSessionVars(bridgeNames, bridgeNumbers, bridgeCounties){
     return new Promise(function(resolve, reject){
         $(document).ready(function() {
@@ -304,6 +378,11 @@ function setBridgeSessionVars(bridgeNames, bridgeNumbers, bridgeCounties){
     })
 }
 
+/**
+ * Runs a php script vai AJAX that sets $_SESSION['beginYear'] and $_SESSION['endYear'].
+ * @param {number} beginYear "From" year
+ * @param {number} endYear "To" year
+ */
 function setYearsSessionVars(beginYear, endYear){
     $(document).ready(function() {
         $.ajax({
@@ -321,6 +400,9 @@ function setYearsSessionVars(beginYear, endYear){
     })
 }
 
+/**
+ * Generates up to a max of 10 "To" (end) year select options based on the selected begin year option
+ */
 function generateEndYears (){
     let beginSelect = document.getElementById('begin-year-select');
     let beginYear = beginSelect.options[beginSelect.selectedIndex].value;
@@ -336,7 +418,6 @@ function generateEndYears (){
     while(!(nextYear >= currentYear) && nextYear < beginYear + 10){
         nextYear ++;
         endYears.push(nextYear);
-        
     }
 
     let yearOption;
@@ -352,6 +433,11 @@ function generateEndYears (){
     }
 }
 
+/**
+ * Generates begin year select options for all years between the current year and the earliest inspection year from among bridgeNames
+ * @param {string[]} bridgeNames selected bridge names for which to generate "From" (begin) year select options
+ * @returns Promise that resolves with true after all begin year options have been generated
+ */
 function generateBeginYears (bridgeNames){
     return new Promise(function(resolve, reject){
         let beginSelect = document.getElementById('begin-year-select');
