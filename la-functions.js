@@ -309,7 +309,7 @@ function setYearsSessionVars(beginYear, endYear){
     })
 }
 
-const generateEndYears = async () => {
+function generateEndYears (){
     let beginSelect = document.getElementById('begin-year-select');
     let beginYear = beginSelect.options[beginSelect.selectedIndex].value;
     
@@ -338,7 +338,7 @@ const generateEndYears = async () => {
     }
 }
 
-const generateBeginYears = async (bridgeNames) => {
+function generateBeginYears (bridgeNames){
     let beginSelect = document.getElementById('begin-year-select');
     removeAllChildNodes(beginSelect);
     let beginYears = [];
