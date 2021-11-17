@@ -60,7 +60,7 @@
                 });
             })
 
-            bridgesSoFar = [];
+            selectedBridgesSoFar = [];
         </script>
 
         <script>
@@ -276,7 +276,7 @@
                         bridgeDiv.remove();
                         updateBridgeIds();
                         if(!awaitingConfirmation){
-                            bridgesSoFar.splice(bridgesSoFar.indexOf(searchInput.value), 1)
+                            selectedBridgesSoFar.splice(selectedBridgesSoFar.indexOf(searchInput.value), 1)
                             nextBridgeIndex -= 1;
                             numConfirmed -=1;
                             updateConfirmationCount(numConfirmed);
@@ -300,7 +300,7 @@
                     //validate user input
                     let inputElements = document.getElementsByTagName("input");
                     if(bridgeData.includes(searchInput.value)){
-                        if(!bridgesSoFar.includes(searchInput.value)){
+                        if(!selectedBridgesSoFar.includes(searchInput.value)){
                             isValid = true;
                             hasDuplicate = false;
                         } else{
@@ -312,7 +312,7 @@
                         hasDuplicate = false;
                     }
                     if(isValid){
-                        bridgesSoFar.push(searchInput.value)
+                        selectedBridgesSoFar.push(searchInput.value)
                         noMatchFeedback.hidden=true;
                         duplicateFeedback.hidden=true;
                         awaitingConfirmation = false;
@@ -386,86 +386,91 @@
                 <br>
 
                 <hr>
-                <div id='search-instructions'>
-                    <p><strong>First, select up to 3 bridges to analyze. Search by bridge name or number.</strong> </p>
-                    <p><strong>Then, after your bridge selections are submitted, you will be prompted to provide a time period for the analysis.</strong></p>
-                    <br>
-                    <p>* <em>Selections must be confirmed to add additional bridges.</em></p>
-                    <p>* <em>To remove a bridge selection, click the "minus" icon to the right of the selection.</em></p>
-                    <br>  
-                    <br>              
-                </div>
-                <h6 id="search-header">Select Up To 3 Bridges:</h6>
-                <form id='search-form'>
-                    <div id="bridges">
-                        <br>
-                        <div id="bridge1" class="bridge">
-                            <h6>Bridge 1</h6>
+                <div id='search-section' hidden='true' >
 
-                            <div class="container-search" id="container-search">
-                                <div class="wrapper">
-                                    <input class="border" type="text" name="search1" id="search1" placeholder="Search for a bridge name or number" autocomplete="chrome-off">
-                                    <button type='button' id="search-btn"><i class="fa fa-search"></i></button>
-                                    <div class="results">
-                                        <ul>
-                                        </ul>
-                                    </div>
-                                        
-                                </div>
-                                <button  type='button' class='confirm-btn btn btn-primary btn-sm' id="confirm-search-1">Confirm Selection</button>
-                                <button  type='button' class='remove-btn' id="remove-bridge-1" ><i class="fa fa-minus-circle option-icon"></i></button>
-                            </div>
-                            <span hidden='true' class='input-feedback text-danger' id='no-match-feedback-1'>No matching records</span>
-                            <span hidden='true' class='input-feedback text-danger' id='duplicate-feedback-1'>Cannot confirm duplicate bridge selection</span>
-                            <br><br>
-                            
-                        </div>
+                    <div id='search-instructions'>
+                        <p><strong>First, select up to 3 bridges to analyze. Search by bridge name or number.</strong> </p>
+                        <p><strong>Then, after your bridge selections are submitted, you will be prompted to provide a time period for the analysis.</strong></p>
+                        <br>
+                        <p>* <em>Selections must be confirmed to add additional bridges.</em></p>
+                        <p>* <em>To remove a bridge selection, click the "minus" icon to the right of the selection.</em></p>
+                        <br>  
+                        <br>              
                     </div>
-                    <button type='button' hidden='true' class='add-bridge' id="add-bridge"><i class="far fa-plus-square"></i></button>
-                    <span  hidden='true' id="add-bridge-label">&nbspAdd Another Bridge</span>
-                    <br>
-                    <br>
-                    <p>
+                    <h6 id="search-header">Select Up To 3 Bridges:</h6>
+                    <form id='search-form'>
+                        <div id="bridges">
+                            <br>
+                            <div id="bridge1" class="bridge">
+                                <h6>Bridge 1</h6>
+    
+                                <div class="container-search" id="container-search">
+                                    <div class="wrapper">
+                                        <input class="border" type="text" name="search1" id="search1" placeholder="Search for a bridge name or number" autocomplete="chrome-off">
+                                        <button type='button' id="search-btn"><i class="fa fa-search"></i></button>
+                                        <div class="results">
+                                            <ul>
+                                            </ul>
+                                        </div>
+                                            
+                                    </div>
+                                    <button  type='button' class='confirm-btn btn btn-primary btn-sm' id="confirm-search-1">Confirm Selection</button>
+                                    <button  type='button' class='remove-btn' id="remove-bridge-1" ><i class="fa fa-minus-circle option-icon"></i></button>
+                                </div>
+                                <span hidden='true' class='input-feedback text-danger' id='no-match-feedback-1'>No matching records</span>
+                                <span hidden='true' class='input-feedback text-danger' id='duplicate-feedback-1'>Cannot confirm duplicate bridge selection</span>
+                                <br><br>
+                                
+                            </div>
+                        </div>
+                        <button type='button' hidden='true' class='add-bridge' id="add-bridge"><i class="far fa-plus-square"></i></button>
+                        <span  hidden='true' id="add-bridge-label">&nbspAdd Another Bridge</span>
                         <br>
-                        <h6 id="confirmation-message">You have confirmed <span id="confirmation-count" class="text-danger">0</span> bridge selections.</h6> 
                         <br>
-                        <button hidden='true' id='edit-btn-bridges' class="btn btn-primary btn-sm" type='button'>Edit Bridge Selections</button>
-                        <button id='submit-btn-bridges' class="btn btn-secondary btn-sm disabled" type='button'>Submit Bridge Selections</button>
-                        <span hidden='true' style="font-size: 0.85em;" class='edit-feedback text-danger'><em>&nbsp&nbspChanging your bridge selections will reset the selected timeframe</em></span>
-                        <span hidden='true' class='submission-feedback text-danger'><em>&nbsp&nbspTo submit your selections, confirm or delete any unconfirmed selections</em></span>
-                    </p>
-
-                </form>
-                <hr>
-                <div id="timeframe-instructions" hidden='true'>
-                    <p><strong>Select a timeframe that you want to analyze by choosing "From" and "To" years.</strong> </p>
-                    <p><strong>Note that a maximum range of 10 years is allowed.</strong></p>
-                    <br>
-                    <p>* <em>Earliest selectable "From" year is determined by the oldest existing inspection among selected bridges.</em></p>
-                    <p>* <em>When more than one bridge is selected, it is possible that not all selected bridges have inspection data for the selected timeframe.</em></p>
-                    <br>  
-                    <br>              
-                </div>
-                <h6 id="timeframe-header" hidden='true'>Select a Timeframe:</h6>
-                <br>
-                <form action="" method="">
                         <p>
-
-                        <span id="begin-year" hidden='true'>
-                            From:
-                            <select name="begin" id="begin-year-select" onchange="generateEndYears()" onfocus="this.selectedIndex=-1;" required></select>
-                        </span>
-                        &nbsp&nbsp
-                        <span id='end-year' hidden='true'>
-                            To:
-                            <select name="end" id="end-year-select" onchange="enableButton(document.getElementById('submit-btn-years'));" onfocus="this.selectedIndex=-1;" required></select>
-                        </span>
+                            <br>
+                            <h6 id="confirmation-message">You have confirmed <span id="confirmation-count" class="text-danger">0</span> bridge selections.</h6> 
+                            <br>
+                            <button hidden='true' id='edit-btn-bridges' class="btn btn-primary btn-sm" type='button'>Edit Bridge Selections</button>
+                            <button id='submit-btn-bridges' class="btn btn-secondary btn-sm disabled" type='button'>Submit Bridge Selections</button>
+                            <span hidden='true' style="font-size: 0.85em;" class='edit-feedback text-danger'><em>&nbsp&nbspChanging your bridge selections will reset the selected timeframe</em></span>
+                            <span hidden='true' class='submission-feedback text-danger'><em>&nbsp&nbspTo submit your selections, confirm or delete any unconfirmed selections</em></span>
+                        </p>
+    
+                    </form>
+                    <hr>
+                </div>
+                <div id='timeframe-section' hidden='true'>
+                    <div id="timeframe-instructions">
+                        <p><strong>Select a timeframe that you want to analyze by choosing "From" and "To" years.</strong> </p>
+                        <p><strong>Note that a maximum range of 10 years is allowed.</strong></p>
                         <br>
-                        <br>
-                        <br>
-                    </p>
-                    <button hidden=true id='submit-btn-years' class="btn btn-secondary btn-sm disabled" type='button'>Submit Timeframe Selection</button>
-                </form>
+                        <p>* <em>Earliest selectable "From" year is determined by the oldest existing inspection among selected bridges.</em></p>
+                        <p>* <em>When more than one bridge is selected, it is possible that not all selected bridges have inspection data for the selected timeframe.</em></p>
+                        <br>  
+                        <br>              
+                    </div>
+                    <h6 id="timeframe-header" >Select a Timeframe:</h6>
+                    <br>
+                    <form action="" method="">
+                            <p>
+    
+                            <span id="begin-year">
+                                From:
+                                <select name="begin" id="begin-year-select" onchange="generateEndYears()" onfocus="this.selectedIndex=-1;" required></select>
+                            </span>
+                            &nbsp&nbsp
+                            <span id='end-year'>
+                                To:
+                                <select name="end" id="end-year-select" onchange="enableButton(document.getElementById('submit-btn-years'));" onfocus="this.selectedIndex=-1;" required></select>
+                            </span>
+                            <br>
+                            <br>
+                            <br>
+                        </p>
+                        <button id='submit-btn-years' class="btn btn-secondary btn-sm disabled" type='button'>Submit Timeframe Selection</button>
+                    </form>
+                </div>
             </div>  
         </div>
         
@@ -548,7 +553,6 @@
             
             submitBridgeSelectionsButton.onclick = function() {
                 if(isValid){
-                    document.getElementById('search-instructions').hidden = true;
                     bridges.children[bridges.children.length -1].removeChild(bridges.children[bridges.children.length -1].lastChild);
                     bridges.children[bridges.children.length -1].removeChild(bridges.children[bridges.children.length -1].lastChild);
                     // hide icons from all bridge inputs so no more changes can be made
@@ -557,6 +561,7 @@
                         icons[i].hidden = true;
                     }
                     // hide the "submit bridge selections" button
+                    document.getElementById('search-instructions').hidden = true;
                     this.hidden = true;
                     editBridgesButton.hidden=false;
                     document.getElementsByClassName('edit-feedback')[0].hidden=false;
@@ -566,11 +571,9 @@
                     addBridgeLabel.hidden = true;
            
                     // show the timeframes selectors
-                    document.getElementById('begin-year').hidden = false;
-                    document.getElementById('end-year').hidden = false;
+                    document.getElementById('timeframe-section').hidden = false;
                     document.getElementById('timeframe-instructions').hidden = false;
-                    document.getElementById('timeframe-header').hidden = false;
-                    document.getElementById('submit-btn-years').hidden = false;
+
 
                     let inputElements = document.getElementsByTagName("input");
                     let bridgeNames = [];
@@ -583,7 +586,17 @@
                         bridgeNames.push(nameAndCounty[0].trim());
                         bridgeCounties.push(nameAndCounty[1].trim());
                     }
-                    setBridgeSessionVars(bridgeNames, bridgeNumbers, bridgeCounties);
+
+                    setBridgeSessionVars(bridgeNames, bridgeNumbers, bridgeCounties).then(
+                        (response) => {
+                            generateBeginYears(JSON.stringify(bridgeNames)).then(
+                                (response) => {
+                                    generateEndYears();
+                                }
+                            )
+
+                        }
+                    );
 
                 }
             }
@@ -611,11 +624,7 @@
                 }
         
                 // hide the begin year selector
-                document.getElementById('begin-year').hidden = true;
-                document.getElementById('end-year').hidden = true;
-                document.getElementById('timeframe-instructions').hidden = true;
-                document.getElementById('timeframe-header').hidden = true;
-                document.getElementById('submit-btn-years').hidden = true;
+                document.getElementById('timeframe-section').hidden = true;
             }
 
             submitButtonYear.onclick = function(){
@@ -632,7 +641,7 @@
             confirmSearch1.onclick = function(){
                 //validate user input
                 if(bridgeData.includes(searchInput.value)){
-                        if(!bridgesSoFar.includes(searchInput.value)){
+                        if(!selectedBridgesSoFar.includes(searchInput.value)){
                             isValid = true;
                             hasDuplicate = false;
                         } else{
@@ -643,7 +652,7 @@
                     isValid = false;
                 }      
                 if(isValid){
-                    bridgesSoFar.push(searchInput.value)
+                    selectedBridgesSoFar.push(searchInput.value)
                     awaitingConfirmation1 = false;
                     awaitingAnyConfirmation = false;
                     nextBridgeIndex++;
@@ -672,7 +681,7 @@
                 let numBridges = document.getElementsByClassName("bridge").length
                 if(numBridges > 1){
                     
-                    bridgesSoFar.splice(bridgesSoFar.indexOf(document.getElementById('search1').value), 1)
+                    selectedBridgesSoFar.splice(selectedBridgesSoFar.indexOf(document.getElementById('search1').value), 1)
                     bridge1.remove();
                     updateBridgeIds();
                     nextBridgeIndex -= 1;
@@ -707,12 +716,29 @@
         </script>
 
         <script>
-            // restore previous state using session vars if there are any
-            if(<?php echo json_encode($_SESSION['hasSavedState']); ?>){
-                restoreSessionStateLongitudinalAnalysis(<?php echo json_encode($_SESSION['selectedBridgeNumbers']); ?>, 
-                                                        <?php echo json_encode($_SESSION['selectedBridgeNames']); ?>, 
-                                                        <?php echo json_encode($_SESSION['selectedBridgeCounties']); ?>);
-            }
+            // if the current session has a saved state for this page, use session vars to restore that state
+            $(function(){
+                if(<?php echo json_encode($_SESSION['hasSavedState']); ?>){
+                    restoreSessionStateLongitudinalAnalysis(<?php echo json_encode($_SESSION['selectedBridgeNumbers']); ?>, 
+                                                            <?php echo json_encode($_SESSION['selectedBridgeNames']); ?>, 
+                                                            <?php echo json_encode($_SESSION['selectedBridgeCounties']); ?>)
+                    // After session state has been fully restored, then show the html divs that contained elements being modified during restore.
+                    // This looks less jittery to the user on load
+                    .then( 
+                        () => {
+                            setTimeout(() => {
+                                $('#search-section').removeAttr('hidden');
+                                $('#timeframe-section').removeAttr('hidden');
+                            }, 50);
+                        }
+                    )
+                } else{
+                    // if there was no saved state for this page, show the divs with the default html elements
+                    $('#search-section').removeAttr('hidden');
+                    $('#confirmation-message').removeAttr('hidden');
+                }
+            });
+               
             
         </script>
         

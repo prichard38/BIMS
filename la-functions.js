@@ -240,26 +240,33 @@ function fillMissingInspections(bridgeName, bridgeInspectionsJsonObject){
 }
 
 function restoreSessionStateLongitudinalAnalysis(bridgeNumbers, bridgeNames, bridgeCounties){
-    document.getElementById('search-instructions').hidden=true;
-    document.getElementById('bridge1').remove();
-    let bridges = document.getElementById('bridges');
-    for(let i = 0 ; i < bridgeNames.length ; i++){
+    return new Promise(function(resolve, reject){
+        // remove the 1st "default" bridge element
+        document.getElementById('bridge1').remove();
+
+        // get the html div that will contain all the of individual bridge elements
+        let bridges = document.getElementById('bridges');
+
+        // for each of the selected bridges
+        for(let i = 0 ; i < bridgeNames.length ; i++){
+            setTimeout(() => {
+                // build a bridge html element and append it to bridges div
+                let bridgeElement = buildBridgeElement();
+                bridges.appendChild(bridgeElement);
+                // create the string value for the bridge search input to be populated with
+                document.getElementById('search'+(nextBridgeIndex)).value = bridgeNumbers[i] + " : " + bridgeNames[i] + ", " + bridgeCounties[i];
+                // programatically click the "confirm selection" button before adding next bridge
+                document.getElementById('confirm-search-'+(nextBridgeIndex)).click();
+            }, 50);
+        }
         setTimeout(() => {
-            let bridgeElement = buildBridgeElement();
-            bridges.appendChild(bridgeElement);
-            document.getElementById('search'+(nextBridgeIndex)).value = bridgeNumbers[i] + " : " + bridgeNames[i] + ", " + bridgeCounties[i];
-            document.getElementById('confirm-search-'+(nextBridgeIndex)).click();
-            if(document.getElementsByClassName("bridge").length > 2){
-                document.getElementById('add-bridge').hidden = true;
-                document.getElementById('add-bridge-label').hidden = true;
-            }
+            // programatically click the "submit bridge selections" button
+            document.getElementById('submit-btn-bridges').click();
+            enableButton(document.getElementById('submit-btn-years'));
+            document.getElementById('timeframe-instructions').hidden = true;
         }, 50);
-    }
-    setTimeout(() => {
-        document.getElementById('submit-btn-bridges').click();
-        enableButton(document.getElementById('submit-btn-years'));
-        document.getElementById('timeframe-instructions').hidden = true;
-    }, 50);
+        resolve(true);
+    })
 }
 
 
@@ -270,25 +277,30 @@ function removeAllChildNodes(parent) {
 }
 
 function setBridgeSessionVars(bridgeNames, bridgeNumbers, bridgeCounties){
-    $(document).ready(function() {
-        $.ajax({
-            type: 'POST',
-            url: 'php-scripts-longitudinal-analysis/set-bridge-session-vars.php',
-            data: {selectedBridgeNames : JSON.stringify(bridgeNames), 
-                   selectedBridgeNumbers : JSON.stringify(bridgeNumbers), 
-                   selectedBridgeCounties: JSON.stringify(bridgeCounties),},
-            dataType: "json",
-            success: function(res){
-                if(!res){
-                    console.warn("Could not submit selected bridge data");
-                } else{
-                    generateBeginYears(JSON.stringify(bridgeNames));
+    return new Promise(function(resolve, reject){
+        $(document).ready(function() {
+            $.ajax({
+                type: 'POST',
+                url: 'php-scripts-longitudinal-analysis/set-bridge-session-vars.php',
+                data: {selectedBridgeNames : JSON.stringify(bridgeNames), 
+                       selectedBridgeNumbers : JSON.stringify(bridgeNumbers), 
+                       selectedBridgeCounties: JSON.stringify(bridgeCounties),},
+                dataType: "json",
+                success: function(res){
+                    if(!res){
+                        console.warn("Could not submit selected bridge data");
+                        resolve(false);
+                    } else{
+                        resolve(true);
+                    }
+                },
+                error: function(res){
+                    console.warn(res)
+                    reject(res);
                 }
-            },
-            error: function(res){
-                console.warn(res)
-            }
+            })
         })
+
     })
 }
 
@@ -320,6 +332,7 @@ function generateEndYears (){
     let nextYear = beginYear;
     let currentYear = new Date().getFullYear();
     
+    // append a max of 10 years or up to the current year, whichever is earlier
     while(!(nextYear >= currentYear) && nextYear < beginYear + 10){
         nextYear ++;
         endYears.push(nextYear);
@@ -330,6 +343,7 @@ function generateEndYears (){
 
     removeAllChildNodes(endSelect);
     
+    // create html option element for each year in endYears and append to the endSelect element
     for(let i = 0 ; i < endYears.length ; i++){
         yearOption= document.createElement('option');
         yearOption.setAttribute('value', endYears[i]);
@@ -339,29 +353,35 @@ function generateEndYears (){
 }
 
 function generateBeginYears (bridgeNames){
-    let beginSelect = document.getElementById('begin-year-select');
-    removeAllChildNodes(beginSelect);
-    let beginYears = [];
-    fetchEarliestYear(bridgeNames).then(
-        (response) => {
-            let beginYear = parseInt(response);
-            let nextYear = beginYear;
-            let currentYear = new Date().getFullYear();
+    return new Promise(function(resolve, reject){
+        let beginSelect = document.getElementById('begin-year-select');
+        removeAllChildNodes(beginSelect);
+        let beginYears = [];
 
-            while(nextYear < currentYear){
-                beginYears.push(nextYear);
-                nextYear ++;
+        // get the earliest inspection year from among selected bridges
+        fetchEarliestYear(bridgeNames).then(
+            // after the earliest year has been fetched...
+            (response) => {
+                let beginYear = parseInt(response);
+                let nextYear = beginYear;
+                let currentYear = new Date().getFullYear();
+    
+                // append a year for each year between the earliest year and current year
+                while(nextYear < currentYear){
+                    beginYears.push(nextYear);
+                    nextYear ++;
+                }
+    
+                let yearOption;
+                // create html option elements for each year in beginYears and append to beginSelect element
+                for(let i = 0 ; i < beginYears.length ; i++){
+                    yearOption= document.createElement('option');
+                    yearOption.setAttribute('value', beginYears[i]);
+                    yearOption.innerHTML = beginYears[i];
+                    beginSelect.appendChild(yearOption);
+                }
+                resolve(true);
             }
-
-            let yearOption;
-            for(let i = 0 ; i < beginYears.length ; i++){
-                yearOption= document.createElement('option');
-                yearOption.setAttribute('value', beginYears[i]);
-                yearOption.innerHTML = beginYears[i];
-                beginSelect.appendChild(yearOption);
-            }
-
-            generateEndYears();
-        }
-    )
+        )
+    })
 }
