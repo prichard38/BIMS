@@ -5,8 +5,6 @@
     session_start();
         
     $bridgeNames = json_decode($_POST['bridgeNames']);
-
-    // echo json_encode($bridgeNames);
     
 
     $sql = "CALL getEarliestYear(".(string) json_encode($bridgeNames[0]);

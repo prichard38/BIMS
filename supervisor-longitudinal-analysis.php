@@ -854,7 +854,7 @@
 
 
     <!-- ----------------------------------------------------------------
-        Bridge Row OnClick functions
+        Bridge Table Row OnClick functions
     -------------------------------------------------------------------- -->
     <script>        
         $(document).ready(function(){
