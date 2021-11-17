@@ -6,6 +6,13 @@
         header("Location:access-denied.php?error=supervisorsonly");
         die();
     }
+
+    if(!isset($_SESSION['hasSavedState'])){
+        $_SESSION['hasSavedState'] = false;
+        $_SESSION['selectedBridgeNames'] = [];
+        $_SESSION['selectedBridgeNumbers'] = [];
+        $_SESSION['selectedBridgeCounties'] = [];
+    }
 ?>
 
 
@@ -702,10 +709,9 @@
         <script>
             // restore previous state using session vars if there are any
             if(<?php echo json_encode($_SESSION['hasSavedState']); ?>){
-                let bridgeNumbers = <?php echo json_encode($_SESSION['selectedBridgeNumbers']); ?>;
-                let bridgeNames = <?php echo json_encode($_SESSION['selectedBridgeNames']); ?>;
-                let bridgeCounties = <?php echo json_encode($_SESSION['selectedBridgeCounties']); ?>;
-                restoreSessionStateLongitudinalAnalysis(bridgeNumbers, bridgeNames, bridgeCounties);
+                restoreSessionStateLongitudinalAnalysis(<?php echo json_encode($_SESSION['selectedBridgeNumbers']); ?>, 
+                                                        <?php echo json_encode($_SESSION['selectedBridgeNames']); ?>, 
+                                                        <?php echo json_encode($_SESSION['selectedBridgeCounties']); ?>);
             }
             
         </script>
