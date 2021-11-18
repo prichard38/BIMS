@@ -1,7 +1,8 @@
+
+DELIMITER $$
 /*
   This procedure creates a new ImageSet and returns its id so that photos can be uploaded using the set id
 */
-DELIMITER $$
 CREATE PROCEDURE createImageSet(IN inspection_id int)
 BEGIN
 	INSERT INTO DroneImageSet (Inspections_InspectionID,DateTime) VALUES (inspection_id,now()); 
@@ -10,12 +11,25 @@ END$$
 
 DELIMITER;
 
+DELIMITER $$
+/*
+  This procedure uploads image information and the filepath to the database
+  This is called in the api after it saves an image on the server
+*/
+CREATE PROCEDURE insertImageData(IN filepath VARCHAR(200), IN image_set_id int, IN comment LONGTEXT, IN x double, IN y double, IN z double)
+BEGIN
+	INSERT INTO DroneImages 
+  (DroneImageSet_ImageSetID, Name, Comments, ElementX, ElementY, ElementZ) 
+  VALUES 
+  (image_set_id, filepath, comment, x, y, z);
+END$$
 
+DELIMITER;
 
 
 DELIMITER $$
-
-/** This procedure grabs information about an inspection for the mobile application to use. 
+/** 
+  This procedure grabs information about an inspection for the mobile application to use. 
 */
 CREATE PROCEDURE selectInspectionData_ById(IN inspection_id int)
 BEGIN
@@ -32,11 +46,4 @@ END$$
 
 DELIMITER;
 
-DELIMITER $$
 
-CREATE PROCEDURE selectLargestImageSetId()
-BEGIN
-    SELECT MAX(ImageSetID) as set_id FROM DroneImageSet;
-END$$
-
-DELIMITER;
