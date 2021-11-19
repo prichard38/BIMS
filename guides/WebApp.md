@@ -8,7 +8,7 @@
 
 ##### The Fall 2021 Capstone team contribution includes database integration, creation of distinct user roles(admin, inspector, and supervisor), implementation of the login process for each role, and implementation of Report Management features for the supervisor role, including the Yearly Inspection Report Tool and the Longitudinal Analysis Tool.
 --------------------------------------------------------
-### The Initial Setup Process
+### Development Environment Setup
 
 #### Setting up your local environment:
 1. Install XAMPP Version 7.4.23 or above. Download: https://www.apachefriends.org/download.html  (* *Note that XAMPP contains the database administration tool, phpMyAdmin, for MariaDB and MySQL.*)
@@ -22,7 +22,7 @@
 * Mac: https://code.visualstudio.com/docs/setup/mac 
 * Windows: https://code.visualstudio.com/docs/setup/windows
 
-#### Installation of the BIMS Codebase on you local machine (Mac):
+#### Installation of the BIMS Codebase on your local machine (Mac):
 1. Download the source code ZIP file from GitHub: https://github.com/prichard38/BIMS
 2. Open XAMPP
 3. In  **[General]** tab of XAMPP panel, click **[Start]** button.
@@ -33,20 +33,20 @@ click **[Enable]** button.
 7. Un-compress the source code zip file, `BIMS-main`, in XAMPP’s `htdocs` directory (usual folder path: `/opt/lampp/htdocs`). If you cannot find the folder, click the **[Explore]** button in the **[Volumes]** tab of XAMPP panel. You will be moved to `lampp` directory and can find the `htdocs` folder.
 8. Now you are ready to use it. You can access the web application by typing in the web browser http://localhost:8080/BIMS-main/login.php (The port number 8080 may be different depending on the MAMP setting.)
 
-#### Installation of the BIMS Codebase on local machine (Windows):
+#### Installation of the BIMS Codebase on your local machine (Windows):
 
 #### Installation of the BIMS Database on your local machine:
 1. With XAMPP services started (see steps above), navigate to phpMyAdmin in your web browser by entering the url `localhost8080/dashboard`, or just simply `localhost8080`, then clicking on **[phpMyAdmin]** in the top nav bar.
 2. Inside phpMyAdmin, click on **[Import]** in the top nav bar.
 3. Click the **[Choose File]** button. Navigate to the directory `/opt/lampp/htdocs/BIMS-main/SQL` and select the file `BIMSdb.sql` to attach.
-4. Click the **[Go]** button. This will build your database structure and fill it with data.
+4. Click the **[Go]** button. This will build your database structure, add stored procedures (routines), and fill it with test data.
 
 
 Now you may open the directory `/opt/lampp/htdocs/BIMS-main` in Visual Studio Code and begin development. Saved changes in source code will be immediately viewable on browser page load/reload.
 
 ----------------------------------------------------------
 ### Directory/File Structure
-##### The project directory, `/opt/lampp/htdocs/BIMS-main`, contains the following top-level folders:
+##### The project directory, `/opt/lampp/htdocs/BIMS-main`, contains the following top-level folders and files:
 1. `admin` : Contains all files specifically related the *admin* role (admin screens, javascript, and php scripts)
 2.  `assets` : Contains all image, pdf, 3D model, and custom CSS assets
 3. `guides` : Contains all markdown guides related to this project (like this one)
@@ -54,6 +54,9 @@ Now you may open the directory `/opt/lampp/htdocs/BIMS-main` in Visual Studio Co
 5. `plugins` : Contains all third-party plugins/libraries (examples: Chart JS, DataTables, BootStrap)
 6. `SQL` : Contains all SQL files, including database seed (dump) file, `BIMSdb.sql`, and all stored procedure definitions
 7. `supervisor` : Contains all files specifically related the *supervisor* role (supervisor screens, javascript, and php scripts) 
+8. *access-denied.php*: Shows "Access Denied" message upon attempting to access pages/files that are forbidden based upon user role pivileges
+8. *dbConfig.inc.php*: Database configuration file
+9. *login.php*: Login screen
  
 
 ##### Sub-folder and file descriptions for all top-level folders:
