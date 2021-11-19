@@ -260,7 +260,7 @@
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5 class="card-title">Inspection List (High Risk)</h5>
+                                        <h5 class="card-title">Inspection List&nbsp&nbsp-&nbsp&nbsp<span class='text-danger'>High Risk</span></h5>
                                     </div>
                                     <!-- /.card-header -->
                                     <div class="card-body">
@@ -304,7 +304,7 @@
                           <div class="col-md-12">
                               <div class="card">
                                   <div class="card-header">
-                                      <h5 class="card-title">Inspection List (Middle Risk) </h5>
+                                      <h5 class="card-title">Inspection List&nbsp&nbsp-&nbsp&nbsp<span class='text-warning'>Middle Risk</span> </h5>
                                   </div>
                                   <!-- /.card-header -->
                                   <div class="card-body">
@@ -348,7 +348,7 @@
                           <div class="col-md-12">
                               <div class="card">
                                   <div class="card-header">
-                                      <h5 class="card-title">Inspection List (Low Risk) </h5>
+                                      <h5 class="card-title">Inspection List&nbsp&nbsp-&nbsp&nbsp<span class='text-success'>Low Risk</span> </h5>
                                   </div>
                                   <!-- /.card-header -->
                                   <div class="card-body">
@@ -811,11 +811,39 @@
              */
             function bindTables(){
                // $('#tbl_bridge_insp').DataTable({"order": [[ 6, "asc" ]]});
-                highRiskTable = $('#tbl_bridge_insp_t1').DataTable({"order": [[ 6, "asc" ]]});
-                middleRiskTable = $('#tbl_bridge_insp_t2').DataTable({"order": [[ 6, "asc" ]]});
-                lowRiskTable= $('#tbl_bridge_insp_t3').DataTable({"order": [[ 6, "asc" ]]});
-                inProgressTable = $('#tbl_bridge_insp_t4').DataTable({"order": [[ 5, "asc" ]]});
-                notStartedTable = $('#tbl_bridge_insp_t5').DataTable({"order": [[ 5, "asc" ]]});
+                highRiskTable = $('#tbl_bridge_insp_t1').DataTable({
+                    "order": [[ 6, "asc" ]], 
+                    "rowCallback": function(row, data){
+                        $('td', row).eq(6).css("color", '#d9534f');
+                        $(row).css('height', '50');
+                    }
+                });
+                middleRiskTable = $('#tbl_bridge_insp_t2').DataTable({
+                    "order": [[ 6, "asc" ]],
+                    "rowCallback": function(row, data){
+                        $('td', row).eq(6).css("color", '#f0ad4e');
+                        $(row).css('height', '50');
+                    }
+                });
+                lowRiskTable= $('#tbl_bridge_insp_t3').DataTable({
+                    "order": [[ 6, "asc" ]],
+                    "rowCallback": function(row, data){
+                        $('td', row).eq(6).css("color", '#5cb85c');
+                        $(row).css('height', '50');
+                    }
+                });
+                inProgressTable = $('#tbl_bridge_insp_t4').DataTable({
+                    "order": [[ 5, "asc" ]],
+                    "rowCallback": function(row, data){
+                        $(row).css('height', '50');
+                    }
+                });
+                notStartedTable = $('#tbl_bridge_insp_t5').DataTable({
+                    "order": [[ 5, "asc" ]],
+                    "rowCallback": function(row, data){
+                        $(row).css('height', '50');
+                    }
+                });
             }
 
             /**
@@ -907,6 +935,7 @@
                     });
 
                     //update the data tables
+
                     highRiskTable.draw();
                     middleRiskTable.draw();
                     lowRiskTable.draw();

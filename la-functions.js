@@ -206,6 +206,7 @@ function loadTable(bridgeId, inspectionDataJson){
             ], 
             "rowCallback": function(row, data){
                 $('td', row).eq(6).css("color", getPointColors([data.rating])[0]);
+                $(row).css('height', '50');
             },
             "responsive": true,
             "order": [[ 0, "desc" ]]
