@@ -75,6 +75,7 @@
         <div class="sidebar" style="background-color: rgb(13, 60, 121);>
             <div class="menubar">
                 <ul class="menu">
+                    <li><a id="Home" href='#'>Supervisor Home</a></li>
                     <li><a id="RM" href='supervisor-longitudinal-analysis.php'>Report Management</a>
                         <ul class="submenu">
                             <li>

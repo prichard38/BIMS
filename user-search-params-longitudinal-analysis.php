@@ -369,6 +369,7 @@
         <div class="sidebar" style="background-color: rgb(13, 60, 121);">
             <div class="menubar">
                 <ul class="menu">
+                    <li><a id="Home" href='#'>Supervisor Home</a></li>
                     <li><a id="RM" href='supervisor-yearly-inspection-report.php'>Report Management</a>
                         <ul class="submenu">
                             <li>

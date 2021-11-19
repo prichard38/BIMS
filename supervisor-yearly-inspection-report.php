@@ -79,9 +79,7 @@
         <div class="sidebar" style="background-color: rgb(13, 60, 121);">
             <div class="menubar">
                 <ul class="menu">
-                    <!-- <li><a id="Home" href='#'>Admin Home</a></li>
-                    <li><a id="IM" href='admin_inspection_management.html'>Inspection Management</a></li>
-                    <li><a id="BM" href='admin_bridge_management.html'>Bridge Management</a></li> -->
+                    <li><a id="Home" href='#'>Supervisor Home</a></li>
                     <li><a id="RM" href='supervisor-yearly-inspection-report.php'>Report Management</a>
                         <ul class="submenu">
                             <li style="background-color: #5e5e5e;">
