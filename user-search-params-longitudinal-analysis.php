@@ -262,7 +262,7 @@
                         return wrapperDiv.classList.remove('show');
                     }
 
-                    const content = results.slice(0,7)
+                    const content = results.slice(0,10)
                         .map((item) => {
                         return `<li class="result">${item}</li>`;
                         })
@@ -517,7 +517,7 @@
                     return searchWrapper.classList.remove('show');
                 }
 
-                const content = results.slice(0,7)
+                const content = results.slice(0,10)
                     .map((item) => {
                     return `<li class="result">${item}</li>`;
                     })
