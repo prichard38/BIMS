@@ -8,4 +8,4 @@
     unset($_SESSION['yearEnd']);
     unset($_SESSION['hasSavedState']);
 
-    header("Location: ../user-search-params-longitudinal-analysis.php");
+    header("Location: ../supervisor-search-params-longitudinal-analysis.php");

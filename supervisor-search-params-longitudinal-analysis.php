@@ -370,13 +370,13 @@
             <div class="menubar">
                 <ul class="menu">
                     <li><a id="Home" href='#'>Supervisor Home</a></li>
-                    <li><a id="RM" href='supervisor-yearly-inspection-report.php'>Report Management</a>
+                    <li><a id="RM" href='supervisor-yearly-inspection-report.php' style="color: #f8ea09;">Report Management</a>
                         <ul class="submenu">
                             <li>
                                 <a id="RM" href='supervisor-yearly-inspection-report.php'>Yearly Inspection Report</a>
                             </li>
-                            <li style="background-color: #5e5e5e;">
-                                <a id="RM" href='user-search-params-longitudinal-analysis.php'>Longitudinal Analysis</a>
+                            <li style="background-color: #5e5e5e; border-top-left-radius: 5px; border-bottom-left-radius: 5px;">
+                                <a id="RM" href='supervisor-search-params-longitudinal-analysis.php'>Longitudinal Analysis</a>
                             </li>
                         </ul>
                     </li>

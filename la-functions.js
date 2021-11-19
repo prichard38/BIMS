@@ -298,7 +298,7 @@ function fillMissingInspections(bridgeName, bridgeInspectionsJsonObject){
 }
 
 /**
- * Restores the user-search-params-longitudinal-analysis page to a "saved" state using the bridge numbers, names, and counties given.
+ * Restores the supervisor-search-params-longitudinal-analysis page to a "saved" state using the bridge numbers, names, and counties given.
  * @param {string[]} bridgeNumbers array of bridge numbers (strings). Number at index i should map to name at bridgeNames[i] and county at bridgeCounties[i]
  * @param {string[]} bridgeNames array of bridge names. Number at index i should map to number at bridgeNumbers[i] and county at bridgeCounties[i]
  * @param {string[]} bridgeCounties array of bridge counties. Number at index i should map to number at bridgeNumbers[i] and name at bridgeNames[i]
