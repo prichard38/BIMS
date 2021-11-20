@@ -1,50 +1,11 @@
 
 # BIMS - CS 490 Capstone Fall 2021
-## Web Application
+## Project Directory and File Structure
 
-#### This guide is meant to assist in setting up the development environment for the BIMS web application and serve as a reference for project structure, file descriptions, and general helpful information.
+#### This guide is meant to serve as a reference for project directory and file structure, including file descriptions and other general information.
 
-##### *NOTE: The BIMS web application is an ongoing project still in development.* 
-
-##### The Fall 2021 Capstone team contribution includes database integration, creation of distinct user roles(admin, inspector, and supervisor), implementation of the login process for each role, and implementation of Report Management features for the supervisor role, including the Yearly Inspection Report Tool and the Longitudinal Analysis Tool.
+###### *NOTE: The BIMS web application is an ongoing project still in development.* 
 --------------------------------------------------------
-### Development Environment Setup
-
-#### Setting up your local environment:
-1. Install XAMPP Version 7.4.23 or above. Download: https://www.apachefriends.org/download.html  (* *Note that XAMPP contains the database administration tool, phpMyAdmin, for MariaDB and MySQL.*)
-2. Install Visual Studio Code. Download: https://code.visualstudio.com/download
-
-###### XAMPP FAQs:
-* Mac: https://www.apachefriends.org/faq_osx.html
-* Windows: https://www.apachefriends.org/faq_windows.html
-
-###### Visual Studio Code Installation Manual:
-* Mac: https://code.visualstudio.com/docs/setup/mac 
-* Windows: https://code.visualstudio.com/docs/setup/windows
-
-#### Installation of the BIMS Codebase on your local machine (Mac):
-1. Download the source code ZIP file from GitHub: https://github.com/prichard38/BIMS
-2. Open XAMPP
-3. In  **[General]** tab of XAMPP panel, click **[Start]** button.
-4. In  **[Services]** tab of XAMPP panel, select *Apache* and click **[Start]**. Then select *MySQL* and click **[Start]**.
-5. In **[Network]** tab of XAMPP panel, select **[localhost:8080->80(OverSSH)]** and
-click **[Enable]** button.
-6. In **[Volumes]** tab of XAMPP panel, click **[Mount]** button.
-7. Un-compress the source code zip file, `BIMS-main`, in XAMPP’s `htdocs` directory (usual folder path: `/opt/lampp/htdocs`). If you cannot find the folder, click the **[Explore]** button in the **[Volumes]** tab of XAMPP panel. You will be moved to `lampp` directory and can find the `htdocs` folder.
-8. Now you are ready to use it. You can access the web application by typing in the web browser http://localhost:8080/BIMS-main/login.php (The port number 8080 may be different depending on the MAMP setting.)
-
-#### Installation of the BIMS Codebase on your local machine (Windows):
-
-#### Installation of the BIMS Database on your local machine:
-1. With XAMPP services started (see steps above), navigate to phpMyAdmin in your web browser by entering the url `localhost8080/dashboard`, or just simply `localhost8080`, then clicking on **[phpMyAdmin]** in the top nav bar.
-2. Inside phpMyAdmin, click on **[Import]** in the top nav bar.
-3. Click the **[Choose File]** button. Navigate to the directory `/opt/lampp/htdocs/BIMS-main/SQL` and select the file `BIMSdb.sql` to attach.
-4. Click the **[Go]** button. This will build your database structure, add stored procedures (routines), and fill it with test data.
-
-
-Now you may open the directory `/opt/lampp/htdocs/BIMS-main` in Visual Studio Code and begin development. Saved changes in source code will be immediately viewable on browser page load/reload.
-
-----------------------------------------------------------
 ### Directory/File Structure
 ##### The project directory, `/opt/lampp/htdocs/BIMS-main`, contains the following top-level folders and files:
 1. `admin` : Contains all files specifically related the *admin* role (admin screens, javascript, and php scripts)
@@ -85,12 +46,17 @@ Now you may open the directory `/opt/lampp/htdocs/BIMS-main` in Visual Studio Co
 - `yearpicker` (sub-folder): contains all files related to the yearpicker plugin
 
 `SQL`
+- *BIMS_ERD.mwb*: MySQL Workbench Document containing the ERD model of the BIMS database. This file is included because working with ERD models is much better in MySQL Workbench than in phpMyAdmin.
+- *BIMS_ERD.png*: The BIMS database ERD as an image
+- *BIMS_ERD.svg*: The BIMS database ERD as an image
 - *BIMSdb.sql*: seed (dump) file for the BIMS database. Running this script will build the database structure, create stored procedures, and fill it with test data.
 - *procedure_LA_tool.sql*: contains the stored procedure definitions for procedures used for performing database queries for the Longintudinal Anaylsis Tool
+- *procedure_Login.sql*: contains the stored procedure definitions for procedures used during the login process
+- *procedure_REST_API.sql*: contains the stored procedure definitions for procedures used in the REST API for mobile app integration
 - *procedure_YIR_tool.sql*: contains the stored procedure definitions for procedures used for performing database queries for the Yearly Inspection Report Tool
 
 `supervisor`
-- *LA-function.js*: Contains JavaScript function definitions related to the Longitudinal Analysis Tool. 
+- *LA-functions.js*: Contains JavaScript function definitions related to the Longitudinal Analysis Tool. 
 
 - `php-scripts-longitudinal-analysis` (sub-folder): contains all php scripts used for fetching data for the Longitudinal Anaylysis Tool
     - *load-bridge-data.php*: Performs a database query that selects the name, number, and county for all bridges in the database
