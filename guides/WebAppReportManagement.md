@@ -1,5 +1,5 @@
 # BIMS - CS 490 Capstone Fall 2021
-## Web Application - Report Management for Supervisors
+## Web Application - Report Management for Supervisors - Developer Reference
 
 #### This guide is meant to serve as a reference and provide helpul information related to the development process for BIMS Report Management for supervisors, including the Yearly Inspection Report Tool and the Longitudinal Analysis Tool 
 
