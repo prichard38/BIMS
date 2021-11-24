@@ -6,7 +6,7 @@ DELIMITER $$
 CREATE PROCEDURE createImageSet(IN inspection_id int)
 BEGIN
 	INSERT INTO DroneImageSet (Inspections_InspectionID,DateTime) VALUES (inspection_id,now()); 
-	SELECT LAST_INSERT_ID();
+	SELECT LAST_INSERT_ID() AS newestImageSetId;
 END$$
 
 DELIMITER;
