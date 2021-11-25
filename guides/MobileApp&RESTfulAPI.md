@@ -12,7 +12,7 @@ Steps used to create the application:
 2. Install Expo `npm install --global expo-cli`
 3. Create new app (navigate into folder where you want to create the project first). `expo init bims-photos`
 4. Navigate into project directory for future steps. `cd bims-photos`
-5. Install all dependencies we need for the project `expo install @react-navigation/native @react-navigation/native-stack @react-navigation/stack react-native-screens react-native-safe-area-context @ant-design/icons-react-native @expo/vector-icons` 
+5. Install all dependencies we need for the project `expo install @react-navigation/native @react-navigation/native-stack @react-navigation/stack react-native-screens react-native-safe-area-context @ant-design/icons-react-native @expo/vector-icons expo-image-picker` 
    
 To Run the Application During Development:
     `expo start`
@@ -71,24 +71,13 @@ Allows users to enter credentials. These credentials are then verified with the 
 3. If you used default values to generate the package-lock file, then the entry point should be *index.js*. So create it:
     `sudo nano index.js`
 4. Install dependencies:
-    ```
-    sudo npm install express
-    sudo npm install mysql2
-    ```
+    `sudo npm --save install multer express mysql2 cors nodemon body-parser forever 
+      sudo npm -global nodemon`
 5. Add some code to *index.js*. Here is a basic HelloWorld example to get started:
     ```
     const express = require('express')
     const app = express()
     const port = 3000
-
-    var mysql = require('mysql2')
-    var connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'websiteuser',  
-        password: 'tvcsCD_03', 
-        database: 'BIMSdb'  
-    })
-    connection.connect()
 
     app.get('/', (req, res) => {
     res.send('Hello World!')
