@@ -16,12 +16,12 @@ DELIMITER $$
   This procedure uploads image information and the filepath to the database
   This is called in the api after it saves an image on the server
 */
-CREATE PROCEDURE insertImageData(IN image_set_id int, IN filepath VARCHAR(200), IN comment LONGTEXT, IN x double, IN y double, IN z double)
+CREATE PROCEDURE insertImageData(IN image_set_id int, IN filepath VARCHAR(200), IN image_name VARCHAR(200), IN comment LONGTEXT, IN x double, IN y double, IN z double)
 BEGIN
 	INSERT INTO DroneImages 
-  (DroneImageSet_ImageSetID, Name, Comments, ElementX, ElementY, ElementZ) 
+  (DroneImageSet_ImageSetID, Picture, Name, Comments, ElementX, ElementY, ElementZ) 
   VALUES 
-  (image_set_id, filepath, comment, x, y, z);
+  (image_set_id, filepath, image_name, comment, x, y, z);
 END$$
 
 DELIMITER;
