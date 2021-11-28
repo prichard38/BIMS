@@ -43,11 +43,11 @@ WHERE Bridges_BridgeNo IN (
 );
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insertImageData` (IN `filepath` VARCHAR(200), IN `image_set_id` INT, IN `comment` LONGTEXT, IN `x` DOUBLE, IN `y` DOUBLE, IN `z` DOUBLE)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertImageData`(IN `image_set_id` int, IN `filepath` VARCHAR(200), IN `image_name` VARCHAR(200), IN `comment` LONGTEXT, IN `x` double, IN `y` double, IN `z` double) BEGIN
 	INSERT INTO DroneImages 
-  (DroneImageSet_ImageSetID, Name, Comments, ElementX, ElementY, ElementZ) 
+  (DroneImageSet_ImageSetID, Picture, Name, Comments, ElementX, ElementY, ElementZ) 
   VALUES 
-  (image_set_id, filepath, comment, x, y, z);
+  (image_set_id, filepath, image_name, comment, x, y, z);
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `LogIn` (IN `user_id` VARCHAR(45), IN `user_password` VARCHAR(45), OUT `user_role` VARCHAR(45))  BEGIN
