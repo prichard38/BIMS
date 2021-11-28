@@ -30,7 +30,7 @@ DELIMITER $$
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `createImageSet` (IN `inspection_id` INT)  BEGIN
 	INSERT INTO DroneImageSet (Inspections_InspectionID,DateTime) VALUES (inspection_id,now()); 
-	SELECT LAST_INSERT_ID();
+	SELECT LAST_INSERT_ID() AS newestImageSetId;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getEarliestYear` (IN `bridge1` VARCHAR(45), IN `bridge2` VARCHAR(45), IN `bridge3` VARCHAR(45))  BEGIN
