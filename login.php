@@ -38,7 +38,7 @@
                 session_start();
                 session_unset();                
                 $_SESSION["loggedAs"] = "Inspector";
-                header("Location:inspector_inspection_management.html");
+                header("Location:inspector/inspector_inspection_management.html");
             } 
             // if user is NULL, display error
             else {
