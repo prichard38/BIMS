@@ -24,7 +24,7 @@
                 session_start();
                 session_unset();
                 $_SESSION["loggedAs"] = "Admin";
-                header("Location:admin_report_management.html");
+                header("Location:admin/admin_report_management.html");
             }
             else if ($row['_LogIn_out'] == "supervisor"){
                 session_destroy();
