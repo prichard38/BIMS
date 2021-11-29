@@ -45,11 +45,11 @@
         <script src="https://kit.fontawesome.com/7b2b0481fc.js" crossorigin="anonymous"></script>
         <!-- Custom CSS -->
         <link rel="stylesheet" href="../assets/css/custom.css">
-        <link rel="stylesheet" href="../yearpicker.css">
+        <link rel="stylesheet" href="../plugins/yearpicker/yearpicker.css">
         <!-- jQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
         <!--Custom JavaScript-->
-        <script src="../yearpicker.js"></script>
+        <script src="../plugins/yearpicker/yearpicker.js"></script>
         <!-- Table Design -->
         <script type="text/javascript" src="../plugins/DataTables/datatables.min.js"></script>
         <link rel="stylesheet" type="text/css" href="../plugins/DataTables/datatables.min.css"/>
