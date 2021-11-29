@@ -1,13 +1,14 @@
-/* Current best query but didn't take non-started inspections into account
-	Also need to grab the Status row */
-/*
+/* 
+	Current best query but doesn't take non-started inspections into account
+ */
+
 DELIMITER $$
 
 CREATE PROCEDURE selectNewestInspectionData_ByYear(IN inspec_year int)
 BEGIN
 	SELECT *
 	FROM (
-		SELECT i.FinishedDate, i.DueDate, i.Bridges_BridgeNo, b.BridgeName, t.InspectionTypeName ,u.FirstName AS inspector_first, 
+		SELECT i.FinishedDate, i.DueDate, i.Bridges_BridgeNo, b.BridgeName, i.Status, t.InspectionTypeName ,u.FirstName AS inspector_first, 
 		u.LastName AS inspector_last, u2.FirstName AS evaluator_first, u2.LastName AS evaluator_last, i.OverallRating
 		FROM Inspections i 
 		JOIN Bridges b ON i.Bridges_BridgeNo = b.BridgeNo
@@ -25,12 +26,18 @@ BEGIN
 END$$
 
 DELIMITER;
-*/
+
 
 /*
 	Temporary Query for demo today 11-29 
 	works fine but need to ensure the group by grabs the newest inspection for final project
+	
+	SQL on server is throwing 
+	ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated 
+	column 'inspection_data.FinishedDate' which is not functionally dependent on columns in GROUP BY clause;
+	this is incompatible with sql_mode=only_full_group_by
 */
+/*
 DELIMITER $$
 
 CREATE PROCEDURE selectNewestInspectionData_ByYear(IN inspec_year int)
@@ -51,7 +58,7 @@ SELECT *
 END$$
 
 DELIMITER;
-
+*/
 /*
 Old unfinished query. 
 Worked fast to get newest report for each bridge in one given year.
