@@ -31,7 +31,7 @@
                 session_start();
                 session_unset();
                 $_SESSION["loggedAs"] = "Supervisor";
-                header("Location:supervisor-yearly-inspection-report.php");
+                header("Location:supervisor/supervisor-yearly-inspection-report.php");
             }
             else if ($row['_LogIn_out'] == "inspector"){
                 session_destroy();

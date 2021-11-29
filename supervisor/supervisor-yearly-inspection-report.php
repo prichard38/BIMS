@@ -41,18 +41,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-        <link href="plugins/components.css" rel="stylesheet">
+        <link href="../plugins/components.css" rel="stylesheet">
         <script src="https://kit.fontawesome.com/7b2b0481fc.js" crossorigin="anonymous"></script>
         <!-- Custom CSS -->
-        <link rel="stylesheet" href="assets/css/custom.css">
-        <link rel="stylesheet" href="yearpicker.css">
+        <link rel="stylesheet" href="../assets/css/custom.css">
+        <link rel="stylesheet" href="../yearpicker.css">
         <!-- jQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
         <!--Custom JavaScript-->
-        <script src="yearpicker.js"></script>
+        <script src="../yearpicker.js"></script>
         <!-- Table Design -->
-        <script type="text/javascript" src="plugins/DataTables/datatables.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="plugins/DataTables/datatables.min.css"/>
+        <script type="text/javascript" src="../plugins/DataTables/datatables.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../plugins/DataTables/datatables.min.css"/>
         <!--
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
@@ -66,12 +66,12 @@
         <nav class="navbar navbar-light" style="background-color: #005cbf; width: 100vw;">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#" style="color: white; vertical-align: middle;">
-                    <img src="img/wvdtlogo.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                    <img src="../img/wvdtlogo.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
                     Bridge Inspection Management System
                 </a>
                 <span class="float-right" style="color: white; font-size: 0.9em;">
                     <i class="fas fa-user-circle"></i>&nbsp;
-                    Logged in as <?php echo $_SESSION['loggedAs']; ?>&nbsp;|&nbsp; <a href="login.php" style="color: white; text-decoration: none;"> sign out</a>
+                    Logged in as <?php echo $_SESSION['loggedAs']; ?>&nbsp;|&nbsp; <a href="../login.php" style="color: white; text-decoration: none;"> sign out</a>
                 </span>
             </div>
         </nav>
@@ -483,7 +483,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12" style="display: flex; justify-content: center;">
-                                <model-viewer src="assets/Model060721.glb" id="mdl" camera-controls exposure="0.72" shadow-intensity="0" camera-orbit="27.23deg 78.62deg 181.9m" min-camera-orbit="auto auto auto" max-camera-orbit="auto auto 181.9m" style="width: 100%;">
+                                <model-viewer src="../assets/Model060721.glb" id="mdl" camera-controls exposure="0.72" shadow-intensity="0" camera-orbit="27.23deg 78.62deg 181.9m" min-camera-orbit="auto auto auto" max-camera-orbit="auto auto 181.9m" style="width: 100%;">
                                     <button class="Hotspot hs4" id="hts2" slot="hotspot-1" data-position="-10.1739862999297m 7.2626670004309535m 45.891232591660675m" data-normal="-0.32664745787836463m 0.017188132570477133m 0.9449899504017711m" data-visibility-attribute="visible" onmouseover="highlightElement('2')" onmouseout="unhighlightElement('2')">
                                         <!-- <div class="HotspotAnnotation">FLOOR BEAM</div> --></button>
                                     <button class="Hotspot hs4" id="hts3" slot="hotspot-2" data-position="3.088437165177318m 6.05021350274236m 16.747897238153026m" data-normal="0.9438577140777109m 0.05812376415448013m 0.32519877554583854m" data-visibility-attribute="visible" onmouseover="highlightElement('3')" onmouseout="unhighlightElement('3')">
@@ -608,10 +608,10 @@
         </div>
 
         <!-- Cards -->
-        <!--<script src="plugins/CardWidget.js"></script>-->
+        <!--<script src="../plugins/CardWidget.js"></script>-->
 
-        <script src="plugins/chart.js/Chart.js"></script>
-        <script src="plugins/adminlte.js"></script>
+        <script src="../plugins/chart.js/Chart.js"></script>
+        <script src="../plugins/adminlte.js"></script>
         <!-- Chart -->
         <script>
            
@@ -626,7 +626,7 @@
                             // console.log(this.responseText);
                         }
                     };
-                    xhr.open('POST', 'yir-load-bridge-data.php', true);
+                    xhr.open('POST', 'php-scripts-yearly-inspection-report/yir-load-bridge-data.php', true);
                     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                     
 
@@ -658,7 +658,7 @@
                             // console.log(this.responseText);
                         }
                     };
-                    xhr.open('POST', 'yir-update-session.php', true);
+                    xhr.open('POST', 'php-scripts-yearly-inspection-report/yir-update-session.php', true);
                     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                     
 
@@ -893,7 +893,7 @@
                             newRow.push(bridge.finishedDate);
                             newRow.push("<span>"+bridge.rating+"</span>");
                             newRow.push("<a class='btnset btn_overview' data-bs-toggle='modal' data-bs-target='#myModal'>3D</a>");
-                            newRow.push("<a href='assets/Report.pdf' class='btnset btn_review2' target='_blank'>PDF</a>");
+                            newRow.push("<a href='../assets/Report.pdf' class='btnset btn_review2' target='_blank'>PDF</a>");
 
                             // high risk...
                             if(bridge.rating >= 1 && bridge.rating <= 3){ 

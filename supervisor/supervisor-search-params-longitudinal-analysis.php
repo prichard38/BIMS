@@ -27,18 +27,18 @@
         
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-        <link href="plugins/components.css" rel="stylesheet">
+        <link href="../plugins/components.css" rel="stylesheet">
         <script src="https://kit.fontawesome.com/7b2b0481fc.js" crossorigin="anonymous"></script>
         
         <!-- Custom CSS -->
-        <link rel="stylesheet" href="assets/css/custom.css">
+        <link rel="stylesheet" href="../assets/css/custom.css">
         
         <!-- jQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
         
         <!-- Table Design -->
-        <script type="text/javascript" src="plugins/DataTables/datatables.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="plugins/DataTables/datatables.min.css"/>
+        <script type="text/javascript" src="../plugins/DataTables/datatables.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../plugins/DataTables/datatables.min.css"/>
 <!--         
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
@@ -355,12 +355,12 @@
         <nav class="navbar navbar-light" style="background-color: #005cbf; width: 100vw;">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#" style="color: white; vertical-align: middle;">
-                    <img src="img/wvdtlogo.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
+                    <img src="../img/wvdtlogo.png" alt="" width="30" height="30" class="d-inline-block align-text-middle">
                     Bridge Inspection Management System
                 </a>
                 <span class="float-right" style="color: white; font-size: 0.9em;">
                     <i class="fas fa-user-circle"></i>&nbsp;
-                    Logged in as <?=$_SESSION["loggedAs"]?>&nbsp;|&nbsp; <a href="login.php" style="color: white; text-decoration: none;"> sign out</a>
+                    Logged in as <?=$_SESSION["loggedAs"]?>&nbsp;|&nbsp; <a href="../login.php" style="color: white; text-decoration: none;"> sign out</a>
                 </span>
             </div>
         </nav>

@@ -1,7 +1,7 @@
 <?php
 
     session_start();
-    include 'dbConfig.inc.php';
+    include '../../dbConfig.inc.php';
     $name = mysqli_real_escape_string($conn, $_POST['selectedYear']);
     
     $sql = "CALL selectNewestInspectionData_ByYear(?);";

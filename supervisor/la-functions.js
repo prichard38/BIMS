@@ -176,7 +176,7 @@ function loadTable(bridgeId, inspectionDataJson){
                 {
                     "targets": -1,
                     "data": null,
-                    "defaultContent": "<a href=\"assets/Report.pdf\" class=\"btnset btn_review2\" target=\"_blank\">PDF</a>"
+                    "defaultContent": "<a href=\"../assets/Report.pdf\" class=\"btnset btn_review2\" target=\"_blank\">PDF</a>"
                 },
                 {
                     "targets": -2,
