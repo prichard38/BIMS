@@ -16,6 +16,7 @@
             while($row = mysqli_fetch_assoc($result)){
                 $bridgeNo = $row["Bridges_BridgeNo"];
                 $bridgeName = $row["BridgeName"];
+                $status = $row["Status"];
                 $inspectionTypeName = $row["InspectionTypeName"];
                 $assignedTo = $row["inspector_first"]." ".$row["inspector_last"];
                 $assignedBy = $row["evaluator_first"]." ".$row["evaluator_last"];
@@ -26,6 +27,7 @@
                 $report = null;
                 $bridges[] = array( 'bridgeNo' => $bridgeNo,
                                     'bridgeName' => $bridgeName,
+                                    'status' => $status,
                                     'inspectionTypeName' => $inspectionTypeName,
                                     'assignedTo' => $assignedTo,
                                     'assignedBy' => $assignedBy,

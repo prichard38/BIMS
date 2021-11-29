@@ -887,7 +887,7 @@
                         ];
 
                         //check if inspection is complete
-                        if(bridge.finishedDate != null){
+                        if(bridge.status == "complete"){
 
                             //add the appropriate columns for completed reports
                             newRow.push(bridge.finishedDate);
@@ -920,7 +920,7 @@
                             newRow.push("<button class='btnset btn_contact' onclick='' data-bs-toggle='modal' data-bs-target='#inspector_contact_modal'>Contact Inspector</button>");
 
                             //if in progress...
-                            if(bridges.dueDate != null){
+                            if(bridge.status == "in progress"){
                                 inProgressTable.row.add(newRow);
                                 dataset[3]++;
                             }
