@@ -626,7 +626,7 @@
                             // console.log(this.responseText);
                         }
                     };
-                    xhr.open('POST', 'php-scripts-yearly-inspection-report/yir-load-bridge-data.php', true);
+                    xhr.open('POST', 'php-scripts-yearly-inspection-report/YIR-load-bridge-data.php', true);
                     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                     
 
@@ -658,7 +658,7 @@
                             // console.log(this.responseText);
                         }
                     };
-                    xhr.open('POST', 'php-scripts-yearly-inspection-report/yir-update-session.php', true);
+                    xhr.open('POST', 'php-scripts-yearly-inspection-report/YIR-update-session.php', true);
                     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                     
 

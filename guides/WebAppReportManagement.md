@@ -10,10 +10,10 @@
 The Fall 2021 Capstone team contribution to the BIMS web application includes database integration, creation of distinct user roles(admin, inspector, and supervisor), implementation of the login process for each role, and implementation of Report Management features for the supervisor role, including the Yearly Inspection Report Tool and the Longitudinal Analysis Tool.
 
 ### Report Management Features
-The Report Management features in this web application allow supervisors to view compiled bridge inspection report data. There are two main Report Management features: the ***Yearly Inspection Report Tool*** and the ***Logitudinal Analysis Tool***. 
+The Report Management features in this web application allow supervisors to view compiled bridge inspection report data. There are two main Report Management features: the ***Yearly Inspection Report Tool*** and the ***Longitudinal Analysis Tool***. 
 
 ##### Yearly Inspection Report Tool 
-This tool provides a summary of all bridge inspection data for the selected year. 
+This tool provides a summary of all bridge inspection data for the selected year with visual pie chart representations of inspection ratings and statuses.
 
 ##### Longitudinal Analysis Tool 
 This tool provides a breakdown of bridge inspection data over a given timeframe of up to 10 years, with visual line chart representations of inspection ratings and the ability to compare up to three bridges simultaneously.
@@ -34,7 +34,7 @@ Both the Yearly Inspection Report Tool (YIRT) and the Longitudinal Analysis Tool
 
 #### Helpful Links:
 - DataTables Documentation: https://datatables.net/manual/index
-- Initializing DataTables in the LAT (see function *loadTable* in *la-functions.js*): https://datatables.net/reference/option/data
+- Initializing DataTables in the LAT (see function *loadTable* in *supervisor/LA-functions.js*): https://datatables.net/reference/option/data
 
 
 --------------------------------------------------------
