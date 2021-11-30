@@ -51,7 +51,12 @@
     </head>
     
     <body>
+        
         <script>
+            /******************************************************************************
+            *                      loading bridge data into memory                        *
+            ******************************************************************************/
+
             // bridgeData will contain ALL bridge data: number, name and county for each bridge existing in the database
             // bridgeData will be used when searching for bridges.
             bridgeData = [];
@@ -69,7 +74,7 @@
 
         <script>
             /******************************************************************************
-            ********************** helper functions  **************************************
+            *                            helper functions                                 *
             ******************************************************************************/
             
             function showEndYearSelector (){
@@ -141,8 +146,13 @@
                 }
             }
 
+            /******************************************************************************
+            *               Creating Additional Bridge Search HTML Elements               * 
+            ******************************************************************************/
+
             /**
-             * Builds bridge search HTML element and assigns associated on click functions for the buttons included in that bridge element
+             * Builds bridge search HTML element and 
+             * assigns associated functions for the buttons/search functionality required for that bridge element
              */
             function buildBridgeElement(){
                 let awaitingConfirmation = true;
@@ -233,6 +243,7 @@
 
                 /******************************************************************************
                 *         Search Functionality for this bridge search element                 *
+                *      (the one being created in this call of buildBridgeElement)             *
                 ******************************************************************************/
                 searchInput.addEventListener('keyup', () => {
                     let results = [];
@@ -274,6 +285,7 @@
 
                 /******************************************************************************
                 *            onclick functions for this bridge search element                 *
+                *       (the one being created in this call of buildBridgeElement)            *
                 ******************************************************************************/
                 removeButton.onclick = function() {
                     let numBridges = document.getElementsByClassName("bridge").length;
@@ -351,6 +363,9 @@
             </script>
 
 
+        <!--******************************************************************************
+        *                               HTML Template                                    * 
+        *******************************************************************************-->
         <!-- Top Navbar -->
         <nav class="navbar navbar-light" style="background-color: #005cbf; width: 100vw;">
             <div class="container-fluid">
@@ -482,7 +497,27 @@
         
         <script>
 
-            
+             // global tracker vars for bridge selection control flow
+            nextBridgeIndex = 1; // index/id number for the next bridge element that is created
+            isValid = false; // form validity
+            hasDuplicate = false; // user serach input is duplicate of bridge that is already selected
+            numConfirmed = 0; // number of bridge selections confirmed so far
+            awaitingAnyConfirmation = true; // tracks if any bridge selections are awaiting confirmation
+
+            // bridges element. parent to all bridge divs
+            let bridges = document.getElementById('bridges');
+
+            // bridge 1 element 
+            let bridge1 = document.getElementById('bridge1');
+            // all child elements of bridge1
+            let confirmSearch1 = document.getElementById('confirm-search-1');
+            let searchButton1 = document.getElementById('search-btn');
+            let addBridge = document.getElementById('add-bridge');
+            let addBridgeLabel = document.getElementById('add-bridge-label');
+            let removeBridge1 = document.getElementById('remove-bridge-1');
+            let awaitingConfirmation1 = true;
+
+
             /******************************************************************************
             *                    Bridge 1 search functionality                            *
             ******************************************************************************/
@@ -527,37 +562,81 @@
                 searchWrapper.classList.add('show');
                 resultsWrapper.innerHTML = `<ul>${content}</ul>`;
             }
-            /**************************************************************************
-            **************************************************************************/
+    
+        
+            /******************************************************************************
+            *                        Bridge 1 onclick functions                           *
+            ******************************************************************************/
+            confirmSearch1.onclick = function(){
+                //validate user input
+                if(bridgeData.includes(searchInput.value)){
+                        if(!selectedBridgesSoFar.includes(searchInput.value)){
+                            isValid = true;
+                            hasDuplicate = false;
+                        } else{
+                            isValid = false;
+                            hasDuplicate = true;
+                        }
+                } else{
+                    isValid = false;
+                }      
+                if(isValid){
+                    selectedBridgesSoFar.push(searchInput.value)
+                    awaitingConfirmation1 = false;
+                    awaitingAnyConfirmation = false;
+                    nextBridgeIndex++;
+                    numConfirmed++;
+                    updateConfirmationCount(numConfirmed);
+                    showValidFeedback(searchInput);
+                    document.getElementById('no-match-feedback-1').hidden=true;
+                    document.getElementById('duplicate-feedback-1').hidden=true;
+                    searchButton1.remove();
+                    this.remove();
+                    removeBridge1.style='margin-left: 0px;'
+                    addBridge.hidden = false;
+                    addBridgeLabel.hidden = false;
+                    removeBridge1.hidden = false;
+                    enableButton(document.getElementById('submit-btn-bridges'));
+                } else {
+                    if(hasDuplicate){
+                        showInvalidFeedback(searchInput, document.getElementById('duplicate-feedback-1'));
+                    } else{
+                        showInvalidFeedback(searchInput, document.getElementById('no-match-feedback-1'));
+                    }
+                }
+            }
 
-            // global tracker vars for control flow
-            nextBridgeIndex = 1; // index/id number for the next bridge element that is created
-            isValid = false; // form validity
-            hasDuplicate = false; // user serach input is duplicate of bridge that is already selected
-            numConfirmed = 0; // number of bridge selections confirmed so far
-            awaitingAnyConfirmation = true; // tracks if any bridge selections are awaiting confirmation
-            
+            removeBridge1.onclick = function() {
+                let numBridges = document.getElementsByClassName("bridge").length
+                if(numBridges > 1){
+                    
+                    selectedBridgesSoFar.splice(selectedBridgesSoFar.indexOf(document.getElementById('search1').value), 1)
+                    bridge1.remove();
+                    updateBridgeIds();
+                    nextBridgeIndex -= 1;
+                    numConfirmed -=1;
+                    updateConfirmationCount(numConfirmed);
+                    
+                    if((numBridges-1) < 3 && !awaitingAnyConfirmation){
+                        addBridge.hidden = false;
+                        addBridgeLabel.hidden = false;
+                    } 
+                } else{
+                    alert("You must select at least one bridge.")
+                }
+            }
+
+
+            /******************************************************************************
+            *                     Bridge Selection onclick Functions                      *
+            *          (not associated with individual bridge search HTML Elements)       *
+            ******************************************************************************/
             
             // submit buttons
             let submitBridgeSelectionsButton = document.getElementById('submit-btn-bridges');
             let submitButtonYear = document.getElementById('submit-btn-years');
             let editBridgesButton = document.getElementById('edit-btn-bridges');
 
-            
-            // bridges element. parent to all bridge divs
-            let bridges = document.getElementById('bridges');
-
-            // bridge 1 element 
-            let bridge1 = document.getElementById('bridge1');
-            // all child elements of bridge1
-            let confirmSearch1 = document.getElementById('confirm-search-1');
-            let searchButton1 = document.getElementById('search-btn');
-            let addBridge = document.getElementById('add-bridge');
-            let addBridgeLabel = document.getElementById('add-bridge-label');
-            let removeBridge1 = document.getElementById('remove-bridge-1');
-            let awaitingConfirmation1 = true;
-
-            
             submitBridgeSelectionsButton.onclick = function() {
                 if(isValid){
                     // remove <br> children 
@@ -647,72 +726,6 @@
                 setYearsSessionVars(beginSelect.options[beginSelect.selectedIndex].value, endSelect.options[endSelect.selectedIndex].value);      
             }
 
-
-
-            /******************************************************************************
-            *                        Bridge 1 onclick functions                           *
-            ******************************************************************************/
-            confirmSearch1.onclick = function(){
-                //validate user input
-                if(bridgeData.includes(searchInput.value)){
-                        if(!selectedBridgesSoFar.includes(searchInput.value)){
-                            isValid = true;
-                            hasDuplicate = false;
-                        } else{
-                            isValid = false;
-                            hasDuplicate = true;
-                        }
-                } else{
-                    isValid = false;
-                }      
-                if(isValid){
-                    selectedBridgesSoFar.push(searchInput.value)
-                    awaitingConfirmation1 = false;
-                    awaitingAnyConfirmation = false;
-                    nextBridgeIndex++;
-                    numConfirmed++;
-                    updateConfirmationCount(numConfirmed);
-                    showValidFeedback(searchInput);
-                    document.getElementById('no-match-feedback-1').hidden=true;
-                    document.getElementById('duplicate-feedback-1').hidden=true;
-                    searchButton1.remove();
-                    this.remove();
-                    removeBridge1.style='margin-left: 0px;'
-                    addBridge.hidden = false;
-                    addBridgeLabel.hidden = false;
-                    removeBridge1.hidden = false;
-                    enableButton(document.getElementById('submit-btn-bridges'));
-                } else {
-                    if(hasDuplicate){
-                        showInvalidFeedback(searchInput, document.getElementById('duplicate-feedback-1'));
-                    } else{
-                        showInvalidFeedback(searchInput, document.getElementById('no-match-feedback-1'));
-                    }
-                }
-            }
-
-            removeBridge1.onclick = function() {
-                let numBridges = document.getElementsByClassName("bridge").length
-                if(numBridges > 1){
-                    
-                    selectedBridgesSoFar.splice(selectedBridgesSoFar.indexOf(document.getElementById('search1').value), 1)
-                    bridge1.remove();
-                    updateBridgeIds();
-                    nextBridgeIndex -= 1;
-                    numConfirmed -=1;
-                    updateConfirmationCount(numConfirmed);
-                    
-                    if((numBridges-1) < 3 && !awaitingAnyConfirmation){
-                        addBridge.hidden = false;
-                        addBridgeLabel.hidden = false;
-                    } 
-                } else{
-                    alert("You must select at least one bridge.")
-                }
-            }
-            /**************************************************************************
-            **************************************************************************/
-
             addBridge.onclick = function(){
                 awaitingAnyConfirmation = true;
                 isValid = false;
@@ -730,6 +743,15 @@
         </script>
 
         <script>
+
+            /******************************************************************************
+            *                       Restoring Session State                               *
+            ******************************************************************************/
+
+            /* If the user has already confirmed some bridge selections and navigated away from the page for any reason, 
+            *  session variables will be used to restore the state of the page 
+            *  so that the user does not have to start over every time they revisit the page. */
+
             // if the current session has a saved state for this page, use session vars to restore that state
             $(function(){
                 if(<?php echo json_encode($_SESSION['hasSavedState']); ?>){

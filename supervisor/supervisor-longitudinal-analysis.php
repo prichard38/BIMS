@@ -518,7 +518,9 @@
         <script src="../plugins/chart.js/Chart.js"></script>
         <script src="../plugins/adminlte.js"></script>
         
-        <!-- Charts -->
+        <!---------------------------------------------------------------------------
+        -                       Building the Line Chart                             -
+        ----------------------------------------------------------------------------->
         <script>
 
             // plugin to handle overlapping data points on line chart
@@ -854,9 +856,10 @@
         </script>
 
 
-    <!-- ----------------------------------------------------------------
-        Bridge Table Row OnClick functions
-    -------------------------------------------------------------------- -->
+    <!--------------------------------------------------------------------------------
+                        Bridge Table Row OnClick functions 
+                    (Drilldown to show inspections data table)
+    --------------------------------------------------------------------------------->
     <script>        
         $(document).ready(function(){
             
