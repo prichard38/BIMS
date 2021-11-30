@@ -20,7 +20,7 @@
     }
     
     /* connect to database */
-    include 'dbConfig.inc.php';
+    include '../dbConfig.inc.php';
 
 
     
