@@ -31,9 +31,11 @@
 - 3D model files (file extension *.glb*)
 
 `guides`
+- *Database Documentation*: developer markdown file that provides important documentation, notes, and references regarding the BIMS databse
+- *LocalEnvironmentSetup*: developer markdown guide for setting up the local development environment
 - *MobileApp&RESTfulAPI*: developer markdown guide for BIMS mobile application and RESTful API for mobile app communication with server
-- *WebApp*: developer markdown guide for BIMS web application (this file)
-- *WebAppReportMangement*: developer markdown guide for supervisor report management features, Yearly Inspection Report Tool and Longitudinal Analysis Tool
+- *ProjectDirectoryFileStructure*: this file - an outline of the project file structure
+- *WebAppDeveloperGuide*: developer markdown guide for supervisor report management features, Yearly Inspection Report Tool and Longitudinal Analysis Tool
 
 `inspector`
 - All files contained in `inspector` are html template files for the inspector role. With the exception of modifying *hrefs* for linking to the new additions the the web app, these files were not modified in any way for the Fall 2021 BIMS capstone project.
