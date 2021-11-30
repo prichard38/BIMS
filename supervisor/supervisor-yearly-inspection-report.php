@@ -112,7 +112,7 @@
                             <div class="col-md-12">
                               <div class="card">
                                 <div class="card-header">
-                                  <h5 class="card-title">Yearly Inspection Report (2021)</h5>
+                                  <h5 class="card-title" id="page-title">Yearly Inspection Report <?php echo $_SESSION['YIR_SelectedYear']?></h5>
                                   <!--
                                   <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -1039,6 +1039,7 @@
                 pieChart.update();
 
                 updateSession(selectedYear);
+                $('#page-title').html('Yearly Inspection Report (' + selectedYear + ')');
 
                 var origHeight = "calc(100vh - 58px)";
                 var contHeight = $('section').height();
