@@ -32,7 +32,7 @@ DELIMITER;
 
 DELIMITER $$
 
-CREATE PROCEDURE selectNewestInspectionData_ByYear(IN inspec_year int)
+CREATE PROCEDURE selectBridgeInspectionData_OneYear(IN inspec_year int)
 BEGIN
 SELECT *
 	FROM (

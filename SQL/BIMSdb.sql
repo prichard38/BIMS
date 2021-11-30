@@ -94,25 +94,20 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `selectInspectionData_ById` (IN `ins
     WHERE InspectionID = inspection_id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `selectNewestInspectionData_ByYear` (IN `inspec_year` INT)  BEGIN
-	SELECT *
-	FROM (
-		SELECT i.FinishedDate, i.DueDate, i.Bridges_BridgeNo, b.BridgeName, t.InspectionTypeName ,u.FirstName AS inspector_first, 
-		u.LastName AS inspector_last, u2.FirstName AS evaluator_first, u2.LastName AS evaluator_last, i.OverallRating
-		FROM Inspections i 
-		JOIN Bridges b ON i.Bridges_BridgeNo = b.BridgeNo
-		JOIN InspectionTypeCode t ON i.InspectionTypeNo = t.InspectionTypeNo
-		JOIN Users u ON i.InspectorID = u.UserNo
-		JOIN Users u2 ON i.EvaluatorID = u2.UserNo
-		WHERE YEAR(DATE(FinishedDate)) = inspec_year
-	) AS inspection_data
-	WHERE FinishedDate IN (
-		SELECT MAX(FinishedDate)
-		FROM Inspections 
-		WHERE year(FinishedDate)= inspec_year 
-		GROUP BY Bridges_BridgeNo
-	);
-END$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `selectBridgeInspectionData_OneYear` (IN `inspec_year` INT)  BEGIN
+  SELECT *
+    FROM (
+      SELECT i.FinishedDate, i.DueDate, i.Bridges_BridgeNo, b.BridgeName, i.Status, t.InspectionTypeName ,u.FirstName AS inspector_first, 
+      u.LastName AS inspector_last, u2.FirstName AS evaluator_first, u2.LastName AS evaluator_last, i.OverallRating
+      FROM Inspections i 
+      JOIN Bridges b ON i.Bridges_BridgeNo = b.BridgeNo
+      JOIN InspectionTypeCode t ON i.InspectionTypeNo = t.InspectionTypeNo
+      JOIN Users u ON i.InspectorID = u.UserNo
+      JOIN Users u2 ON i.EvaluatorID = u2.UserNo
+      WHERE YEAR(DATE(FinishedDate)) = inspec_year
+          OR YEAR(DATE(DueDate)) = inspec_year
+    ) AS inspection_data;
+  END$$
 
 DELIMITER ;
 

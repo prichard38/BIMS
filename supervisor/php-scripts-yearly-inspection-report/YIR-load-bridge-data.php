@@ -4,7 +4,7 @@
     include '../../dbConfig.inc.php';
     $name = mysqli_real_escape_string($conn, $_POST['selectedYear']);
     
-    $sql = "CALL selectNewestInspectionData_ByYear(?);";
+    $sql = "CALL selectBridgeInspectionData_OneYear(?);";
     $stmt = mysqli_stmt_init($conn);
     if(!mysqli_stmt_prepare($stmt, $sql)){
         echo "SQL statement failed";
