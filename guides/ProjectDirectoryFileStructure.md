@@ -15,7 +15,7 @@
 5. `plugins` : Contains all third-party plugins/libraries (examples: Chart JS, DataTables, BootStrap)
 6. `SQL` : Contains all SQL files, including database seed (dump) file, `BIMSdb.sql`, and all stored procedure definitions
 7. `supervisor` : Contains all files specifically related the *supervisor* role (supervisor screens, javascript, and php scripts) 
-8. *access-denied.php*: Shows "Access Denied" message upon attempting to access pages/files that are forbidden based upon user role pivileges
+8. *access-denied.php*: Shows "Access Denied" message upon attempting to access pages/files that are forbidden based upon user role privileges
 8. *dbConfig.inc.php*: Database configuration file
 9. *login.php*: Login screen
  
@@ -52,7 +52,7 @@
 - *BIMS_ERD.png*: The BIMS database ERD as an image
 - *BIMS_ERD.svg*: The BIMS database ERD as an image
 - *BIMSdb.sql*: seed (dump) file for the BIMS database. Running this script will build the database structure, create stored procedures, and fill it with test data.
-- *procedure_LA_tool.sql*: contains the stored procedure definitions for procedures used for performing database queries for the Longintudinal Anaylsis Tool
+- *procedure_LA_tool.sql*: contains the stored procedure definitions for procedures used for performing database queries for the Longitudinal Analsis Tool
 - *procedure_Login.sql*: contains the stored procedure definitions for procedures used during the login process
 - *procedure_REST_API.sql*: contains the stored procedure definitions for procedures used in the REST API for mobile app integration
 - *procedure_YIR_tool.sql*: contains the stored procedure definitions for procedures used for performing database queries for the Yearly Inspection Report Tool
@@ -60,15 +60,15 @@
 `supervisor`
 - *LA-functions.js*: Contains JavaScript function definitions related to the Longitudinal Analysis Tool. 
 
-- `php-scripts-longitudinal-analysis` (sub-folder): contains all php scripts used for fetching data for the Longitudinal Anaylysis Tool
+- `php-scripts-longitudinal-analysis` (sub-folder): contains all php scripts used for fetching data for the Longitudinal Analysis Tool
     - *load-bridge-data.php*: Performs a database query that selects the name, number, and county for all bridges in the database
     - *load-earliest-year.php*: Calls the stored procedure, *getEarliestYear*, to get the earliest inspection year from among selected bridges
     - *load-inspections.php* Calls the stored procedure, *selectBridgeInspectionData_BetweenYears*, to select all inspection data between the selected begin and end year for a single bridge
-    - *reset-session-longitudinal-analysis.php*: Unsets all php session variables related to longitudinal anaylsis. Runs when user chooses to perform a new longitudinal analysis during the same session
+    - *reset-session-longitudinal-analysis.php*: Unsets all php session variables related to longitudinal analysis. Runs when user chooses to perform a new longitudinal analysis during the same session
     - *set-bridge-session-vars.php*: sets session variables for selected bridges to be analyzed in longitudinal analysis
     - *set-years-session-vars.php*: sets session variables for selected begin year and end year for the longitudinal analysis timeframe
 
-- `php-scripts-yearly-inspection-report` (sub-folder): contains all php scripts used for fetching data for the Longitudinal Anaylysis Tool
+- `php-scripts-yearly-inspection-report` (sub-folder): contains all php scripts used for fetching data for the Longitudinal Analysis Tool
     - *YIR-load-bridge-data.php*: Calls the stored procedure, *selectNewestInspectionData_ByYear*, to select the newest inspection data for every bridge for the selected year 
     - *YIR-update-session.php*: Updates the selected year session variable
 
