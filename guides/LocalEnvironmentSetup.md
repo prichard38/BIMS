@@ -28,8 +28,8 @@
 5. In **[Network]** tab of XAMPP panel, select **[localhost:8080->80(OverSSH)]** and
 click **[Enable]** button.
 6. In **[Volumes]** tab of XAMPP panel, click **[Mount]** button.
-7. Un-compress the source code zip file, `BIMS-main`, in XAMPP’s `htdocs` directory (usual folder path: `/opt/lampp/htdocs`). If you cannot find the folder, click the **[Explore]** button in the **[Volumes]** tab of XAMPP panel. You will be moved to `lampp` directory and can find the `htdocs` folder.
-8. Now you are ready to use it. You can access the web application by typing in the web browser http://localhost:8080/BIMS-main/login.php (The port number 8080 may be different depending on the MAMP setting.)
+7. Un-compress the source code zip file, `BIMS-main`, in XAMPP’s `htdocs` directory (usual folder path: `/opt/lampp/htdocs`). If you cannot find the folder, click the **[Explore]** button in the **[Volumes]** tab of XAMPP panel. You will be moved to `lampp` directory and can find the `htdocs` folder. It is suggested to rename the folder from `BIMS-main` to `BIMS`.
+8. Now you are ready to use it. You can access the web application by typing in the web browser http://localhost:8080/BIMS/login.php (The port number 8080 may be different depending on the MAMP setting.)
 
 #### Installation of the BIMS Codebase on your local machine (Windows):
 

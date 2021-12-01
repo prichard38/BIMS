@@ -52,8 +52,8 @@ Because the execution of *buildLineChart* is dependent on the execution of *buil
 
 Specifically, only *buildLineChart* needs to be explicitly called. From there, *buildLineChart* calls and awaits the execution of *buildChartDatasets*. In turn, *buildChartDatasets* calls and awaits the execution of *fetchAllChartInspections*. After *fetchAllChartInspections* finishes executing, then *buildChartDatasets* can continue on and finish executing, after which *buildLineChart* will finally continue on and finish executing. The end result is a dynamically generated line chart representation of bridge inspection ratings from the database.
 
-![Data Flow](buildLineChartExample.png)
-![Data Flow](buildChartDatasetsExample.png)
+![buildLineChart](buildLineChartExample.png)
+![buildChartDatasets](buildChartDatasetsExample.png)
 
 --------------------------------------------------------
 

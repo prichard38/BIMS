@@ -7,7 +7,7 @@
 ###### *NOTE: The BIMS web application is an ongoing project still in development.* 
 --------------------------------------------------------
 ### Directory/File Structure
-##### The project directory, `/opt/lampp/htdocs/BIMS-main`, contains the following top-level folders and files:
+##### The project directory, `/opt/lampp/htdocs/BIMS`, contains the following top-level folders and files:
 1. `admin` : Contains all files specifically related the *admin* role (admin screens, javascript, and php scripts)
 2.  `assets` : Contains all image, pdf, 3D model, and custom CSS assets
 3. `guides` : Contains all markdown guides related to this project (like this one)
