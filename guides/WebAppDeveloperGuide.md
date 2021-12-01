@@ -1,7 +1,7 @@
 # BIMS - CS 490 Capstone Fall 2021
 ## Web Application - Report Management for Supervisors - Developer Reference
 
-#### This guide is meant to serve as a reference and provide helpul information related to the development process for BIMS web application Report Management for supervisors, including the Yearly Inspection Report Tool and the Longitudinal Analysis Tool 
+#### This guide is meant to serve as a reference and provide helpful information related to the development process for BIMS web application Report Management for supervisors, including the Yearly Inspection Report Tool and the Longitudinal Analysis Tool 
 
 ###### *NOTE: The BIMS web application is an ongoing project still in development.* 
 --------------------------------------------------------
@@ -51,6 +51,9 @@ Dynamically building the line chart that is generated in the Longitudinal Analys
 Because the execution of *buildLineChart* is dependent on the execution of *buildChartDatasets*, and *buildChartDatasets* is dependent on the the execution of *fetchAllChartInspections*, it must be ensured that these functions execute in sequence. To accomplish this, nesting of *async/await* function calls is used. 
 
 Specifically, only *buildLineChart* needs to be explicitly called. From there, *buildLineChart* calls and awaits the execution of *buildChartDatasets*. In turn, *buildChartDatasets* calls and awaits the execution of *fetchAllChartInspections*. After *fetchAllChartInspections* finishes executing, then *buildChartDatasets* can continue on and finish executing, after which *buildLineChart* will finally continue on and finish executing. The end result is a dynamically generated line chart representation of bridge inspection ratings from the database.
+
+![Data Flow](buildLineChartExample.png)
+![Data Flow](buildChartDatasetsExample.png)
 
 --------------------------------------------------------
 
