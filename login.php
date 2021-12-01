@@ -11,29 +11,29 @@
     
             include 'dbConfig.inc.php';
 
+            
             //get the role of the user. If user is not in database, then the role is NULL
-            $conn->query("SET @user_role = NULL");
-            $conn->query("CALL LogIn('$username','$password',@user_role);");
-            $result = $conn->query("SELECT @user_role as _LogIn_out");
+            $result = $conn->query("CALL logIn('$username','$password');");
+
             $row = $result->fetch_assoc();
-            echo $row['_LogIn_out'];
+            echo $row['UserRoleName'];
     
             //if user is admin, start session and redirect
-            if ($row['_LogIn_out'] == "admin"){
+            if ($row['UserRoleName'] == "admin"){
                 session_destroy();
                 session_start();
                 session_unset();
                 $_SESSION["loggedAs"] = "Admin";
                 header("Location:admin/admin_report_management.html");
             }
-            else if ($row['_LogIn_out'] == "supervisor"){
+            else if ($row['UserRoleName'] == "supervisor"){
                 session_destroy();
                 session_start();
                 session_unset();
                 $_SESSION["loggedAs"] = "Supervisor";
                 header("Location:supervisor/supervisor-yearly-inspection-report.php");
             }
-            else if ($row['_LogIn_out'] == "inspector"){
+            else if ($row['UserRoleName'] == "inspector"){
                 session_destroy();
                 session_start();
                 session_unset();                
@@ -45,6 +45,7 @@
                 header("Location:login.php?error=invalidcredentials");
                 exit();
             }
+          
         }
     } 
 
