@@ -19,22 +19,19 @@ BEGIN
 END
 */
 
-/* marshallscee server has outdated software, so this is a version that works on older mysql and php versions 
-	It selects the output rather than having an OUT parameter.
+/* marshallscee server has outdated software, so this is a version that works on older mysql and php versions.
+	Also had to add COLLATE to get this working on the server. 
+	To see why: https://stackoverflow.com/questions/11770074/illegal-mix-of-collations-utf8-unicode-ci-implicit-and-utf8-general-ci-implic
 */
+DELIMITER $$
 
 CREATE PROCEDURE logIn(IN user_id VARCHAR(45), IN user_password VARCHAR(45))
 BEGIN
 
-	DECLARE role_num INT;
-    DECLARE role_name VARCHAR(45);
+	SELECT r.UserRoleName, u.UserId, u.UserPassword
+    FROM Users u
+    JOIN UserRole r ON u.UserRole = r.UserRole
+    WHERE UserId = user_id COLLATE utf8_unicode_ci
+	AND UserPassword = user_password COLLATE utf8_unicode_ci; 
 
-	SELECT UserRole INTO role_num
-	FROM Users
-	WHERE UserId = user_id AND UserPassword=user_password;
-
-	SELECT UserRoleName
-	FROM UserRole
-	WHERE UserRole = role_num;
-    
-END
+END$$
