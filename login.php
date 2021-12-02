@@ -1,54 +1,53 @@
-
 <?php
+    session_start();
 
-    
-    if (!isset($_SESSION['loggedAs'])){ //if user hasn't already logged in
+    if (isset($_GET['Username']) && isset($_GET['Password'])){ //if user has entered a username and password
 
-        if (isset($_GET['Username']) && isset($_GET['Password'])){ //if user has entered a username and password
+        $username = $_GET['Username'];
+        $password = $_GET['Password'];
 
-            $username = $_GET['Username'];
-            $password = $_GET['Password'];
-    
-            include 'dbConfig.inc.php';
+        include 'dbConfig.inc.php';
 
-            
-            //get the role of the user. If user is not in database, then the role is NULL
-            $result = $conn->query("CALL logIn('$username','$password');");
+        //get the role of the user. If user is not in database, then the role is NULL
+        $result = $conn->query("CALL logIn('$username','$password');");
+        $row = $result->fetch_assoc();
 
-            $row = $result->fetch_assoc();
-            echo $row['UserRoleName'];
-    
-            //if user is admin, start session and redirect
-            if ($row['UserRoleName'] == "admin"){
-                session_destroy();
-                session_start();
-                session_unset();
-                $_SESSION["loggedAs"] = "Admin";
-                header("Location:admin/admin_report_management.html");
-            }
-            else if ($row['UserRoleName'] == "supervisor"){
-                session_destroy();
-                session_start();
-                session_unset();
-                $_SESSION["loggedAs"] = "Supervisor";
-                header("Location:supervisor/supervisor-yearly-inspection-report.php");
-            }
-            else if ($row['UserRoleName'] == "inspector"){
-                session_destroy();
-                session_start();
-                session_unset();                
-                $_SESSION["loggedAs"] = "Inspector";
-                header("Location:inspector/inspector_inspection_management.html");
-            } 
-            // if user is NULL, display error
-            else {
-                header("Location:login.php?error=invalidcredentials");
-                exit();
-            }
-          
+        //if user is admin, start session and redirect
+        if ($row['UserRoleName'] == "admin"){
+            session_destroy();
+            session_start();
+            session_unset();
+            $_SESSION["loggedAs"] = "Admin";
+            header("Location:admin/admin_report_management.html");
+            exit('Redirecting...');
         }
-    } 
+        else if ($row['UserRoleName'] == "supervisor"){  
+            session_destroy();
+            session_start();
+            session_unset();
+            $_SESSION["loggedAs"] = "Supervisor";
+            header("Location:supervisor/supervisor-yearly-inspection-report.php",true,301);
+            exit('Redirecting...');
 
+        }
+        else if ($row['UserRoleName'] == "inspector"){
+            session_destroy();
+            session_start();
+            session_unset();                
+            $_SESSION["loggedAs"] = "Inspector";
+            header("Location:inspector/inspector_inspection_management.html");
+            exit('Redirecting...');
+        } 
+        // if user is NULL, display error
+        else {
+            header("Location:login.html?error=invalidcredentials");
+            exit('Redirecting...');
+        }
+    }
+    else{
+        header("Location:login.html?error=invalidcredentials");
+        exit('Redirecting...');
+    }
 ?>
 <html lang="en">
   <head>
@@ -163,7 +162,6 @@
           }
       </style>
   </head>
-
   <body>
       <div id="container">
         <table id="layouttable" cellpadding="0" cellspacing="0">
@@ -196,22 +194,4 @@
       </div>
   </body>
 </html>
-<!--
-<html>
-
-    <form>
-        <label>Username</label>
-        <input type='text' name='Username' require>
-        <br>
-        <label>Password</label>
-        <input type='password' name='Password' require>
-        <br>
-        <input type='submit' value='log-in'>
-    </form>
-
-
-
-
-</html>
--->
 
