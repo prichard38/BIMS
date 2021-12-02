@@ -871,10 +871,12 @@
                         
                         
                         $('#rm_t1' + ' .card-title').text('Inspection List');
-                        setTimeout(function(){
-                            $('#rm_t1').removeAttr('hidden');
-                            $('#rm_t1').show();
-                        }, 70)
+                        $('#rm_t1').removeAttr('hidden');
+                        $('#rm_t1').show();
+                        // setTimeout(function(){
+                        //     $('#rm_t1').removeAttr('hidden');
+                        //     $('#rm_t1').show();
+                        // }, 70)
                         
                     } else{
                         $('#rm_t1').toggle();
@@ -893,10 +895,12 @@
                         
                         
                         $('#rm_t2' + ' .card-title').text('Inspection List');
-                        setTimeout(function(){
-                            $('#rm_t2').removeAttr('hidden');
-                            $('#rm_t2').show();
-                        }, 70)
+                        $('#rm_t2').removeAttr('hidden');
+                        $('#rm_t2').show();
+                        // setTimeout(function(){
+                        //     $('#rm_t2').removeAttr('hidden');
+                        //     $('#rm_t2').show();
+                        // }, 70)
                         
                     } else{
                         $('#rm_t2').toggle();
@@ -914,10 +918,12 @@
                         
                         
                         $('#rm_t3' + ' .card-title').text('Inspection List');
-                        setTimeout(function(){
-                            $('#rm_t3').removeAttr('hidden');
-                            $('#rm_t3').show();
-                        }, 70)
+                        $('#rm_t3').removeAttr('hidden');
+                        $('#rm_t3').show();
+                        // setTimeout(function(){
+                        //     $('#rm_t3').removeAttr('hidden');
+                        //     $('#rm_t3').show();
+                        // }, 70)
                         
                     } else{
                         $('#rm_t3').toggle();
