@@ -1,116 +1,5 @@
--- phpMyAdmin SQL Dump
--- version 5.1.1
--- https://www.phpmyadmin.net/
---
--- Host: localhost
--- Generation Time: Nov 19, 2021 at 07:11 AM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 8.0.10
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `BIMSdb`
---
-
 CREATE DATABASE BIMSdb;
 USE BIMSdb;
-
-DELIMITER $$
---
--- Procedures
---
-CREATE DEFINER=`root`@`localhost` PROCEDURE `createImageSet` (IN `inspection_id` INT)  BEGIN
-	INSERT INTO DroneImageSet (Inspections_InspectionID,DateTime) VALUES (inspection_id,now()); 
-	SELECT LAST_INSERT_ID() AS newestImageSetId;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getEarliestYear` (IN `bridge1` VARCHAR(45), IN `bridge2` VARCHAR(45), IN `bridge3` VARCHAR(45))  BEGIN
-SELECT MIN(YEAR(DATE(FinishedDate))) as year
-FROM Inspections
-WHERE Bridges_BridgeNo IN (
-	SELECT BridgeNo FROM Bridges WHERE BridgeName=bridge1
-    OR BridgeName=bridge2
-    OR BridgeName=bridge3
-);
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insertImageData`(IN `image_set_id` int, IN `filepath` VARCHAR(200), IN `image_name` VARCHAR(200), IN `comment` LONGTEXT, IN `x` double, IN `y` double, IN `z` double) BEGIN
-	INSERT INTO DroneImages 
-  (DroneImageSet_ImageSetID, Picture, Name, Comments, ElementX, ElementY, ElementZ) 
-  VALUES 
-  (image_set_id, filepath, image_name, comment, x, y, z);
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `LogIn` (IN `user_id` VARCHAR(45), IN `user_password` VARCHAR(45), OUT `user_role` VARCHAR(45))  BEGIN
-
-	DECLARE role_num INT;
-    	DECLARE role_name VARCHAR(45);
-
-	SELECT UserRole INTO role_num
-	FROM Users
-	WHERE UserId = user_id AND UserPassword=user_password;
-
-	SELECT UserRoleName INTO role_name
-	FROM UserRole
-	WHERE UserRole = role_num;
-    
-    	SET user_role = role_name;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `selectBridgeInspectionData_BetweenYears` (IN `bridge_name` VARCHAR(45), IN `begin_year` INT, IN `end_year` INT)  BEGIN
-	SELECT i.FinishedDate, i.Bridges_BridgeNo, b.BridgeName, t.InspectionTypeName ,u.FirstName AS inspector_first, 
-	u.LastName AS inspector_last, u2.FirstName AS evaluator_first, u2.LastName AS evaluator_last, i.OverallRating
-	FROM Inspections i 
-	JOIN Bridges b ON i.Bridges_BridgeNo = b.BridgeNo
-	JOIN InspectionTypeCode t ON i.InspectionTypeNo = t.InspectionTypeNo
-	JOIN Users u ON i.InspectorID = u.UserNo
-	JOIN Users u2 ON i.EvaluatorID = u2.UserNo
-	WHERE Bridges_BridgeNo IN (
-		SELECT BridgeNo FROM Bridges WHERE BridgeName=bridge_name
-	) 
-    AND YEAR(DATE(FinishedDate)) >= begin_year
-    AND YEAR(DATE(FinishedDate)) <= end_year
-	ORDER BY i.FinishedDate;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `selectInspectionData_ById` (IN `inspection_id` INT)  BEGIN
-    SELECT i.InspectionID, i.Bridges_BridgeNo, b.BridgeName, i.AssignedDate, i.DueDate, i.FinishedDate, 
-    t.InspectionTypeName,  i.OverallRating, u.FirstName AS inspector_first, 
-    u.LastName AS inspector_last, u2.FirstName AS evaluator_first, u2.LastName AS evaluator_last
-    FROM Inspections i 
-    JOIN Bridges b ON i.Bridges_BridgeNo = b.BridgeNo
-    JOIN InspectionTypeCode t ON i.InspectionTypeNo = t.InspectionTypeNo
-    JOIN Users u ON i.InspectorID = u.UserNo
-    JOIN Users u2 ON i.EvaluatorID = u2.UserNo
-    WHERE InspectionID = inspection_id;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `selectBridgeInspectionData_OneYear` (IN `inspec_year` INT)  BEGIN
-  SELECT *
-    FROM (
-      SELECT i.FinishedDate, i.DueDate, i.Bridges_BridgeNo, b.BridgeName, i.Status, t.InspectionTypeName ,u.FirstName AS inspector_first, 
-      u.LastName AS inspector_last, u2.FirstName AS evaluator_first, u2.LastName AS evaluator_last, i.OverallRating
-      FROM Inspections i 
-      JOIN Bridges b ON i.Bridges_BridgeNo = b.BridgeNo
-      JOIN InspectionTypeCode t ON i.InspectionTypeNo = t.InspectionTypeNo
-      JOIN Users u ON i.InspectorID = u.UserNo
-      JOIN Users u2 ON i.EvaluatorID = u2.UserNo
-      WHERE YEAR(DATE(FinishedDate)) = inspec_year
-          OR YEAR(DATE(DueDate)) = inspec_year
-    ) AS inspection_data;
-  END$$
-
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -670,7 +559,11 @@ CREATE TABLE `InspectionTypeCode` (
 --
 
 INSERT INTO `InspectionTypeCode` (`InspectionTypeNo`, `InspectionTypeName`) VALUES
-(1, 'Annual');
+(1, 'Initial'),
+(2, 'Routine'),
+(3, 'In-Depth'),
+(4, 'Damage'),
+(5, 'Special');
 
 -- --------------------------------------------------------
 
@@ -1107,6 +1000,3 @@ ALTER TABLE `Users`
   ADD CONSTRAINT `fk_Users_UserRole` FOREIGN KEY (`UserRole`) REFERENCES `UserRole` (`UserRole`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
