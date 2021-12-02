@@ -3,7 +3,7 @@
 //database information
 $host = "localhost";
 $dbUsername = "root";
-$dbPassword = "";
+$dbPassword = "tvcsCD_03";
 $dbName = "BIMSdb";
 
 
@@ -17,4 +17,3 @@ if ($conn->connect_error) {
     exit;
 }
 ?>
-
