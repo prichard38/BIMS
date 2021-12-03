@@ -1,7 +1,7 @@
 DELIMITER $$
 
 /*
-    Used to check a username and password submitted in login.php
+    Used to check a username and password submitted in login.html
 */
 CREATE PROCEDURE logIn(IN user_id VARCHAR(45), IN user_password VARCHAR(45))
 BEGIN

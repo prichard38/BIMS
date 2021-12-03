@@ -375,7 +375,7 @@
                 </a>
                 <span class="float-right" style="color: white; font-size: 0.9em;">
                     <i class="fas fa-user-circle"></i>&nbsp;
-                    Logged in as <?=$_SESSION["loggedAs"]?>&nbsp;|&nbsp; <a href="../login.php" style="color: white; text-decoration: none;"> sign out</a>
+                    Logged in as <?=$_SESSION["loggedAs"]?>&nbsp;|&nbsp; <a href="../login.html" style="color: white; text-decoration: none;"> sign out</a>
                 </span>
             </div>
         </nav>

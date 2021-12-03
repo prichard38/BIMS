@@ -17,7 +17,7 @@
 7. `supervisor` : Contains all files specifically related the *supervisor* role (supervisor screens, javascript, and php scripts) 
 8. *access-denied.php*: Shows "Access Denied" message upon attempting to access pages/files that are forbidden based upon user role privileges
 8. *dbConfig.inc.php*: Database configuration file
-9. *login.php*: Login screen
+9. *login.html*: Login screen
  
 
 ##### Sub-folder and file descriptions for all top-level folders:
