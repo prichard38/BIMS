@@ -631,7 +631,6 @@
                     
 
                     xhr.onload = function() {
-                        console.log(this.responseText);
                         if(!this.responseText || this.responseText.trim().length === 0){
                             resolve({data: null})
                         }else{
@@ -663,7 +662,6 @@
                     
 
                     xhr.onload = function() {
-                        console.log(this.responseText);
                         if(!this.responseText || this.responseText.trim().length === 0){
                             resolve({data: null})
                         }else{
@@ -986,7 +984,6 @@
              */
             let fetchData = async (year) => {
                 const bridgeData = await fetchNewestBridgeData(year);
-                console.log("fetchData:",bridgeData);
                 return bridgeData;
             }
             const buildChart = async (pieOptions,year) => {

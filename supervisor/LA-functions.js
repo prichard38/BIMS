@@ -6,7 +6,7 @@
  * @returns Promise that is resolved with the JSON bridge inspection data, 
  *          or a JSON object with null data if no inspections exist for the given bridge
  */
-function fetchInspections(bridgeName) {
+const fetchInspections = async (bridgeName) => {
     return new Promise(function(resolve, reject) {
         data = [];
         
@@ -165,10 +165,9 @@ function getPointColors(ratingsArray){
  * @param {object[]} inspectionDataJson the array of inspection data javascript objects to be inserted into the data table 
  *                                      (example: [{assignedBy:x, assignedTo:x, bridgeName:x, bridgeNo:x, finishedDate:x, inspectionTypeName:x, rating:x}, ...])
  */
-function loadTable(bridgeId, inspectionDataJson){
+function loadTable(tableId, inspectionDataJson){
     $(document).ready(function(){
-        var index = bridgeId.charAt(bridgeId.length-1);
-        $('#tbl_bridge_insp_t' + index).DataTable({
+        $('#'+tableId).DataTable({
             "destroy": true,
             "aaData": inspectionDataJson,
             "dataSrc": '',

@@ -568,11 +568,13 @@ a.btn_ccl:hover, a.btn_del:hover {
 #tbl_bridge_insp_t3_wrapper,
 #tbl_bridge_insp_t4_wrapper,
 #tbl_bridge_insp_t5_wrapper,
+#tbl_bridge_insp_t6_wrapper,
 #tbl_bridge_insp2_t1_wrapper,
 #tbl_bridge_insp2_t2_wrapper,
 #tbl_bridge_insp2_t3_wrapper,
 #tbl_bridge_insp2_t4_wrapper,
-#tbl_bridge_insp2_t5_wrapper {
+#tbl_bridge_insp2_t5_wrapper,
+#tbl_bridge_insp2_t6_wrapper {
     font-size: 0.82em;
 }
 #tbl_bridge_insp_wrapper input,
@@ -582,11 +584,13 @@ a.btn_ccl:hover, a.btn_del:hover {
 #tbl_bridge_insp_t3_wrapper input,
 #tbl_bridge_insp_t4_wrapper input,
 #tbl_bridge_insp_t5_wrapper input,
+#tbl_bridge_insp_t6_wrapper input,
 #tbl_bridge_insp2_t1_wrapper input,
 #tbl_bridge_insp2_t2_wrapper input,
 #tbl_bridge_insp2_t3_wrapper input,
 #tbl_bridge_insp2_t4_wrapper input,
-#tbl_bridge_insp2_t5_wrapper input {
+#tbl_bridge_insp2_t5_wrapper input,
+#tbl_bridge_insp2_t6_wrapper input {
     margin-left: 10px;
     height: 1.7em;
 }
@@ -597,11 +601,13 @@ a.btn_ccl:hover, a.btn_del:hover {
 #tbl_bridge_insp_t3_wrapper select,
 #tbl_bridge_insp_t4_wrapper select,
 #tbl_bridge_insp_t5_wrapper select,
+#tbl_bridge_insp_t6_wrapper select,
 #tbl_bridge_insp2_t1_wrapper select,
 #tbl_bridge_insp2_t2_wrapper select,
 #tbl_bridge_insp2_t3_wrapper select,
 #tbl_bridge_insp2_t4_wrapper select,
-#tbl_bridge_insp2_t5_wrapper select {
+#tbl_bridge_insp2_t5_wrapper select,
+#tbl_bridge_insp2_t6_wrapper select{
     margin-left: 5px;
     margin-right: 5px;
     height: 2em;
@@ -609,30 +615,40 @@ a.btn_ccl:hover, a.btn_del:hover {
 #tbl_bridge_insp,
 #tbl_bridge_insp2,
 #tbl_bridge_insp_t1,
+#tbl_bridge_insp_t1-1,
 #tbl_bridge_insp_t2,
+#tbl_bridge_insp_t2-1,
 #tbl_bridge_insp_t3,
+#tbl_bridge_insp_t3-1,
 #tbl_bridge_insp_t4,
 #tbl_bridge_insp_t5,
+#tbl_bridge_insp_t6,
 #tbl_bridge_insp2_t1,
 #tbl_bridge_insp2_t2,
 #tbl_bridge_insp2_t3,
 #tbl_bridge_insp2_t4,
-#tbl_bridge_insp2_t5 {
+#tbl_bridge_insp2_t5,
+#tbl_bridge_insp2_t6 {
     margin-bottom: 10px;
     border-bottom: 1px solid lightgrey;
 }
 #tbl_bridge_insp th,
 #tbl_bridge_insp2 th,
 #tbl_bridge_insp_t1 th,
+#tbl_bridge_insp_t1-1 th,
 #tbl_bridge_insp_t2 th,
+#tbl_bridge_insp_t2-1 th,
 #tbl_bridge_insp_t3 th,
+#tbl_bridge_insp_t3-1 th,
 #tbl_bridge_insp_t4 th,
 #tbl_bridge_insp_t5 th,
+#tbl_bridge_insp_t6 th,
 #tbl_bridge_insp2_t1 th,
 #tbl_bridge_insp2_t2 th,
 #tbl_bridge_insp2_t3 th,
 #tbl_bridge_insp2_t4 th,
-#tbl_bridge_insp2_t5 th {
+#tbl_bridge_insp2_t5 th,
+#tbl_bridge_insp2_t6 th {
     padding: 9px 17px;
     line-height: 1.1em;
     border-bottom: 2px solid grey;
@@ -640,15 +656,20 @@ a.btn_ccl:hover, a.btn_del:hover {
 #tbl_bridge_insp td,
 #tbl_bridge_insp2 td,
 #tbl_bridge_insp_t1 td,
+#tbl_bridge_insp_t1-1 td,
 #tbl_bridge_insp_t2 td,
+#tbl_bridge_insp_t2-1 td,
 #tbl_bridge_insp_t3 td,
+#tbl_bridge_insp_t3-1 td,
 #tbl_bridge_insp_t4 td,
 #tbl_bridge_insp_t5 td,
+#tbl_bridge_insp_t6 td,
 #tbl_bridge_insp2_t1 td,
 #tbl_bridge_insp2_t2 td,
 #tbl_bridge_insp2_t3 td,
 #tbl_bridge_insp2_t4 td,
-#tbl_bridge_insp2_t5 td {
+#tbl_bridge_insp2_t5 td,
+#tbl_bridge_insp2_t6 td {
     padding: 5px 2px;
     line-height: 1.3em;
     border-bottom: 1px solid lightgrey;
@@ -658,15 +679,23 @@ a.btn_ccl:hover, a.btn_del:hover {
 #tbl_bridge_insp2 th,
 #tbl_bridge_insp2 td,
 #tbl_bridge_insp_t1 th,
+#tbl_bridge_insp_t1-1 th,
 #tbl_bridge_insp_t1 td,
+#tbl_bridge_insp_t1-1 td,
 #tbl_bridge_insp_t2 th,
+#tbl_bridge_insp_t2-1 th,
 #tbl_bridge_insp_t2 td,
+#tbl_bridge_insp_t2-1 td,
 #tbl_bridge_insp_t3 th,
+#tbl_bridge_insp_t3-1 th,
 #tbl_bridge_insp_t3 td,
+#tbl_bridge_insp_t3-1 td,
 #tbl_bridge_insp_t4 th,
 #tbl_bridge_insp_t4 td,
 #tbl_bridge_insp_t5 th,
 #tbl_bridge_insp_t5 td,
+#tbl_bridge_insp_t6 td,
+#tbl_bridge_insp_t6 th,
 #tbl_bridge_insp2_t1 th,
 #tbl_bridge_insp2_t1 td,
 #tbl_bridge_insp2_t2 th,
@@ -676,7 +705,9 @@ a.btn_ccl:hover, a.btn_del:hover {
 #tbl_bridge_insp2_t4 th,
 #tbl_bridge_insp2_t4 td,
 #tbl_bridge_insp2_t5 th,
-#tbl_bridge_insp2_t5 td {
+#tbl_bridge_insp2_t5 td,
+#tbl_bridge_insp2_t6 th,
+#tbl_bridge_insp2_t6 td {
     text-align: center;
     vertical-align: middle;
 }
