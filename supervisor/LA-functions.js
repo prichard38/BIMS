@@ -313,22 +313,22 @@ function restoreSessionStateLongitudinalAnalysis(bridgeNumbers, bridgeNames, bri
 
         // for each of the selected bridges
         for(let i = 0 ; i < bridgeNames.length ; i++){
-            setTimeout(() => {
-                // build a bridge html element and append it to bridges div
-                let bridgeElement = buildBridgeElement();
-                bridges.appendChild(bridgeElement);
-                // create the string value for the bridge search input to be populated with
-                document.getElementById('search'+(nextBridgeIndex)).value = bridgeNumbers[i] + " : " + bridgeNames[i] + ", " + bridgeCounties[i];
-                // programatically click the "confirm selection" button before adding next bridge
-                document.getElementById('confirm-search-'+(nextBridgeIndex)).click();
-            }, 50);
+            
+            // build a bridge html element and append it to bridges div
+            let bridgeElement = buildBridgeElement();
+            bridges.appendChild(bridgeElement);
+            // create the string value for the bridge search input to be populated with
+            document.getElementById('search'+(nextBridgeIndex)).value = bridgeNumbers[i] + " : " + bridgeNames[i] + ", " + bridgeCounties[i];
+            // programatically click the "confirm selection" button before adding next bridge
+            document.getElementById('confirm-search-'+(nextBridgeIndex)).click();
+            
         }
-        setTimeout(() => {
-            // programatically click the "submit bridge selections" button
-            document.getElementById('submit-btn-bridges').click();
-            enableButton(document.getElementById('submit-btn-years'));
-            document.getElementById('timeframe-instructions').hidden = true;
-        }, 50);
+      
+        // programatically click the "submit bridge selections" button
+        document.getElementById('submit-btn-bridges').click();
+        enableButton(document.getElementById('submit-btn-years'));
+        document.getElementById('timeframe-instructions').hidden = true;
+
         resolve(true);
     })
 }
