@@ -45,16 +45,46 @@
         <!-- init global vars -->
         <script>
             lastClick = 'inspectionClick';
+            /* Names, numbers, and counties correspond to one another by index 
+            * (selectedBridgeNames[i] references the same bridge as selectedBridgeNumbers[i]) */
             selectedBridgeNames = <?php echo json_encode($_SESSION['selectedBridgeNames']); ?>;
             selectedBridgeNumbers = <?php echo json_encode($_SESSION['selectedBridgeNumbers']); ?>;
             selectedBridgeCounties = <?php echo json_encode($_SESSION['selectedBridgeCounties']); ?>;
             yearBegin = <?php echo json_encode($_SESSION['yearBegin']); ?>;
             yearEnd = <?php echo json_encode($_SESSION['yearEnd']); ?>;
-            inspectionData = [];
-            inspectionIndex = -1;
-            prevInspectionIndex = -1;
-            bridgeIndex = -1;
-            prevBridgeIndex = -1;
+            bridgeInspectionData = []; // will hold unprocessed inspection data from the database for use by DataTables
+            chartInspectionData = []; // will hold unprocessed inspection data from the database for use by ChartJS 
+            correctedChartInspectionData = []; // will hold processed inspection data for building datasets for ChartJS
+
+        </script>
+
+        <script>
+            // fetches all inspection data for each of the selected bridges
+            async function fetchAllInspectionData()  {
+                let inspectionData = [];
+                for(let i = 0; i < selectedBridgeNames.length; i++){
+                    let dataset = await fetchInspections(selectedBridgeNames[i]);
+                    inspectionData.push(dataset);
+                }
+                return inspectionData;
+            }
+
+            // loads the inspection list data tables (tables are not made visible here, only loaded with data)
+            async function loadAllInspectionListTables(inspectionData) {
+                for(let i = 0; i < inspectionData.length; i++){
+                    // /* 
+                    // *  Reason for "let tableNumber = ((i+1)*2)-1"
+                    // *  Single Inspection Table Numbers are even (2, 4, and 6) and Inspection List Table Numbers are odd (1, 3, 5). 
+                    // *  Example: Inspection List Table for Bridge 1 has table Number 1 and Single Inspection Table for Bridge 1 has table number 2
+                    // *  It follows that the Inspection List Table for Bridge 2 has table Number 3 and Single Inspection Table for Bridge 2 has table number 4 
+                    // *  See id attribute of Bridge Inspection DataTables in the HTML template. 
+                    // */
+                    let tableNumber = ((i+1)*2)-1;
+                    loadTable('tbl_bridge_insp_t'+tableNumber, inspectionData[i].data);
+                }
+                return true;
+            }
+
         </script>
 
         <!-- Top Navbar -->
@@ -264,12 +294,61 @@
                             <!-- /.col -->
                         </div>
                         <!-- /.row -->
+
+                        <!-- Bridge 1 Single Inspection DataTable -->
+                        <div hidden='true', class="row tbox" id="rm_t2">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title">Inspection</h5>
+                                        <br>
+                                        <h6 style="font-size: small; font-weight: bold; color: darkgrey"><span id="bridgeName1-2"></span></h6>
+                                        <script>
+                                        var bridgeName = selectedBridgeNames[0];
+                                        document.getElementById('bridgeName1-2').innerHTML = bridgeName;
+                                        </script>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div style="padding: 10px; overflow: auto; min-width: 400px;">
+                                                    <table style="width:100%" class="table table-sm" id="tbl_bridge_insp_t2">
+                                                        <thead>
+                                                            <tr>
+                                                                <th data-orderable="true">Completed on</th>
+                                                                <th>Bridge Number</th>
+                                                                <th>Bridge Name</th>
+                                                                <th>Type</th>
+                                                                <th>Assigned To</th>
+                                                                <th>Assigned By</th>
+                                                                <th>Rate</th>
+                                                                <th data-orderable="false">Bridge<br>Elements</th>
+                                                                <th data-orderable="false">Report</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="inspection-list">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <!-- /.col -->
+                                        </div>
+                                        <!-- /.row -->
+                                    </div>
+                                    <!-- ./card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
                         
 
 
                         <!-- **** Bridge 2 DataTable **** -->
 
-                        <div hidden='true', class="row tbox" id="rm_t2">
+                        <div hidden='true', class="row tbox" id="rm_t3">
                           <div class="col-md-12">
                               <div class="card">
                                   <div class="card-header">
@@ -286,7 +365,7 @@
                                       <div class="row">
                                           <div class="col-md-12">
                                               <div style="padding: 10px; overflow: auto; min-width: 400px;">
-                                                  <table style="width:100%" class="table table-sm" id="tbl_bridge_insp_t2">
+                                                  <table style="width:100%" class="table table-sm" id="tbl_bridge_insp_t3">
                                                   <thead>
                                                             <tr>
                                                                 <th data-orderable="true">Completed on</th>
@@ -318,10 +397,59 @@
                         <!-- /.row -->
 
 
+                         <!-- **** Bridge 2 Single Inspection DataTable **** -->
+
+                         <div hidden='true', class="row tbox" id="rm_t4">
+                          <div class="col-md-12">
+                              <div class="card">
+                                  <div class="card-header">
+                                      <h5 class="card-title">Inspection</h5>
+                                      <br>
+                                        <h6 style="font-size: small; font-weight: bold; color: navy"><span id="bridgeName2-2"></span></h6>
+                                        <script>
+                                        var bridgeName = selectedBridgeNames[1];
+                                        document.getElementById('bridgeName2-2').innerHTML = bridgeName;
+                                        </script>
+                                  </div>
+                                  <!-- /.card-header -->
+                                  <div class="card-body">
+                                      <div class="row">
+                                          <div class="col-md-12">
+                                              <div style="padding: 10px; overflow: auto; min-width: 400px;">
+                                                  <table style="width:100%" class="table table-sm" id="tbl_bridge_insp_t4">
+                                                  <thead>
+                                                            <tr>
+                                                                <th data-orderable="true">Completed on</th>
+                                                                <th>Bridge Number</th>
+                                                                <th>Bridge Name</th>
+                                                                <th>Type</th>
+                                                                <th>Assigned To</th>
+                                                                <th>Assigned By</th>
+                                                                <th>Rate</th>
+                                                                <th data-orderable="false">Bridge<br>Elements</th>
+                                                                <th data-orderable="false">Report</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="inspection-list">
+                                                        </tbody>
+                                                  </table>
+                                              </div>
+                                          </div>
+                                          <!-- /.col -->
+                                      </div>
+                                      <!-- /.row -->
+                                  </div>
+                                  <!-- ./card-body -->
+                              </div>
+                              <!-- /.card -->
+                          </div>
+                          <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
 
                         <!-- **** Bridge 3 DataTable **** -->
 
-                        <div hidden='true', class="row tbox" id="rm_t3">
+                        <div hidden='true', class="row tbox" id="rm_t5">
                           <div class="col-md-12">
                               <div class="card">
                                   <div class="card-header">
@@ -338,7 +466,58 @@
                                       <div class="row">
                                           <div class="col-md-12">
                                               <div style="padding: 10px; overflow: auto; min-width: 400px;">
-                                                  <table style="width:100%" class="table table-sm" id="tbl_bridge_insp_t3">
+                                                  <table style="width:100%" class="table table-sm" id="tbl_bridge_insp_t5">
+                                                  <thead>
+                                                            <tr>
+                                                                <th data-orderable="true">Completed on</th>
+                                                                <th>Bridge Number</th>
+                                                                <th>Bridge Name</th>
+                                                                <th>Type</th>
+                                                                <th>Assigned To</th>
+                                                                <th>Assigned By</th>
+                                                                <th>Rate</th>
+                                                                <th data-orderable="false">Bridge<br>Elements</th>
+                                                                <th data-orderable="false">Report</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="inspection-list">
+                                                        </tbody>
+                                                  </table>
+                                              </div>
+                                          </div>
+                                          <!-- /.col -->
+                                      </div>
+                                      <!-- /.row -->
+                                  </div>
+                                  <!-- ./card-body -->
+                              </div>
+                              <!-- /.card -->
+                          </div>
+                          <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+
+                        
+                        <!-- **** Bridge 3 Single Inspection DataTable **** -->
+
+                        <div hidden='true', class="row tbox" id="rm_t6">
+                          <div class="col-md-12">
+                              <div class="card">
+                                  <div class="card-header">
+                                      <h5 class="card-title">Inspection</h5>
+                                      <br>
+                                        <h6 style="font-size: small; font-weight: bold; color: steelblue"><span id="bridgeName3-2"></span></h6>
+                                        <script>
+                                        var bridgeName = selectedBridgeNames[2];
+                                        document.getElementById('bridgeName3-2').innerHTML = bridgeName;
+                                        </script>
+                                  </div>
+                                  <!-- /.card-header -->
+                                  <div class="card-body">
+                                      <div class="row">
+                                          <div class="col-md-12">
+                                              <div style="padding: 10px; overflow: auto; min-width: 400px;">
+                                                  <table style="width:100%" class="table table-sm" id="tbl_bridge_insp_t6">
                                                   <thead>
                                                             <tr>
                                                                 <th data-orderable="true">Completed on</th>
@@ -518,246 +697,242 @@
         <script src="../plugins/chart.js/Chart.js"></script>
         <script src="../plugins/adminlte.js"></script>
         
-        <!---------------------------------------------------------------------------
-        -                       Building the Line Chart                             -
-        ----------------------------------------------------------------------------->
+   
         <script>
 
-            // plugin to handle overlapping data points on line chart
+            // ChartJS plugin to handle overlapping data points on line chart
             var jitterEffectPlugin = {
-                        beforeDatasetDraw: function (ctx, args) {
-                            if (ctx.animating) {
-                                var _args = args,
-                                dataIndex = _args.index,
-                                meta = _args.meta;
-                                var points = meta.data.map(function (el) {
-                                  return {
-                                    x: el._model.x,
-                                    y: el._model.y
-                                  };
+                beforeDatasetDraw: function (ctx, args) {
+                    if (ctx.animating) {
+                        var _args = args,
+                        dataIndex = _args.index,
+                        meta = _args.meta;
+                        var points = meta.data.map(function (el) {
+                            return {
+                            x: el._model.x,
+                            y: el._model.y
+                            };
+                        });
+                        var dsLength = ctx.data.datasets.length;
+                        var adjustedMap = []; // keeps track of adjustments to prevent double offsets
+
+                        for (var datasetIndex = 0; datasetIndex < dsLength; datasetIndex += 1) {
+                            if (dataIndex !== datasetIndex) {
+                            var datasetMeta = ctx.getDatasetMeta(datasetIndex);
+                            datasetMeta.data.forEach(function (el) {
+                                var overlapFilter = points.filter(function (point) {
+                                return point.x === el._model.x && point.y === el._model.y;
                                 });
-                                var dsLength = ctx.data.datasets.length;
-                                var adjustedMap = []; // keeps track of adjustments to prevent double offsets
-        
-                                for (var datasetIndex = 0; datasetIndex < dsLength; datasetIndex += 1) {
-                                  if (dataIndex !== datasetIndex) {
-                                    var datasetMeta = ctx.getDatasetMeta(datasetIndex);
-                                    datasetMeta.data.forEach(function (el) {
-                                      var overlapFilter = points.filter(function (point) {
-                                        return point.x === el._model.x && point.y === el._model.y;
-                                      });
 
-                                      var overlap = false;
-                                      var overObj = JSON.parse(JSON.stringify(overlapFilter));
-                                      for (var i = 0; i < overObj.length; i++) {
-                                          if(overObj[i]['x'] === el._model.x && overObj[i]['y'] === el._model.y){
-                                            overlap = true;
-                                            break;
-                                          }
-                                      }
-                                      if (overlap) {
-                                        var adjusted = false;
-                                        var adjustedFilter = adjustedMap.filter(function (item) {
-                                            return item.datasetIndex === datasetIndex && item.dataIndex === dataIndex;
-                                        });
-                                        var adjObj = JSON.parse(JSON.stringify(adjustedFilter));
-                                          for (var i = 0; i < adjObj.length; i++) {
-                                              if(adjObj[i]['datasetIndex'] === datasetIndex && adjObj[i]['dataIndex'] === dataIndex){
-                                                adjusted = true;
-                                                break;
-                                              }
-                                          }
-
-                                        if (!adjusted && datasetIndex % 2) {
-                                          el._model.x += 6;
-                                        } else {
-                                          el._model.x -= 6;
+                                var overlap = false;
+                                var overObj = JSON.parse(JSON.stringify(overlapFilter));
+                                for (var i = 0; i < overObj.length; i++) {
+                                    if(overObj[i]['x'] === el._model.x && overObj[i]['y'] === el._model.y){
+                                    overlap = true;
+                                    break;
+                                    }
+                                }
+                                if (overlap) {
+                                var adjusted = false;
+                                var adjustedFilter = adjustedMap.filter(function (item) {
+                                    return item.datasetIndex === datasetIndex && item.dataIndex === dataIndex;
+                                });
+                                var adjObj = JSON.parse(JSON.stringify(adjustedFilter));
+                                    for (var i = 0; i < adjObj.length; i++) {
+                                        if(adjObj[i]['datasetIndex'] === datasetIndex && adjObj[i]['dataIndex'] === dataIndex){
+                                        adjusted = true;
+                                        break;
                                         }
-        
-                                        adjustedMap.push({
-                                          datasetIndex: datasetIndex,
-                                          dataIndex: dataIndex
-                                        });
-                                      }
-                                    });
-                                  }
+                                    }
+
+                                if (!adjusted && datasetIndex % 2) {
+                                    el._model.x += 6;
+                                } else {
+                                    el._model.x -= 6;
+                                }
+
+                                adjustedMap.push({
+                                    datasetIndex: datasetIndex,
+                                    dataIndex: dataIndex
+                                });
+                                }
+                            });
+                            }
+                        }
+                    }
+                }
+            }
+
+            fetchAllInspectionData().then((response) => {
+                bridgeInspectionData = response;
+                // create a copy of the inspection data for chart builder to use. avoids data access conflicts between loadTable and buildLineChart.
+                chartInspectionData = JSON.parse(JSON.stringify(response));
+                loadAllInspectionListTables(bridgeInspectionData).then(() => {
+                
+                    //var origHeight = "calc(100vh - 58px)";
+                    var origHeight = $('.sidebar').height();
+                    var contHeight_before = "";
+                    var contHeight_after = "";
+                    var sideHeight = "";
+                    
+                    // Build the Line Chart After Inspection Data has loaded
+                    /* ---------------------------------------------------------------------------
+                     -                       Building the Line Chart                             -
+                     ----------------------------------------------------------------------------- */
+                    var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
+                    var ratings = []; // inspection ratings for a single brige
+                    var pointColors = []; // point colors tbd by rating
+                    var borderColors = ['darkgrey', 'navy', 'steelblue'] // Line colors
+                    var inspectionIndex; // used for tracking click events on inspection data points (line chart)
+                    var prevInspectionIndex; // used for tracking click events on inspection data points (line chart)
+                    var bridgeIndex; // used for tracking click events on bridge rows
+                    var prevBridgeIndex; // used for tracking click events on bridge rows
+                    var years = getChartYears(<?php echo json_encode($_SESSION['yearBegin']); ?>, 
+                                        <?php echo json_encode($_SESSION['yearEnd']); ?>);
+                    var lineData = {
+                        labels: years,
+                        datasets: []
+                    }
+
+                    // parses and performs pre-processing on inspection data for each bridge. 
+                    const processChartInspectionData = async () => {
+                        var i = 0;
+                        for (let dataset of chartInspectionData){
+                            // There is inspection data for the bridge
+                            if(dataset.data != null){
+                                var correctedInspections = fillMissingInspections(bridgeName, dataset);
+                                correctedInspections.color = borderColors[i];
+                                correctedChartInspectionData.push(correctedInspections);
+                                var ratingsArray = getRatings(correctedInspections);
+                                ratings.push(ratingsArray);
+                                var pointColorsArray = getPointColors(ratingsArray);
+                                pointColors.push(pointColorsArray);
+                            }
+                            else{
+                                // there is no inspection data for the bridge
+                                bridgeName = selectedBridgeNames[i]; // since dataset is null for this bridge, get name from selectedBridgeNames
+                                var dummyEmptyInspections = {data:[]};
+                                dummyEmptyInspections.data[0] = {bridgeName: bridgeName};
+                                dummyEmptyInspections.color = borderColors[i];
+                                correctedChartInspectionData.push(dummyEmptyInspections);
+                                var ratingsArray = getRatings(dummyEmptyInspections);
+                                ratings.push(ratingsArray);
+                                var pointColorsArray = getPointColors(ratingsArray);
+                                pointColors.push(pointColorsArray);
+                                
+                                // handle UI cue that bridge has no inspection data
+                                bridgeIndex = selectedBridgeNames.indexOf(bridgeName);
+                                renderInspectionlessBridgeHTML(document.getElementById('bridge'+(bridgeIndex+1)))
+                                alert("There are no inspections for " + bridgeName + " for the specified timeframe.")
+                            }
+                            i++;
+                        }
+                        return new Promise(function(resolve, reject) {
+                            resolve ({allInspectionsLoaded: true});
+                        })
+                    }
+
+                    // builds the datasets using the processed inspection data
+                    const buildChartDatasets = async () => {
+                        const inspectionDataProcessed = await processChartInspectionData();
+                        var i = 0;
+                        for(data of correctedChartInspectionData){
+                            // Get label from the first non-null inspection
+                            var label = null;
+                            for(var inspection of data.data){
+                                if(inspection != null){
+                                    label = inspection.bridgeName;
+                                    break;
                                 }
                             }
+                            lineData.datasets.push({
+                                label: label,
+                                data: ratings[i],
+                                backgroundColor: 'rgba(255, 255, 255, 0)',
+                                pointBackgroundColor: pointColors[i],
+                                borderColor: data.color,
+                                radius: 6
+                            });
+                            i++;
                         }
-                    }
-            $(function () {
-                'use strict'
-
-                //var origHeight = "calc(100vh - 58px)";
-                var origHeight = $('.sidebar').height();
-                var contHeight_before = "";
-                var contHeight_after = "";
-                var sideHeight = "";
-
-                /* LINE CHART */
-                var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
-                var ratings = [];
-                var pointColors = [];
-                var borderColors = ['darkgrey', 'navy', 'steelblue']
-                var inspectionIndex;
-                var prevInspectionIndex;
-                var bridgeIndex;
-                var prevBridgeIndex;
-                var years = getChartYears(<?php echo json_encode($_SESSION['yearBegin']); ?>, 
-                                     <?php echo json_encode($_SESSION['yearEnd']); ?>);
-                var lineData = {
-                    labels: years,
-                    datasets: []
-                }
-
-                const fetchAllChartInspections = async () => {
-                    var i = 0;
-                    for (name of selectedBridgeNames){
-                        const bridgeInspections = await fetchInspections(name);
-                        // There is inspection data for the bridge
-                        if(bridgeInspections.data != null){
-                            var correctedInspections = fillMissingInspections(name, bridgeInspections);
-                            inspectionData.push(correctedInspections);
-                            var ratingsArray = getRatings(correctedInspections);
-                            ratings.push(ratingsArray);
-                            var pointColorsArray = getPointColors(ratingsArray);
-                            pointColors.push(pointColorsArray);
-                        } else{
-                            // there is no inspection data for the bridge
-                            var dummyEmptyInspections = {data:[]};
-                            inspectionData.push(dummyEmptyInspections);
-                            var ratingsArray = getRatings(dummyEmptyInspections);
-                            ratings.push(ratingsArray);
-                            var pointColorsArray = getPointColors(ratingsArray);
-                            pointColors.push(pointColorsArray);
-                            
-                            renderInspectionlessBridgeHTML(document.getElementById('bridge'+(i+1)))
-                            alert("There are no inspections for " + name + " for the specified timeframe.")
-                          
-
-                        }
-                        i++;
-                    }
-                    return new Promise(function(resolve, reject) {
-                        resolve ({allInspectionsLoaded: true});
-                    })
-                }
-
-                const buildChartDatasets = async () => {
-                    const inspectionsLoaded = await fetchAllChartInspections();
-                    var i = 0;
-                    for(data of inspectionData){
-                        // Get label from the first non-null inspection
-                        var label = null;
-                        for(var inspection of data.data){
-                            if(inspection != null){
-                                label = inspection.bridgeName;
-                                break;
-                            }
-                        }
-                        lineData.datasets.push({
-                            label: label,
-                            data: ratings[i],
-                            backgroundColor: 'rgba(255, 255, 255, 0)',
-                            pointBackgroundColor: pointColors[i],
-                            borderColor: borderColors[i],
-                            radius: 6
+                        return new Promise(function(resolve, reject) {
+                            resolve({datasetsBuilt: true})
                         });
-                        i++;
                     }
-                    return new Promise(function(resolve, reject) {
-                        resolve({datasetsBuilt: true})
-                    });
-                }
 
-                var lineOptions = {
-       
-                    
-                    legend: {
-                        display: false,
-                    },
-                    'onClick' : function (evt, item) {
-                        bridgeIndex = lineChart.getDatasetAtEvent(evt)[0]._datasetIndex;
-                        inspectionIndex = item[0]._index;
-                        var inspection;
-                        
-                        var inspection = [inspectionData[bridgeIndex].data[inspectionIndex]];
-                        var bridgeId = 'bridge' + (bridgeIndex+1);
-                        loadTable(bridgeId, inspection);
-                        
-                        $('#rm_t' + (bridgeIndex+1) + ' .card-title').text('Inspection');
-                        $('#rm_t' + (bridgeIndex+1)).removeAttr('hidden');
-                        $(".tbox").not("#rm_t" + (bridgeIndex+1)).hide();
-                        
-                        if ( lastClick == 'bridgeClick'){
-                            if($('#rm_t' + (bridgeIndex+1)).is(':visible')){
-                                $('#rm_t' + (bridgeIndex+1)).show();
+                    // options object for line chart customization
+                    var lineOptions = {
+                        legend: {
+                            display: false,
+                        },
+                        // onClick function for inspections data points on the chart
+                        'onClick' : function (evt, item) {
+                            bridgeIndex = lineChart.getDatasetAtEvent(evt)[0]._datasetIndex;
+                            inspectionIndex = item[0]._index;
+                            var inspection;
+                            
+                            var inspection = [correctedChartInspectionData[bridgeIndex].data[inspectionIndex]];
+                            /* 
+                            *  Reason for "var tableNumber = ((bridgeIndex+1)*2)"
+                            *  Single Inspection Table Numbers are even (2, 4, and 6) and Inspection List Table Numbers are odd (1, 3, 5). 
+                            *  Example: Inspection List Table for Bridge 1 has table Number 1 and Single Inspection Table for Bridge 1 has table number 2
+                            *  It follows that the Inspection List Table for Bridge 2 has table Number 3 and Single Inspection Table for Bridge 2 has table number 4 
+                            *  See id attribute of Bridge Inspection DataTables in the HTML template. 
+                            */
+                            var tableNumber = ((bridgeIndex+1)*2);
+                            var tableId = 'tbl_bridge_insp_t' + tableNumber;
+                            loadTable(tableId, inspection);
+                            
+                            $('#rm_t' + tableNumber).removeAttr('hidden');
+                            $(".tbox").not("#rm_t" + tableNumber).hide();
+                            if($('#rm_t' + tableNumber).is(':visible')){
+                                if(prevInspectionIndex == inspectionIndex){
+                                    $('#rm_t' + tableNumber).toggle();
+                                }
                             } else{
-                                $('#rm_t' + (bridgeIndex+1)).toggle();
+                                $('#rm_t' + tableNumber).toggle();
                             }
-                        } else{
-                            if(prevInspectionIndex == inspectionIndex || prevBridgeIndex != bridgeIndex){
-                                $('#rm_t' + (bridgeIndex+1)).toggle();
-                            } else{
-                                $('#rm_t' + (bridgeIndex+1)).show();
-                            }
-                        }
-                        
-                        lastClick = "inspectionClick";
-                        prevInspectionIndex = inspectionIndex;
-                        prevBridgeIndex = bridgeIndex;
-                        
-                        
-                        contHeight_after = $('.container').height();
-                        sideHeight = $('.sidebar').height();
-                        if (contHeight_after >= sideHeight) {
-                            $('.sidebar').height(contHeight_after);
-                            contHeight_before = $('.sidebar').height();
-                        } else if (contHeight_after < sideHeight && contHeight_before == sideHeight) {
-                            if (contHeight_after < origHeight) {
-                                $('.sidebar').height(origHeight);
-                            } else {
-                                $('.sidebar').height(contHeight_after);
-                            }
-                            contHeight_before = $('.sidebar').height();
-                        } else {
-                            $('.sidebar').height(origHeight);
-                            contHeight_before = $('.sidebar').height();
-                        }
-                    },
-                    scales: {
-                        yAxes: [{
-                            scaleLabel: {
-                                display: true,
-                                labelString: "Inspection Rating"
-                            },
-                            ticks: {
-                                max: 9,
-                                min: 1
-                            }
-                        }]
+                            
+                            lastClick = "inspectionClick";
+                            prevInspectionIndex = inspectionIndex;
+                            prevBridgeIndex = bridgeIndex;
+                            
+                        },
+                        scales: {
+                            yAxes: [{
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: "Inspection Rating"
+                                },
+                                ticks: {
+                                    max: 9,
+                                    min: 1
+                                }
+                            }]
 
-                        
-                    },
-                    spanGaps: true
-                }
+                            
+                        },
+                        spanGaps: true
+                    }
 
-                const buildLineChart = async (lineOptions) => {
-                    const datasetsBuilt = await buildChartDatasets();
-                    var lineChart = new Chart(lineChartCanvas, {
-                        type: 'line',
-                        data: lineData,
-                        options: lineOptions,
-                        plugins: [jitterEffectPlugin]
-                    });
-                    return lineChart;
-                }
+                    // builds the line chart using the chart datasets built in buildChartDatasets
+                    const buildLineChart = async (lineOptions) => {
+                        const datasetsBuilt = await buildChartDatasets();
+                        var lineChart = new Chart(lineChartCanvas, {
+                            type: 'line',
+                            data: lineData,
+                            options: lineOptions,
+                            plugins: [jitterEffectPlugin]
+                        });
+                        return lineChart;
+                    }
 
-                var lineChart = buildLineChart(lineOptions); 
-                lineChart.then(function(response){
-                    lineChart = response;
+                    // Build the Line Chart
+                    var lineChart = buildLineChart(lineOptions); 
+                    lineChart.then(function(response){
+                        lineChart = response;
+                    })
                 })
-
             })
         </script>
 
@@ -780,15 +955,6 @@
             });
         </script>
 
-        <!-- Tables - Initialization -->
-        <script>
-            $(document).ready(function(){
-                $('#tbl_bridge_insp').DataTable({"order": [[ 0, "asc" ]]});
-                $('#tbl_bridge_insp_t1').DataTable({"order": [[ 0, "asc" ]]});
-                $('#tbl_bridge_insp_t2').DataTable({"order": [[ 0, "asc" ]]});
-                $('#tbl_bridge_insp_t3').DataTable({"order": [[ 0, "asc" ]]});
-            });
-        </script>
 
         <!-- Open Modal Event Listener -->
         <script>
@@ -864,72 +1030,44 @@
         $(document).ready(function(){
             
             $('#bridge1').on('click', function(){
-                fetchInspections(selectedBridgeNames[0]).then(function(response) {            
-                    $(".tbox").not("#rm_t1").hide();
-                    if(!$('#rm_t1').is(':visible') || ($('#rm_t1').is(':visible') && lastClick == 'inspectionClick')){
-                        loadTable('bridge1', response.data);
-                        
-                        
-                        $('#rm_t1' + ' .card-title').text('Inspection List');
-                        $('#rm_t1').removeAttr('hidden');
-                        $('#rm_t1').show();
-                        // setTimeout(function(){
-                        //     $('#rm_t1').removeAttr('hidden');
-                        //     $('#rm_t1').show();
-                        // }, 70)
-                        
-                    } else{
-                        $('#rm_t1').toggle();
-                    }
-                    lastClick = "bridgeClick";   
-                })
+                          
+                $(".tbox").not("#rm_t1").hide();
+                if(!$('#rm_t1').is(':visible') || ($('#rm_t1').is(':visible') && lastClick == 'inspectionClick')){
+                    $('#rm_t1').removeAttr('hidden');
+                    $('#rm_t1').show();
+                } else{
+                    $('#rm_t1').toggle();
+                }
+                lastClick = "bridgeClick";   
+    
             });
 
 
             $('#bridge2').on('click', function(){ 
                 
-                fetchInspections(selectedBridgeNames[1]).then(function(response) {            
-                    $(".tbox").not("#rm_t2").hide();
-                    if(!$('#rm_t2').is(':visible') || ($('#rm_t2').is(':visible') && lastClick == 'inspectionClick')){
-                        loadTable('bridge2', response.data);
-                        
-                        
-                        $('#rm_t2' + ' .card-title').text('Inspection List');
-                        $('#rm_t2').removeAttr('hidden');
-                        $('#rm_t2').show();
-                        // setTimeout(function(){
-                        //     $('#rm_t2').removeAttr('hidden');
-                        //     $('#rm_t2').show();
-                        // }, 70)
-                        
-                    } else{
-                        $('#rm_t2').toggle();
-                    }
-                    lastClick = "bridgeClick";   
-                })
+                         
+                $(".tbox").not("#rm_t3").hide();
+                if(!$('#rm_t3').is(':visible') || ($('#rm_t3').is(':visible') && lastClick == 'inspectionClick')){
+                    $('#rm_t3').removeAttr('hidden');
+                    $('#rm_t3').show();
+                } else{
+                    $('#rm_t3').toggle();
+                }
+                lastClick = "bridgeClick";   
+            
             });
 
 
             $('#bridge3').on('click', function(){
-                fetchInspections(selectedBridgeNames[2]).then(function(response) {            
-                    $(".tbox").not("#rm_t3").hide();
-                    if(!$('#rm_t3').is(':visible') || ($('#rm_t3').is(':visible') && lastClick == 'inspectionClick')){
-                        loadTable('bridge3', response.data);
-                        
-                        
-                        $('#rm_t3' + ' .card-title').text('Inspection List');
-                        $('#rm_t3').removeAttr('hidden');
-                        $('#rm_t3').show();
-                        // setTimeout(function(){
-                        //     $('#rm_t3').removeAttr('hidden');
-                        //     $('#rm_t3').show();
-                        // }, 70)
-                        
-                    } else{
-                        $('#rm_t3').toggle();
-                    }
-                    lastClick = "bridgeClick";   
-                })
+                $(".tbox").not("#rm_t5").hide();
+                if(!$('#rm_t5').is(':visible') || ($('#rm_t5').is(':visible') && lastClick == 'inspectionClick')){
+                    $('#rm_t5').removeAttr('hidden');
+                    $('#rm_t5').show();
+                } else{
+                    $('#rm_t5').toggle();
+                }
+                lastClick = "bridgeClick";   
+                
             });
         });
     </script>
