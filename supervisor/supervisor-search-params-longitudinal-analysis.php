@@ -288,6 +288,7 @@
                 *       (the one being created in this call of buildBridgeElement)            *
                 ******************************************************************************/
                 removeButton.onclick = function() {
+                    awaitingConfirmation = !searchInput.classList.contains('border-success');
                     let numBridges = document.getElementsByClassName("bridge").length;
                     if(numBridges > 1){
                         bridgeDiv.remove();

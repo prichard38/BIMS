@@ -327,7 +327,6 @@ function restoreSessionStateLongitudinalAnalysis(bridgeNumbers, bridgeNames, bri
             document.getElementById('confirm-search-'+nextBridgeIndex).remove();
             let removeButton = document.getElementById('remove-bridge-'+nextBridgeIndex);
             removeButton.style='margin-left: 0px;'
-            awaitingConfirmation = false;
             awaitingAnyConfirmation = false;
             nextBridgeIndex++;
             numConfirmed++;            
