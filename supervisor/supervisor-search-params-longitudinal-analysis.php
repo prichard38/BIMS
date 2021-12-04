@@ -762,10 +762,10 @@
                     // This looks less jittery to the user on load
                     .then( 
                         () => {
-                            setTimeout(() => {
+                           
                                 $('#search-section').removeAttr('hidden');
                                 $('#timeframe-section').removeAttr('hidden');
-                            }, 50);
+                            
                         }
                     )
                 } else{
