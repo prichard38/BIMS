@@ -12,3 +12,5 @@ if(isset($_POST['selectedBridgeNames']) && isset($_POST['selectedBridgeNumbers']
 } else{
     echo false;
 }
+
+?>

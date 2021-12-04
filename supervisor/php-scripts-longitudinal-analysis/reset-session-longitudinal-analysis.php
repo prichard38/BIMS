@@ -9,3 +9,5 @@
     unset($_SESSION['hasSavedState']);
 
     header("Location: ../supervisor-search-params-longitudinal-analysis.php");
+
+?>

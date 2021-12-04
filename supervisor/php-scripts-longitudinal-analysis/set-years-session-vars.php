@@ -11,3 +11,5 @@ if(isset($_POST['yearBegin']) && isset($_POST['yearEnd'])){
 } else{
     echo false;
 }
+
+?>
