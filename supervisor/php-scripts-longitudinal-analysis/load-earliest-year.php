@@ -1,8 +1,8 @@
 <?php 
+    session_start();
     
     include '../../dbConfig.inc.php';
 
-    session_start();
         
     $bridgeNames = json_decode($_POST['bridgeNames']);
     

@@ -1,15 +1,8 @@
 <?php 
+    session_start();
     
     include '../../dbConfig.inc.php';
 
-    // old SELECT; replaced with stored procedure
-    /*$sql = "SELECT FinishedDate, Bridges.BridgeName, Bridges.BridgeNo, InspectionTypeName, OverallRating
-        FROM Bridges, Inspections, InspectionTypeCode 
-        WHERE Bridges.BridgeName LIKE ? AND Inspections.Bridges_BridgeNo = Bridges.BridgeNo AND Inspections.InspectionTypeNo = InspectionTypeCode.InspectionTypeNo
-        ORDER BY FinishedDate ASC";
-    */
-    session_start();
-    
     $name = mysqli_real_escape_string($conn, $_POST['selectedBridgeName']);
     
     $sql = "CALL selectBridgeInspectionData_BetweenYears(?,".(string) json_encode($_SESSION['yearBegin']).",".(string) json_encode($_SESSION['yearEnd']).");";
