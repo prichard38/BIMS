@@ -313,22 +313,60 @@ function restoreSessionStateLongitudinalAnalysis(bridgeNumbers, bridgeNames, bri
 
         // for each of the selected bridges
         for(let i = 0 ; i < bridgeNames.length ; i++){
-            
             // build a bridge html element and append it to bridges div
             let bridgeElement = buildBridgeElement();
             bridges.appendChild(bridgeElement);
             // create the string value for the bridge search input to be populated with
-            document.getElementById('search'+(nextBridgeIndex)).value = bridgeNumbers[i] + " : " + bridgeNames[i] + ", " + bridgeCounties[i];
-            // programatically click the "confirm selection" button before adding next bridge
-            document.getElementById('confirm-search-'+(nextBridgeIndex)).click();
-            
+            let bridgeString = bridgeNumbers[i] + " : " + bridgeNames[i] + ", " + bridgeCounties[i];
+            let searchInput =  document.getElementById('search'+(nextBridgeIndex));
+            searchInput.value = bridgeString;
+            showValidFeedback(searchInput);
+            enableButton(document.getElementById('submit-btn-bridges'));
+            document.getElementsByClassName('submission-feedback')[0].hidden=true;
+            document.getElementById('search-btn').remove();
+            document.getElementById('confirm-search-'+nextBridgeIndex).remove();
+            let removeButton = document.getElementById('remove-bridge-'+nextBridgeIndex);
+            removeButton.style='margin-left: 0px;'
+            awaitingConfirmation = false;
+            awaitingAnyConfirmation = false;
+            nextBridgeIndex++;
+            numConfirmed++;            
         }
-      
-        // programatically click the "submit bridge selections" button
-        document.getElementById('submit-btn-bridges').click();
+        updateConfirmationCount(bridgeNames.length);
+           
+        // remove <br> children 
+        bridges.children[bridges.children.length -1].removeChild(bridges.children[bridges.children.length -1].lastChild);
+        bridges.children[bridges.children.length -1].removeChild(bridges.children[bridges.children.length -1].lastChild);
+        // hide icons from all bridge inputs so no more changes can be made
+        let icons = document.getElementsByClassName("option-icon");
+        for(let i = 0 ; i < icons.length ; i++){
+            icons[i].hidden = true;
+        }
+        // hide the "submit bridge selections" button
+        document.getElementById('search-instructions').hidden = true;
+        document.getElementById('submit-btn-bridges').hidden = true;
+        let editBridgesButton = document.getElementById('edit-btn-bridges');
+        editBridgesButton.hidden=false;
+        document.getElementsByClassName('edit-feedback')[0].hidden=false;
+
+        // hide the add bridge icon and label
+        let addBridge = document.getElementById('add-bridge');
+        let addBridgeLabel = document.getElementById('add-bridge-label');
+        addBridge.hidden = true;
+        addBridgeLabel.hidden = true;
+
+        // show the timeframe section and instructions
+        document.getElementById('timeframe-section').hidden = false;
+        document.getElementById('timeframe-instructions').hidden = false;
+
         enableButton(document.getElementById('submit-btn-years'));
         document.getElementById('timeframe-instructions').hidden = true;
-
+        generateBeginYears(JSON.stringify(bridgeNames)).then(
+            () => {
+                generateEndYears();
+            }
+        )
+        isValid = true;
         resolve(true);
     })
 }
