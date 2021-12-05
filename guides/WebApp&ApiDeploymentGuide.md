@@ -1,9 +1,9 @@
 # BIMS - CS 490 Capstone Fall 2021
-## Web Application Deployment Guide
+## Deployment Guide for the Web Application and API 
 
 #### This guide lists the steps taken to deploy the web app to https://bims.marshallcsee.com
 
-#### *NOTE: The BIMS web application is an ongoing project still in development.* 
+#### *NOTE: The BIMS web application and API is an ongoing project still in development.* 
 --------------------------------------------------------
 
 ### Contribution of the Fall 2021 Capstone Team
@@ -25,7 +25,7 @@ To access site files, permission and credentials are required to access the Host
 *The CPanel will be used for making any changes on the server.*
 1. After receiving credentials for the HostGator server, navigate to https://hostgator.com.
 2. Select *Sign In* then *Portal* to navigate to the customer dashboard.
-3. After logging in, select *Hosting* on the left navigation bar. 
+3. After logging in, select *Hosting* on the left navigation bar and then *CPanel* for the *marshallcsee.com* server.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="img/select_cpanel.png" alt="Data Flow" width="70%"/>
 
