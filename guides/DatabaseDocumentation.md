@@ -5,7 +5,9 @@
 #### This guide is meant to serve as a reference for information related to the BIMS database as implemented by the Fall 2021 Capstone Team.
 
 ###### *NOTE: The BIMS database is part of an ongoing project still in development.* 
+
 --------------------------------------------------------
+
 ### Contribution of the Fall 2021 Capstone Team
 The Fall 2021 Capstone team integrated the BIMS database, in part, with the BIMS web application and mobile photography application. Because not all tables were required for the Fall 2021 Capstone project, most tables in the database are not accessed and currently contain no test data. The tables that are relevant to the Fall 2021 Capstone contribution are outlined in the following section.
 
@@ -49,8 +51,10 @@ Foreign Key Constraints follow the naming convention *fk_ForeignKeyTable_Primary
 ###### Example: The **Bridges** table has a foreign key constraint *fk_Bridges_County* because the **Bridges** table contains the foreign key, ***County_CountyNo***, that references the primary key, ***CountyNo***, in the **County** table. 
 
 --------------------------------------------------------
+
 ### Entity Relationship Diagram (ERD)
 
-The ERD for the BIMS Database is also available in the `SQL` folder of this project in PNG, SVG, and MWB (MySQL Workbench Document) formats.
-![Data Flow](/SQL/BIMS_ERD.png)
+The ERD for the BIMS Database is also available in the `SQL_localhost` folder of this project in PNG, SVG, and MWB (MySQL Workbench Document) formats.
+
+![ERD](/SQL_localhost/BIMS_ERD.png)
 

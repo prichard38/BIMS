@@ -3,7 +3,8 @@
 
 #### This guide is meant to serve as a reference and provide helpful information related to the development process for BIMS web application Report Management for supervisors, including the Yearly Inspection Report Tool and the Longitudinal Analysis Tool 
 
-###### *NOTE: The BIMS web application is an ongoing project still in development.* 
+#### *NOTE: The BIMS web application is an ongoing project still in development.* 
+
 --------------------------------------------------------
 
 ### Contribution of the Fall 2021 Capstone Team
@@ -24,9 +25,10 @@ This tool provides a breakdown of bridge inspection data over a given timeframe 
 
 ### Data Flow
 
-In general, the flow of data within the web application can be seen in the diagram below: 
+In general, the flow of data within the BIMS web and mobile applications can be seen in the diagram below: 
 
-![Data Flow](/guides/DataFlowWebApp.png)
+<!-- ![Data Flow](/guides/DataFlowWebApp.png) -->
+<img src="http://167.99.229.90/guides/DataFlowWebApp.png" alt="Data Flow" width="100%"/>
 
 --------------------------------------------------------
 ### Longitudinal Analysis Parameters (*supervisor-search-params-longitudinal-analysis.php*)
@@ -39,24 +41,6 @@ To accomplish this, the *buildBridgeElement* function is called when the user cl
 
 
 --------------------------------------------------------
-### Longitudinal Analysis - Line Chart
-#### Dynamically Building the Line Chart
-
-Dynamically building the line chart that is generated in the Longitudinal Analysis Report requires that all chart datasets (including inspection ratings, label/name, point color, etc.) also be dynamically generated using data from the database. To accomplish this, three functions are defined:
-
-- ***fetchAllChartInspections***: fetches all chart inspections for each of the selected bridges
-- ***buildChartDataSets***: parses inspection data returned by *fetchAllChartInspections* and creates the chart dataset for each selected bridge, according to the chart.js requirements, and pushes it to an array inside a JavaScript object, *lineData.datasets*
-- ***buildLineChart***: Creates the new Line Chart using *lineData*
-
-Because the execution of *buildLineChart* is dependent on the execution of *buildChartDatasets*, and *buildChartDatasets* is dependent on the the execution of *fetchAllChartInspections*, it must be ensured that these functions execute in sequence. To accomplish this, nesting of *async/await* function calls is used. 
-
-Specifically, only *buildLineChart* needs to be explicitly called. From there, *buildLineChart* calls and awaits the execution of *buildChartDatasets*. In turn, *buildChartDatasets* calls and awaits the execution of *fetchAllChartInspections*. After *fetchAllChartInspections* finishes executing, then *buildChartDatasets* can continue on and finish executing, after which *buildLineChart* will finally continue on and finish executing. The end result is a dynamically generated line chart representation of bridge inspection ratings from the database.
-
-![buildLineChart](buildLineChartExample.png)
-![buildChartDatasets](buildChartDatasetsExample.png)
-
---------------------------------------------------------
-
 
 ### A Note About the Use of PHP Session Variables in Report Management Features
 
@@ -64,13 +48,13 @@ For the YIRT and LAT, php session variables are used to store current user input
 
 #### Longitudinal Analysis Tool Session Variables
 
-- ***selectedBridgeNames****
-- ***selectedBridgeNumbers****
-- ***selectedBridgeCounties****
+- ***selectedBridgeNames*** *
+- ***selectedBridgeNumbers*** *
+- ***selectedBridgeCounties*** *
 - ***yearBegin***
 - ***yearEnd*** 
 
-###### *Bridge names, numbers, and counties map to one another by index. This means that the bridge name at *selectedBridgeNames[i]* corresponds to the bridge number at *selectedBridgeNumbers[i]* and the county at *selectedBridgeCounties[i]*.
+##### *Bridge names, numbers, and counties map to one another by index. This means that the bridge name at *selectedBridgeNames[i]* corresponds to the bridge number at *selectedBridgeNumbers[i]* and the county at *selectedBridgeCounties[i]*.
 
 #### Yearly Inspection Report Tool Session Variable
 - ***YIR_SelectedYear***
@@ -98,7 +82,7 @@ Both the Yearly Inspection Report Tool (YIRT) and the Longitudinal Analysis Tool
 
 
 #### Other libraries used throughout the project 
-###### **Some of these libraries were already in use by previous capstone teams in other areas of the BIMS project*
+##### * *Some of these libraries were already in use by previous capstone teams in other areas of the BIMS project*
 
 ##### **jQuery(v3.3.1)**: https://jquery.com/
 
@@ -107,4 +91,5 @@ Both the Yearly Inspection Report Tool (YIRT) and the Longitudinal Analysis Tool
 ##### **Bootstrap (v4.5.3)**: https://getbootstrap.com/
 
 ##### **AdminLTE (v3.1.0) (built on top of Bootstrap)**: https://adminlte.io/
-- ##### **AdminLTE CardWidget**: https://adminlte.io/docs/3.1/javascript/card-widget.html
+
+##### **AdminLTE CardWidget**: https://adminlte.io/docs/3.1/javascript/card-widget.html
