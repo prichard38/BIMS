@@ -21,7 +21,7 @@
 * Mac: https://code.visualstudio.com/docs/setup/mac 
 * Windows: https://code.visualstudio.com/docs/setup/windows
 
-#### Installation of the BIMS Codebase on your local machine (Mac):
+#### Installation of the BIMS Codebase on your local machine:
 1. Download the source code ZIP file from GitHub: https://github.com/prichard38/BIMS
 2. Open XAMPP
 3. In  **[General]** tab of XAMPP panel, click **[Start]** button.
@@ -31,8 +31,6 @@ click **[Enable]** button.
 6. In **[Volumes]** tab of XAMPP panel, click **[Mount]** button.
 7. Un-compress the source code zip file, `BIMS-main`, in XAMPP’s `htdocs` directory (usual folder path: `/opt/lampp/htdocs`). If you cannot find the folder, click the **[Explore]** button in the **[Volumes]** tab of XAMPP panel. You will be moved to `lampp` directory and can find the `htdocs` folder. ***It is suggested to rename the folder from `BIMS-main` to `BIMS`.***
 8. Now you are ready to use it. You can access the web application by typing in the web browser http://localhost:8080/BIMS/login.html (The port number 8080 may be different depending on the MAMP setting.)
-
-#### Installation of the BIMS Codebase on your local machine (Windows):
 
 #### Installation of the BIMS Database and Procedures on your local machine:
 
